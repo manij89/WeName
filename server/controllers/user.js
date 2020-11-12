@@ -62,6 +62,7 @@ exports.createLinkingCode = async (req, res) => {
     )
     res.status(200).send(result);
   } catch (error) {
+    res.status(500);
     console.error('no linking code created', error)
   }
 }
@@ -89,7 +90,40 @@ exports.linkPartner = async (req, res) => {
       );
       res.status(200).send({user1, user2});
   } catch (error) {
+    res.status(500);
     console.error('failed to connect partners', error)
+  }
+};
+
+exports.getLikedNames = async (req,res) => {
+  try {
+    const { userId } = req.params;
+    const user = await db.User.findOne({
+      where: {
+        id: +userId
+      }
+    });
+    const result = await user.getLiked()
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500);
+    console.error('failed to get liked names', error)
+  }
+};
+
+exports.getSeenNames = async (req,res) => {
+  try {
+    const { userId } = req.params;
+    const user = await db.User.findOne({
+      where: {
+        id: +userId
+      }
+    });
+    const result = await user.getSeen()
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(500);
+    console.error('failed to get seen names', error)
   }
 };
 
