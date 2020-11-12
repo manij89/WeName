@@ -1,5 +1,6 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid')
 
 exports.getUser = async (req, res) => {
   try {
@@ -18,7 +19,7 @@ exports.getUser = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  const {firstName, lastName, email, password } = req.body
+  const { firstName, lastName, email, password } = req.body
   try {
     const hash = await bcrypt.hash(password, 10);
     await db.User.create({
@@ -40,7 +41,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await db.User.findOne({where: { email: email }});
+    const user = await db.User.findOne({ where: { email: email } });
     const validatedPass = await bcrypt.compare(password, user.password);
     if (!validatedPass) throw new Error();
     res.status(200).send(user);
@@ -51,9 +52,57 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.createLinkingCode = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const code = uuidv4();
+    const result = await db.User.update(
+      { linkingCode: code },
+      { returning: true, where: { id: user.id } }
+    )
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('no linking code created', error)
+  }
+}
+
+exports.linkPartner = async (req, res) => {
+  try {
+    const { linkingCode } = req.body;
+    const { id } = req.params; // user 2
+    const user1 = await db.User.findOne({
+      where: { linkingCode: linkingCode }
+    });
+    console.log(user1)
+
+    await db.User.update(
+      { partnerId: id},
+      { returning: true, where: { id: user1.id } 
+    });
+
+    const user2 = await db.User.update(
+      {
+        linkingCode: linkingCode,
+        partnerId: user1.id
+      },
+      {returning: true, where: {id: id}}
+      );
+      res.status(200).send({user1, user2});
+  } catch (error) {
+    console.error('failed to connect partners', error)
+  }
+};
+
 exports.updateSeenNames = async (req, res) => {
   try {
-    
+    const { userId, nameId } = req.params;
+    const user = await db.User.findOne({
+      where: {
+        id: +userId
+      }
+    });
+    const result = await user.addSeen(+nameId)
+    res.status(201).send(result);
   } catch (error) {
     console.error('failed updating seen names', error);
     res.status(500);
@@ -62,7 +111,14 @@ exports.updateSeenNames = async (req, res) => {
 
 exports.updateLikedNames = async (req, res) => {
   try {
-    
+    const { userId, nameId } = req.params;
+    const user = await db.User.findOne({
+      where: {
+        id: +userId
+      }
+    });
+    const result = await user.addLiked(+nameId)
+    res.status(201).send(result);
   } catch (error) {
     console.error('failed updating liked names', error);
     res.status(500);

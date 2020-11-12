@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    linkingCode: {
+      type: DataTypes.STRING,
+      allowNull: true
     }
   },
   {
@@ -28,8 +32,8 @@ module.exports = (sequelize, DataTypes) => {
       db.User.hasOne(db.User, {
         foreignKey: 'partnerId'
       });
-      db.User.belongsToMany(db.Name, {through: 'SeenNames'})
-      db.User.belongsToMany(db.Name, {through: 'LikedNames'})
+      db.User.belongsToMany(db.Name, {through: 'SeenNames', as: 'Seen'})
+      db.User.belongsToMany(db.Name, {through: 'LikedNames', as: 'Liked'})
   }
 
   return User;
