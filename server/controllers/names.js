@@ -1,8 +1,13 @@
 const db = require('../models');
 
-exports.getNames =  async (req, res) => {
+exports.getNamesByGender =  async (req, res) => {
   try {
-    const result = await db.Name.findAll();
+    const { gender } = req.params
+    const result = await db.Name.findAll({
+      where: {
+        gender: gender
+      }
+    });
     res.send(result);
     res.status(200);
   } catch (error) {

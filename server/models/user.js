@@ -17,14 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    liked: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true
-    },
-    matched: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
-      allowNull: true
     }
   },
   {
@@ -33,12 +25,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = db => {
-      db.User.hasMany(db.Names);
+      db.User.hasOne(db.User, {
+        foreignKey: 'partnerId'
+      });
+      db.User.belongsToMany(db.Name, {through: 'SeenNames'})
+      db.User.belongsToMany(db.Name, {through: 'LikedNames'})
   }
 
-  User.associate = db => {
-    db.User.belongsTo(db.Sessions);
-  }
-  
   return User;
 }

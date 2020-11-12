@@ -11,7 +11,6 @@ const db = {};
 const sequelize = new Sequelize(db_name, db_user, db_password, {
   host: db_host,
   dialect: 'postgres',
-  logging: false,
   pool: {
     max: 5,
     min: 0,
@@ -30,7 +29,14 @@ fs
   .forEach(file => {
     var model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
-  });
+  })
+
+  Object.keys(db).forEach(model => {
+    if(db[model].associate) {
+      db[model].associate(db)
+    }
+  })
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

@@ -4,7 +4,11 @@ const bcrypt = require('bcrypt');
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params
-    const result = await db.User.findOne({ where: { id: id } });
+    const result = await db.User.findOne({
+      where: {
+        id: id
+      }
+    });
     res.send(result);
     res.status(200);
   } catch (error) {
@@ -36,7 +40,7 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({where: { email: email }});
+    const user = await db.User.findOne({where: { email: email }});
     const validatedPass = await bcrypt.compare(password, user.password);
     if (!validatedPass) throw new Error();
     res.status(200).send(user);
@@ -47,9 +51,22 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.updateSeenNames = async (req, res) => {
+  try {
+    
+  } catch (error) {
+    console.error('failed updating seen names', error);
+    res.status(500);
+  }
+}
 
-
-
-// exports.login = (req, res) = {};
+exports.updateLikedNames = async (req, res) => {
+  try {
+    
+  } catch (error) {
+    console.error('failed updating liked names', error);
+    res.status(500);
+  }
+}
 
 // exports.delete = (req, res) = {};
