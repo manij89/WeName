@@ -1,0 +1,35 @@
+.info-container {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    margin: 0;
+    padding: 12px
+  }
+  a {
+    text-decoration: none;
+  }
+}
+
+.info-card {
+  width: 90vw;
+  margin-left: 30px;
+}
+
+.info-button {
+  z-index: 20;
+  background-color: #f5e6cc;
+  position: relative;
+  color:#41b3a3;
+  border: none;
+  background-color: rgba(255,255,255, 0.5);
+  padding: 15px 25px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-top: 35px;
+  transition: 0.5s;
+}
