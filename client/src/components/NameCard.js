@@ -4,7 +4,7 @@ import {Paper} from '@material-ui/core';
 
 export default function NameCard({ names, index, direction }) {
 
-console.log(names, index)
+// console.log(names, index)
 
   return (
     <div className='namecard'>

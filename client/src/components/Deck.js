@@ -4,7 +4,7 @@ import NameCard from './NameCard';
 import Header from './Header';
 import Draggable from 'react-draggable';
 import axios from 'axios';
-import { setUser, setPartner, findMatches, setLoading } from '../redux/actions';
+import { setPartner, findMatches, setLoading, getSeenNames, getLikedNames, getPartnerLikedNames } from '../redux/actions';
 import { connect } from 'react-redux';
 const BASE_URL = 'http://localhost:4002';
 
@@ -18,17 +18,37 @@ function Deck(props) {
     console.log(props)
     axios
       .get(`${BASE_URL}/names/${props.gender}`)
-      .then(allnames => {
-        console.log(allnames);
-        return setNames(allnames.data)
-      })
+      .then(allnames => setNames(allnames.data))
       .then(status => {
         return props.setLoading(status = false)
       })
   }
 
-  useEffect(() => getNames(), []);
-  useEffect(() => {if(props.user.data.partnerId) props.setPartner(props.user)}, [])
+  useEffect(() =>
+    getNames()
+    , []);
+
+
+  useEffect(() => {
+    if (props.user.data.partnerId) props.setPartner(props.user)
+  }, []);
+
+  useEffect(() => {
+    props.getSeenNames(props.user.data.id);
+  }, []);
+
+  useEffect(() => {
+    props.getLikedNames(props.user.data.id)
+  }, []);
+
+  useEffect(() => {
+    if (props.user.data.partnerId) props.getPartnerLikedNames(props.user.data.partnerId)
+  }, []);
+
+  useEffect(() => {
+    if (props.user.data.partnerId) props.findMatches()
+  }, []);
+
 
   const swipe = (direction) => {
     if (direction === "right") {
@@ -37,6 +57,8 @@ function Deck(props) {
 
     } else {
       setDirection("left");
+      //TODO set seen
+      
     }
     setTimeout(() => {
       setIndex(index + 1);
@@ -56,10 +78,6 @@ function Deck(props) {
     };
 
 
-
-
-
-
   };
   return (
     <>
@@ -76,7 +94,7 @@ function Deck(props) {
               direction={direction}
               names={names}
               index={index}
-               />
+            />
           </div>
         </Draggable>
         :
@@ -100,10 +118,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setPartner: (partnerData) => dispatch(setPartner(partnerData)),
-  setLoading: (status) => dispatch(setLoading(status))
+  setLoading: (status) => dispatch(setLoading(status)),
+  getSeenNames: (userId) => dispatch(getSeenNames(userId)),
+  getLikedNames: (userId) => dispatch(getLikedNames(userId)),
+  findMatches: () => dispatch(findMatches()),
+  getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId)),
+
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Deck);
+
+//TODO bug: make game redirect to login if there is no user (authorization)

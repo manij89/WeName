@@ -1,6 +1,19 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-lone-blocks */
-import { SET_USER, SET_PARTNER, UPDATE_LIKED_NAMES, UPDATE_SEEN_NAMES, UPDATE_PARTNER_NAMES, FIND_MATCHES, LINK_ACCOUNT, REGISTRATION_SUCCESS, SET_LOADING } from './actiontypes';
+import {
+  SET_USER,
+  SET_PARTNER,
+  UPDATE_LIKED_NAMES,
+  UPDATE_SEEN_NAMES,
+  UPDATE_PARTNER_NAMES,
+  FIND_MATCHES,
+  LINK_ACCOUNT,
+  REGISTRATION_SUCCESS,
+  SET_LOADING,
+  GET_LIKED_NAMES,
+  GET_SEEN_NAMES,
+  GET_PARTNER_NAMES
+} from './actiontypes';
 
 const initialState = {
   isAuthenticated: false,
@@ -52,7 +65,7 @@ function reducer(state = initialState, action) {
 
     case UPDATE_PARTNER_NAMES: {
       const newName = action.payload;
-      const copy = [...state.partnerlikedNames, newName];
+      const copy = [...state.partnerLikedNames, newName];
       return {
         ...state,
         partnerLikedNames: copy
@@ -61,20 +74,47 @@ function reducer(state = initialState, action) {
 
     case UPDATE_SEEN_NAMES: {
       const newName = action.payload;
-      const copy = [...state.likedNames, newName];
+      console.log('new seen name', newName)
+      const copy = [...state.seenNames, newName];
       return {
         ...state,
         seenNames: copy
       }
     };
 
+    case GET_SEEN_NAMES: {
+      const copy = action.payload;
+      return {
+        ...state,
+        seenNames: copy
+      }
+    };
+
+    case GET_LIKED_NAMES: {
+      const copy = action.payload;
+      return {
+        ...state,
+        likedNames: copy
+      }
+    };
+
+    case GET_PARTNER_NAMES: {
+      const copy = action.payload;
+      return {
+        ...state,
+        partnerLikedNames: copy
+      }
+    };
+
     case FIND_MATCHES: {
       const myNames = state.likedNames;
       const partner = state.partnerLikedNames;
-      let matches = myNames.filter((name) => (partner.indexOf(name) !== -1))
+     if(myNames.length && partner.length) {
+         myNames.filter((name) => (partner.indexOf(name) !== -1))
+      }
       return {
         ...state,
-        matches: matches
+        matches: myNames
       }
     };
 
@@ -89,7 +129,7 @@ function reducer(state = initialState, action) {
         user: copyUser1,
         partner: copyPartner
       }
-    
+
     };
 
     default:

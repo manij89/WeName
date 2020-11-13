@@ -14,5 +14,6 @@ router.put('/user/:id/code', userCtrl.createLinkingCode);
 // router.delete('/delete/:id', userCtrl.delete);
 
 router.get('/names/:gender', namesCtrl.getNamesByGender);
+router.get('/names/:id', namesCtrl.getName);
 
 module.exports = router;

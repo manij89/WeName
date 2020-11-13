@@ -15,3 +15,19 @@ exports.getNamesByGender = async (req, res) => {
     res.status(500);
   }
 };
+
+exports.getName = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await db.Name.findOne({
+      where: {
+        id: +id
+      }
+    });
+    res.send(result);
+    res.status(200);
+  } catch (error) {
+    console.error('failed fetching name', error);
+    res.status(500);
+  }
+};
