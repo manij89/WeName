@@ -1,10 +1,10 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
-const { v4: uuidv4 } = require('uuid')
+const { v4: uuidv4 } = require('uuid');
 
 exports.getUser = async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
     const result = await db.User.findOne({
       where: {
         id: id
@@ -19,7 +19,7 @@ exports.getUser = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body
+  const { firstName, lastName, email, password } = req.body;
   try {
     const hash = await bcrypt.hash(password, 10);
     await db.User.create({
@@ -54,18 +54,18 @@ exports.login = async (req, res) => {
 
 exports.createLinkingCode = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const code = uuidv4();
     const result = await db.User.update(
       { linkingCode: code },
-      { returning: true, where: { id: user.id } }
-    )
+      { returning: true, where: { id: id } }
+    );
     res.status(200).send(result);
   } catch (error) {
     res.status(500);
-    console.error('no linking code created', error)
+    console.error('no linking code created', error);
   }
-}
+};
 
 exports.linkPartner = async (req, res) => {
   try {
@@ -74,12 +74,10 @@ exports.linkPartner = async (req, res) => {
     const user1 = await db.User.findOne({
       where: { linkingCode: linkingCode }
     });
-    console.log(user1)
-
     await db.User.update(
       { partnerId: id},
       { returning: true, where: { id: user1.id } 
-    });
+      });
 
     const user2 = await db.User.update(
       {
@@ -87,11 +85,11 @@ exports.linkPartner = async (req, res) => {
         partnerId: user1.id
       },
       {returning: true, where: {id: id}}
-      );
-      res.status(200).send({user1, user2});
+    );
+    res.status(200).send(user1, user2);
   } catch (error) {
     res.status(500);
-    console.error('failed to connect partners', error)
+    console.error('failed to connect partners', error);
   }
 };
 
@@ -103,11 +101,11 @@ exports.getLikedNames = async (req,res) => {
         id: +userId
       }
     });
-    const result = await user.getLiked()
+    const result = await user.getLiked();
     res.status(200).send(result);
   } catch (error) {
     res.status(500);
-    console.error('failed to get liked names', error)
+    console.error('failed to get liked names', error);
   }
 };
 
@@ -119,11 +117,11 @@ exports.getSeenNames = async (req,res) => {
         id: +userId
       }
     });
-    const result = await user.getSeen()
+    const result = await user.getSeen();
     res.status(200).send(result);
   } catch (error) {
     res.status(500);
-    console.error('failed to get seen names', error)
+    console.error('failed to get seen names', error);
   }
 };
 
@@ -135,13 +133,13 @@ exports.updateSeenNames = async (req, res) => {
         id: +userId
       }
     });
-    const result = await user.addSeen(+nameId)
+    const result = await user.addSeen(+nameId);
     res.status(201).send(result);
   } catch (error) {
     console.error('failed updating seen names', error);
     res.status(500);
   }
-}
+};
 
 exports.updateLikedNames = async (req, res) => {
   try {
@@ -151,12 +149,12 @@ exports.updateLikedNames = async (req, res) => {
         id: +userId
       }
     });
-    const result = await user.addLiked(+nameId)
+    const result = await user.addLiked(+nameId);
     res.status(201).send(result);
   } catch (error) {
     console.error('failed updating liked names', error);
     res.status(500);
   }
-}
+};
 
 // exports.delete = (req, res) = {};

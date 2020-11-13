@@ -1,45 +1,47 @@
 
-.registration {
+p {
+  color: red;
+  background-color: transparent;
+}
+
+p::before {
+  display: inline;
+  content: "⚠ ";
+}
+
+button:hover,
+input:hover {
+  background: #fccd04;
+}
+
+button:active,
+input:active,
+input:active {
+  transition: 0.3s all;
+  transform: translateY(3px);
+  border: 1px solid transparent;
+  opacity: 0.8;
+}
+
+input:disabled {
+  opacity: 0.4;
+}
+
+input:hover {
+  transition: 0.3s all;
+}
+
+
+.login {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  p {
-    color: red;
-    background-color: transparent;
-  }
-  
-  p::before {
-    display: inline;
-    content: "⚠ ";
-  }
-  
-  button:hover,
-  input:hover {
-    background: #fccd04;
-  }
-  
-  button:active,
-  input:active,
-  input:active {
-    transition: 0.3s all;
-    transform: translateY(3px);
-    border: 1px solid transparent;
-    opacity: 0.8;
-  }
-  
-  input:disabled {
-    opacity: 0.4;
-  }
-  
-  input:hover {
-    transition: 0.3s all;
-  }
 }
 
-.registration-form {
+.login-form {
   width: 80%;
   height: 80%;
   display: flex;
@@ -55,7 +57,7 @@
   padding: 15px
 }
 
-.registration-button {
+.login-button {
   position: relative;
   color:white;
   border: none;
@@ -68,7 +70,7 @@
   transition: 0.5s;
 }
 
-.registration-input{
+.login-input{
   background: white;
   color: #a64ac9;
   text-transform: uppercase;
@@ -96,9 +98,3 @@ h5 {
   }
 
 }
-
-
-
-
-
-

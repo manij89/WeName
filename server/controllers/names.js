@@ -1,8 +1,8 @@
 const db = require('../models');
 
-exports.getNamesByGender =  async (req, res) => {
+exports.getNamesByGender = async (req, res) => {
   try {
-    const { gender } = req.params
+    const { gender } = req.params;
     const result = await db.Name.findAll({
       where: {
         gender: gender
@@ -14,4 +14,4 @@ exports.getNamesByGender =  async (req, res) => {
     console.error('failed fetching names', error);
     res.status(500);
   }
-}
+};
