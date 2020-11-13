@@ -1,16 +1,17 @@
-import { 
-  SET_LOADING, 
-  SET_USER, 
-  SET_PARTNER, 
-  UPDATE_LIKED_NAMES, 
-  UPDATE_SEEN_NAMES, 
-  UPDATE_PARTNER_NAMES, 
-  FIND_MATCHES, 
-  LINK_ACCOUNT, 
-  REGISTRATION_SUCCESS, 
-  GET_LIKED_NAMES, 
-  GET_SEEN_NAMES, 
-  GET_PARTNER_NAMES } from './actiontypes';
+import {
+  SET_LOADING,
+  SET_USER,
+  SET_PARTNER,
+  UPDATE_LIKED_NAMES,
+  UPDATE_SEEN_NAMES,
+  UPDATE_PARTNER_NAMES,
+  FIND_MATCHES,
+  LINK_ACCOUNT,
+  REGISTRATION_SUCCESS,
+  GET_LIKED_NAMES,
+  GET_SEEN_NAMES,
+  GET_PARTNER_NAMES
+} from './actiontypes';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -112,6 +113,7 @@ export const getSeenNames = (userId) => {
     axios
       .get(`${BASE_URL}/user/${userId}/seen`)
       .then((seen) => {
+        console.log('seen', seen)
         dispatch({
           type: GET_SEEN_NAMES,
           payload: seen
@@ -124,13 +126,26 @@ export const getSeenNames = (userId) => {
   }
 }
 
-export const updateSeenNames = (name) => {
-console.log('updating names')
-return {
-  type: UPDATE_SEEN_NAMES,
-  payload: name
-}
-}
+// TODO weird glitch: runs 1 post behind, does not update the state
+// TODO same as getSeenNames, do i need this?
+// export const updateSeenNames = (userId) => {
+//   console.log('userID' , userId)
+//   return dispatch => {
+//     axios
+//       .get(`${BASE_URL}/user/${userId}/seen`)
+//       .then((seen) => {
+//         console.log('seen', seen)
+//         dispatch({
+//           type: GET_SEEN_NAMES,
+//           payload: seen
+//         })
+//       })
+//       .catch(err => {
+//         toast.error('Something went wrong');
+//         console.error(err);
+//       });
+//   }
+// }
 
 export const getLikedNames = (userId) => {
   return dispatch => {

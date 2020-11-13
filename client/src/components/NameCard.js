@@ -3,9 +3,7 @@ import '../styles/namecard.scss';
 import {Paper} from '@material-ui/core';
 
 export default function NameCard({ names, index, direction }) {
-
-// console.log(names, index)
-
+// console.log(names, index, direction)
   return (
     <div className='namecard'>
       <Paper elevation={7} className='name'>

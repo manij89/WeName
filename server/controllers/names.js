@@ -19,6 +19,7 @@ exports.getNamesByGender = async (req, res) => {
 exports.getName = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const result = await db.Name.findOne({
       where: {
         id: +id
