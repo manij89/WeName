@@ -75,7 +75,8 @@ function reducer(state = initialState, action) {
     case UPDATE_SEEN_NAMES: {
       const newName = action.payload;
       console.log('new seen name', newName)
-      const copy = [...state.seenNames, newName];
+      const copy = Object.assign(state.seenNames);
+      copy.data = [...state.seenNames.data, newName];
       return {
         ...state,
         seenNames: copy

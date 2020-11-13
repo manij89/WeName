@@ -109,7 +109,6 @@ export const loginUser = (userData) => {
 
 export const getSeenNames = (userId) => {
   return dispatch => {
-    console.log('trying to get names')
     axios
       .get(`${BASE_URL}/user/${userId}/seen`)
       .then((seen) => {
@@ -125,8 +124,12 @@ export const getSeenNames = (userId) => {
   }
 }
 
-export const updateSeenNames = (nameId) => {
-  
+export const updateSeenNames = (name) => {
+console.log('updating names')
+return {
+  type: UPDATE_SEEN_NAMES,
+  payload: name
+}
 }
 
 export const getLikedNames = (userId) => {

@@ -4,8 +4,17 @@ import NameCard from './NameCard';
 import Header from './Header';
 import Draggable from 'react-draggable';
 import axios from 'axios';
-import { setPartner, findMatches, setLoading, getSeenNames, getLikedNames, getPartnerLikedNames } from '../redux/actions';
+import {
+  setPartner,
+  findMatches,
+  setLoading,
+  getSeenNames,
+  getLikedNames,
+  getPartnerLikedNames,
+  updateSeenNames
+} from '../redux/actions';
 import { connect } from 'react-redux';
+
 const BASE_URL = 'http://localhost:4002';
 
 function Deck(props) {
@@ -15,7 +24,6 @@ function Deck(props) {
   const [direction, setDirection] = useState(null);
 
   function getNames() {
-    console.log(props)
     axios
       .get(`${BASE_URL}/names/${props.gender}`)
       .then(allnames => setNames(allnames.data))
@@ -54,11 +62,11 @@ function Deck(props) {
     if (direction === "right") {
       setDirection("right");
       //TODO set seen/liked/matched
-
+      console.log('swiped right')
     } else {
       setDirection("left");
-      //TODO set seen
-      
+      console.log('swiped left', names[index]);
+      props.updateSeenNames(names[index]);
     }
     setTimeout(() => {
       setIndex(index + 1);
@@ -69,9 +77,9 @@ function Deck(props) {
 
   const handleDrag = (e, d) => {
     // swiping animations
-    if (d.x > 100) {
+    if (d.x > 50) {
       swipe("right");
-    } else if (d.x < -100) {
+    } else if (d.x < -50) {
       swipe("left");
     } else {
       setDragging(false);
@@ -122,6 +130,7 @@ const mapDispatchToProps = (dispatch) => ({
   getSeenNames: (userId) => dispatch(getSeenNames(userId)),
   getLikedNames: (userId) => dispatch(getLikedNames(userId)),
   findMatches: () => dispatch(findMatches()),
+  updateSeenNames: (name) => dispatch(updateSeenNames(name)),
   getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId)),
 
 })
