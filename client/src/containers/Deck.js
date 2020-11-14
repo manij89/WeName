@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 
 const BASE_URL = 'http://localhost:4002';
 
-function Deck({user, partner, partnerLikedNames, loading, matches, setPartner, setLoading, setMatches, getPartnerLikedNames, getLikedNames, gender }) {
+function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, setLoading, setMatches, getPartnerLikedNames, getLikedNames, gender }) {
   const [names, setNames] = useState([]);
   const [seen, setSeen] = useState([]);
   const [liked, setLiked] = useState([]);
@@ -25,6 +25,15 @@ function Deck({user, partner, partnerLikedNames, loading, matches, setPartner, s
   const [direction, setDirection] = useState(null);
 
   let filteredNames = filterNames();
+
+  function filterNames() {
+    if (names.length && seen.length) {
+      const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
+      return results;
+    } else {
+      return names;
+    }
+  }
 
   function getNames() {
     axios
@@ -66,50 +75,35 @@ function Deck({user, partner, partnerLikedNames, loading, matches, setPartner, s
       .catch(err => console.error(err))
   }
 
-  function setMatch() {
-    console.log('set match')
+  function setMatch(target) {
+    if (liked.length && partnerLikedNames.data.length) {
+      const result = partnerLikedNames.data.filter(({ name: name1 }) => target === name1);
+      setMatches(prev => [...prev, result]);
+      if (result.length) alert('it\'s a match!')
+
+      console.log(matches)
+    }
   }
 
   useEffect(() => {
     getNames();
     seenNames();
     likedNames();
-    if (user.data.partnerId) {
+    if (partner) {
       setPartner(user);
       getPartnerLikedNames(user.data.partnerId);
     };
   }, []);
 
-  function filterNames () {
-    if (names.length && seen.length) {
-      const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-      return results;
-    } else {
-      return names;
-    }
-  }
-
-  // useEffect(() => {
-  //   if (names.length && seen.length) {
-  //     const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-  //     filteredNames = results;
-  //   } else {
-  //     filteredNames = names;
-  //   }
-  // }, [names, seen]);
-
   useEffect(() => {
-    
     if (liked.length && partnerLikedNames.data.length) {
       const result = liked.filter(({ id: id1 }) => partnerLikedNames.data.some(({ id: id2 }) => id2 === id1));
+      console.log(result)
       setMatches(result)
     } else {
       console.log('oh noooooo')
     }
   }, [liked, partnerLikedNames, setMatches])
-
-
-
 
   const swipe = (direction) => {
     if (direction === "right") {
@@ -121,7 +115,7 @@ function Deck({user, partner, partnerLikedNames, loading, matches, setPartner, s
       postLikedNames(user.data.id, filteredNames[index].id)
       setLiked(prev => [...prev, filteredNames[index]]);
 
-      setMatch();
+      setMatch(filteredNames[index].name);
 
     } else {
       setDirection("left");
@@ -145,8 +139,9 @@ function Deck({user, partner, partnerLikedNames, loading, matches, setPartner, s
     } else {
       setDragging(false);
     };
-
   };
+
+
   return (
     <>
       { !loading

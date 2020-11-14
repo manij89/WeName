@@ -6,7 +6,7 @@ import AccountBox from '@material-ui/icons/AccountBox';
 export default function Header(props) {
 
   return (
-    <div className='header'>
+    <div>
       <Navbar fixed='bottom' variant='dark' className='header'>
         <NavLink
           href='/profile'
