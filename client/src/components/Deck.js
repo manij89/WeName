@@ -11,7 +11,7 @@ import {
   getSeenNames,
   getLikedNames,
   getPartnerLikedNames,
-  // updateSeenNames
+  updateSeenNames
 } from '../redux/actions';
 import { connect } from 'react-redux';
 
@@ -19,39 +19,32 @@ const BASE_URL = 'http://localhost:4002';
 
 function Deck(props) {
   const [names, setNames] = useState([]);
-  const [filteredNames, setFilteredNames] = useState([]);
   const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [direction, setDirection] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   function getNames() {
-    setLoading(true)
     axios
       .get(`${BASE_URL}/names/${props.gender}`)
-      .then(allnames => {
-        // console.log(allnames.data)
-        setNames(allnames.data)
-        setLoading(false)
+      .then(allnames => setNames(allnames.data))
+      .then(status => {
+        return props.setLoading(status = false)
       })
-
-  };
+  }
 
   function postSeenNames(userId, nameId) {
     axios
       .post(`${BASE_URL}/user/${userId}/seen/${nameId}`)
-      .then((userId) => {
-        console.log('trying to get seen names')
-        return (props.getSeenNames(userId))
-      }
-      )
+      .then((result) => console.log(result))
   }
 
-  useEffect(() => {
-  
-    setTimeout(() => getNames(), 300)
-    // console.log('names', names)
+  useEffect(() =>
+    getNames()
+    , []);
 
+
+  useEffect(() => {
+    if (props.user.data.partnerId) props.setPartner(props.user)
   }, []);
 
   useEffect(() => {
@@ -59,92 +52,72 @@ function Deck(props) {
   }, []);
 
   useEffect(() => {
-    const seen = props.seenNames.data || [];
-    const copy = [...names];
-    console.log('seen', seen)
-    // TODO breaks with new user
-    if(seen.length) {
-      const results = copy.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-      console.log(results, "results")
-      setFilteredNames(prev => prev = results)
+    props.getLikedNames(props.user.data.id)
+  }, []);
+
+  useEffect(() => {
+    if (props.user.data.partnerId) props.getPartnerLikedNames(props.user.data.partnerId)
+  }, []);
+
+  useEffect(() => {
+    if (props.user.data.partnerId) props.findMatches()
+  }, []);
+
+  const swipe = (direction) => {
+    if (direction === "right") {
+      setDirection("right");
+      //TODO set seen/liked/matched
+      console.log('swiped right')
     } else {
-      setFilteredNames(names);
+      setDirection("left");
+      console.log('swiped left', names[index], names[index].id);
+      postSeenNames(props.user.data.id, names[index].id);
+      props.updateSeenNames(names[index]);
     }
-    props.setLoading(false);
-  }, [names])
-
-useEffect(() => {
-  if (props.user.data.partnerId) props.setPartner(props.user)
-}, []);
-
-
-useEffect(() => {
-  props.getLikedNames(props.user.data.id)
-}, []);
-
-useEffect(() => {
-  if (props.user.data.partnerId) props.getPartnerLikedNames(props.user.data.partnerId)
-}, []);
-
-useEffect(() => {
-  if (props.user.data.partnerId) props.findMatches()
-}, []);
-
-
-const swipe = (direction) => {
-  if (direction === "right") {
-    setDirection("right");
-    //TODO set seen/liked/matched
-    console.log('swiped right')
-  } else {
-    setDirection("left");
-    console.log('swiped left')
-    postSeenNames(props.user.data.id, names[index].id);
-  }
-  setTimeout(() => {
-    setIndex(index + 1);
-    setDirection(null);
-    setDragging(false);
-  }, 400);
-};
-
-const handleDrag = (e, d) => {
-  // swiping animations
-  if (d.x > 50) {
-    swipe("right");
-  } else if (d.x < -50) {
-    swipe("left");
-  } else {
-    setDragging(false);
+    setTimeout(() => {
+      setIndex(index + 1);
+      setDirection(null);
+      setDragging(false);
+    }, 400);
   };
 
+  const handleDrag = (e, d) => {
+    // swiping animations
+    if (d.x > 50) {
+      swipe("right");
+    } else if (d.x < -50) {
+      swipe("left");
+    } else {
+      setDragging(false);
+    };
 
-};
-return (
-  <>
-    { !loading
-      ?
-      <Draggable
-        onStart={() => { setDragging(true); }}
-        onStop={handleDrag}
-        key={index}
-        position={dragging ? null : { x: 0, y: 0 }}
-      >
-        <div>
-          <NameCard
-            direction={direction}
-            names={filteredNames}
-            index={index}
-          />
-        </div>
-      </Draggable>
-      :
-      //TODO add spinner
-      'LOADING...'
-    }
-    <Header />
-  </>
-)
+
+  };
+  return (
+    <>
+      { !props.loading
+        ?
+        <Draggable
+          onStart={() => { setDragging(true); }}
+          onStop={handleDrag}
+          key={index}
+          position={dragging ? null : { x: 0, y: 0 }}
+        >
+          <div>
+            <NameCard
+              direction={direction}
+              names={names}
+              index={index}
+            />
+          </div>
+        </Draggable>
+        :
+        //TODO add spinner
+        'LOADING...'
+      }
+      <Header />
+    </>
+  )
 }
 
 const mapStateToProps = (state) => ({
@@ -163,7 +136,7 @@ const mapDispatchToProps = (dispatch) => ({
   getSeenNames: (userId) => dispatch(getSeenNames(userId)),
   getLikedNames: (userId) => dispatch(getLikedNames(userId)),
   findMatches: () => dispatch(findMatches()),
-  // updateSeenNames: (name) => dispatch(updateSeenNames(name)),
+  updateSeenNames: (name) => dispatch(updateSeenNames(name)),
   getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId)),
 
 })
