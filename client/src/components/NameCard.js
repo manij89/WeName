@@ -17,7 +17,7 @@ export default function NameCard({ names, index, direction }) {
         ?
         names[index].name
           :
-          'LOADING'
+          'LOADING card'
       }
 
         </div>

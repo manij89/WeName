@@ -67,13 +67,14 @@ function Register(props) {
         <input
           className='registration-input'
           name='firstName'
-          ref={register({ required: true })} />
+          required />
         <ErrorMessage error={errors.firstName} />
 
         <label>Last Name:</label>
         <input
           className='registration-input'
-          name="lastName" 
+          name="lastName"
+          required  
           ref={register({ required: true, minLength: 2 })} />
         <ErrorMessage error={errors.firstName} />
 
@@ -82,6 +83,7 @@ function Register(props) {
           className='registration-input'
           name="email"
           type="email"
+          required 
           ref={register({ required: true, pattern: /^\S+@\S+$/i })}
         />
         <ErrorMessage error={errors.email || errors.validate} />
@@ -90,6 +92,7 @@ function Register(props) {
         <input className='registration-input'
           name="password"
           type="password"
+          required 
           ref={register({ required: true, minLength: 8 })}
         />
         <ErrorMessage error={errors.email} />

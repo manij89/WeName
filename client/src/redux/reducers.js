@@ -4,14 +4,12 @@ import {
   SET_USER,
   SET_PARTNER,
   UPDATE_LIKED_NAMES,
-  UPDATE_SEEN_NAMES,
   UPDATE_PARTNER_NAMES,
   FIND_MATCHES,
   LINK_ACCOUNT,
   REGISTRATION_SUCCESS,
   SET_LOADING,
   GET_LIKED_NAMES,
-  GET_SEEN_NAMES,
   GET_PARTNER_NAMES
 } from './actiontypes';
 
@@ -21,7 +19,6 @@ const initialState = {
   loading: true,
   user: {},
   partner: {},
-  seenNames: [],
   likedNames: [],
   partnerLikedNames: [],
   matches: []
@@ -69,25 +66,6 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         partnerLikedNames: copy
-      }
-    };
-
-    case UPDATE_SEEN_NAMES: {
-      const newName = action.payload;
-      console.log('new seen name', newName)
-      const copy = Object.assign(state.seenNames);
-      copy.data = [...state.seenNames.data, newName];
-      return {
-        ...state,
-        seenNames: copy
-      }
-    };
-
-    case GET_SEEN_NAMES: {
-      const copy = action.payload;
-      return {
-        ...state,
-        seenNames: copy
       }
     };
 

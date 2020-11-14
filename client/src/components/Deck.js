@@ -8,10 +8,8 @@ import {
   setPartner,
   findMatches,
   setLoading,
-  getSeenNames,
   getLikedNames,
   getPartnerLikedNames,
-  updateSeenNames
 } from '../redux/actions';
 import { connect } from 'react-redux';
 
@@ -19,45 +17,66 @@ const BASE_URL = 'http://localhost:4002';
 
 function Deck(props) {
   const [names, setNames] = useState([]);
+  const [filteredNames, setFilteredNames] = useState([])
+  const [seen, setSeen] = useState([]);
+  const [liked, setLiked] = useState([]);
+
   const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [direction, setDirection] = useState(null);
 
+  // all names ('return' returns a promise, so getNames() and seenNames() are chainable)
   function getNames() {
-    axios
+    return axios
       .get(`${BASE_URL}/names/${props.gender}`)
       .then(allnames => setNames(allnames.data))
-      .then(status => {
-        return props.setLoading(status = false)
-      })
+      .then(props.setLoading(false))
+      .catch(err => console.error(err))
+  }
+
+  // already seen names
+  function seenNames() {
+    return axios
+      .get(`${BASE_URL}/user/${props.user.data.id}/seen`)
+      .then(res => setSeen(res.data))
+      .catch(err => console.error(err))
   }
 
   function postSeenNames(userId, nameId) {
     axios
       .post(`${BASE_URL}/user/${userId}/seen/${nameId}`)
-      .then((result) => console.log(result))
+      .then(res => res.status <= 400 ? res : Promise.reject(res))
+      .catch(err => console.error(err))
   }
 
-  useEffect(() =>
-    getNames()
-    , []);
-
+  function postLikedNames(userId, nameId) {
+    axios
+      .post(`${BASE_URL}/user/${userId}/liked/${nameId}`)
+      .then(res => res.status <= 400 ? res : Promise.reject(res))
+      .catch(err => console.error(err)) 
+  }
 
   useEffect(() => {
-    if (props.user.data.partnerId) props.setPartner(props.user)
+    getNames();
+    seenNames();
+    props.getLikedNames(props.user.data.id);
+    if (props.user.data.partnerId) {
+      props.setPartner(props.user);
+      props.getPartnerLikedNames(props.user.data.partnerId)
+    };
   }, []);
 
   useEffect(() => {
-    props.getSeenNames(props.user.data.id);
-  }, []);
-
-  useEffect(() => {
-    props.getLikedNames(props.user.data.id)
-  }, []);
-
-  useEffect(() => {
-    if (props.user.data.partnerId) props.getPartnerLikedNames(props.user.data.partnerId)
-  }, []);
+    console.log('seen', seen)
+    if (names.length && seen.length) {
+      console.log(names, seen)
+      const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
+      console.log(results)
+      setFilteredNames(results);
+    } else {
+      setFilteredNames(names)
+    }
+  }, [names, seen]);
 
   useEffect(() => {
     if (props.user.data.partnerId) props.findMatches()
@@ -66,13 +85,18 @@ function Deck(props) {
   const swipe = (direction) => {
     if (direction === "right") {
       setDirection("right");
-      //TODO set seen/liked/matched
+      //TODO set liked/matched
+      postSeenNames(props.user.data.id, filteredNames[index].id);
+      setSeen([...seen,filteredNames[index]]);
+
+      postLikedNames(props.user.data.id, filteredNames[index].id)
+      setLiked([...liked,filteredNames[index]]);
+
       console.log('swiped right')
     } else {
       setDirection("left");
-      console.log('swiped left', names[index], names[index].id);
-      postSeenNames(props.user.data.id, names[index].id);
-      props.updateSeenNames(names[index]);
+      postSeenNames(props.user.data.id, filteredNames[index].id);
+      setSeen([...seen,filteredNames[index]]);
     }
     setTimeout(() => {
       setIndex(index + 1);
@@ -91,7 +115,6 @@ function Deck(props) {
       setDragging(false);
     };
 
-
   };
   return (
     <>
@@ -106,7 +129,7 @@ function Deck(props) {
           <div>
             <NameCard
               direction={direction}
-              names={names}
+              names={filteredNames}
               index={index}
             />
           </div>
@@ -124,7 +147,6 @@ const mapStateToProps = (state) => ({
   loading: state.loading,
   user: state.user,
   partner: state.partner,
-  seenNames: state.seenNames,
   likedNames: state.likedNames,
   partnerLikedNames: state.partnerLikedNames,
   matches: state.mapDispatchToProps
@@ -133,10 +155,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setPartner: (partnerData) => dispatch(setPartner(partnerData)),
   setLoading: (status) => dispatch(setLoading(status)),
-  getSeenNames: (userId) => dispatch(getSeenNames(userId)),
   getLikedNames: (userId) => dispatch(getLikedNames(userId)),
   findMatches: () => dispatch(findMatches()),
-  updateSeenNames: (name) => dispatch(updateSeenNames(name)),
   getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId)),
 
 })

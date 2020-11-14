@@ -3,13 +3,11 @@ import {
   SET_USER, 
   SET_PARTNER, 
   UPDATE_LIKED_NAMES, 
-  UPDATE_SEEN_NAMES, 
   UPDATE_PARTNER_NAMES, 
   FIND_MATCHES, 
   LINK_ACCOUNT, 
   REGISTRATION_SUCCESS, 
   GET_LIKED_NAMES, 
-  GET_SEEN_NAMES, 
   GET_PARTNER_NAMES } from './actiontypes';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
@@ -48,11 +46,6 @@ export const setPartner = user => {
   }
 };
 
-export const findMatches = () => {
-  return {
-    type: FIND_MATCHES
-  };
-};
 
 // TODO why toast notification not working?
 export const registerUser = (userData) => {
@@ -107,30 +100,6 @@ export const loginUser = (userData) => {
   };
 }
 
-export const getSeenNames = (userId) => {
-  return dispatch => {
-    axios
-      .get(`${BASE_URL}/user/${userId}/seen`)
-      .then((seen) => {
-        dispatch({
-          type: GET_SEEN_NAMES,
-          payload: seen
-        })
-      })
-      .catch(err => {
-        toast.error('Something went wrong');
-        console.error(err);
-      });
-  }
-}
-
-export const updateSeenNames = (name) => {
-console.log('updating names')
-return {
-  type: UPDATE_SEEN_NAMES,
-  payload: name
-}
-}
 
 export const getLikedNames = (userId) => {
   return dispatch => {
@@ -165,6 +134,12 @@ export const getPartnerLikedNames = (partnerId) => {
       });
   }
 }
+
+export const findMatches = () => {
+  return {
+    type: FIND_MATCHES
+  };
+};
 
 
 
