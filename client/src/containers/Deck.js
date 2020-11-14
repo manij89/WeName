@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/namecard.scss'
-import NameCard from './NameCard';
-import Header from './Header';
+import NameCard from '../components/NameCard';
+import Header from '../components/Header';
 import Draggable from 'react-draggable';
 import axios from 'axios';
 import {
@@ -15,9 +15,8 @@ import { connect } from 'react-redux';
 
 const BASE_URL = 'http://localhost:4002';
 
-function Deck(props) {
+function Deck({user, partner, partnerLikedNames, loading, matches, setPartner, setLoading, setMatches, getPartnerLikedNames, getLikedNames, gender }) {
   const [names, setNames] = useState([]);
-  const [filteredNames, setFilteredNames] = useState([])
   const [seen, setSeen] = useState([]);
   const [liked, setLiked] = useState([]);
 
@@ -25,19 +24,19 @@ function Deck(props) {
   const [dragging, setDragging] = useState(false);
   const [direction, setDirection] = useState(null);
 
-  // all names ('return' returns a promise, so getNames() and seenNames() are chainable)
+  let filteredNames = filterNames();
+
   function getNames() {
-    return axios
-      .get(`${BASE_URL}/names/${props.gender}`)
+    axios
+      .get(`${BASE_URL}/names/${gender}`)
       .then(allnames => setNames(allnames.data))
-      .then(props.setLoading(false))
+      .then(setLoading(false))
       .catch(err => console.error(err))
   }
 
-  // already seen names
   function seenNames() {
-    return axios
-      .get(`${BASE_URL}/user/${props.user.data.id}/seen`)
+    axios
+      .get(`${BASE_URL}/user/${user.data.id}/seen`)
       .then(res => setSeen(res.data))
       .catch(err => console.error(err))
   }
@@ -49,53 +48,85 @@ function Deck(props) {
       .catch(err => console.error(err))
   }
 
+  function likedNames() {
+    axios
+      .get(`${BASE_URL}/user/${user.data.id}/liked`)
+      .then(res => {
+        if (res.data && Array.isArray(res.data)) {
+          setLiked(res.data)
+        }
+      })
+      .catch(err => console.error(err));
+  }
+
   function postLikedNames(userId, nameId) {
     axios
       .post(`${BASE_URL}/user/${userId}/liked/${nameId}`)
       .then(res => res.status <= 400 ? res : Promise.reject(res))
-      .catch(err => console.error(err)) 
+      .catch(err => console.error(err))
+  }
+
+  function setMatch() {
+    console.log('set match')
   }
 
   useEffect(() => {
     getNames();
     seenNames();
-    props.getLikedNames(props.user.data.id);
-    if (props.user.data.partnerId) {
-      props.setPartner(props.user);
-      props.getPartnerLikedNames(props.user.data.partnerId);
-      props.findMatches()
+    likedNames();
+    if (user.data.partnerId) {
+      setPartner(user);
+      getPartnerLikedNames(user.data.partnerId);
     };
   }, []);
 
-  useEffect(() => {
+  function filterNames () {
     if (names.length && seen.length) {
       const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-      setFilteredNames(results);
+      return results;
     } else {
-      setFilteredNames(names)
+      return names;
     }
-  }, [names, seen]);
+  }
+
+  // useEffect(() => {
+  //   if (names.length && seen.length) {
+  //     const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
+  //     filteredNames = results;
+  //   } else {
+  //     filteredNames = names;
+  //   }
+  // }, [names, seen]);
 
   useEffect(() => {
-    if (props.user.data.partnerId) props.findMatches()
-  }, []);
+    
+    if (liked.length && partnerLikedNames.data.length) {
+      const result = liked.filter(({ id: id1 }) => partnerLikedNames.data.some(({ id: id2 }) => id2 === id1));
+      setMatches(result)
+    } else {
+      console.log('oh noooooo')
+    }
+  }, [liked, partnerLikedNames, setMatches])
+
+
+
 
   const swipe = (direction) => {
     if (direction === "right") {
       setDirection("right");
-      //TODO set liked/matched
-      postSeenNames(props.user.data.id, filteredNames[index].id);
-      setSeen(prev => [...prev,filteredNames[index]]);
+      //TODO matched
+      postSeenNames(user.data.id, filteredNames[index].id);
+      setSeen(prev => [...prev, filteredNames[index]]);
 
-      postLikedNames(props.user.data.id, filteredNames[index].id)
+      postLikedNames(user.data.id, filteredNames[index].id)
       setLiked(prev => [...prev, filteredNames[index]]);
-    
 
+      setMatch();
 
     } else {
       setDirection("left");
-      postSeenNames(props.user.data.id, filteredNames[index].id);
-      setSeen(prev => [...prev,filteredNames[index]]);
+      postSeenNames(user.data.id, filteredNames[index].id);
+      setSeen(prev => [...prev, filteredNames[index]]);
     }
 
     setTimeout(() => {
@@ -118,7 +149,7 @@ function Deck(props) {
   };
   return (
     <>
-      { !props.loading
+      { !loading
         ?
         <Draggable
           onStart={() => { setDragging(true); }}
@@ -136,7 +167,7 @@ function Deck(props) {
         </Draggable>
         :
         //TODO add spinner
-        'LOADING...'
+        'LOADING.....'
       }
       <Header />
     </>
@@ -147,16 +178,15 @@ const mapStateToProps = (state) => ({
   loading: state.loading,
   user: state.user,
   partner: state.partner,
-  likedNames: state.likedNames,
   partnerLikedNames: state.partnerLikedNames,
-  matches: state.mapDispatchToProps
+  matches: state.matches
 })
 
 const mapDispatchToProps = (dispatch) => ({
   setPartner: (partnerData) => dispatch(setPartner(partnerData)),
   setLoading: (status) => dispatch(setLoading(status)),
   getLikedNames: (userId) => dispatch(getLikedNames(userId)),
-  setMatches: (nameId) => dispatch(setMatches(nameId)),
+  setMatches: (matches) => dispatch(setMatches(matches)),
   getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId)),
 
 })

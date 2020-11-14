@@ -4,7 +4,7 @@ import {
   SET_PARTNER, 
   UPDATE_LIKED_NAMES, 
   UPDATE_PARTNER_NAMES, 
-  FIND_MATCHES, 
+  SET_MATCHES, 
   LINK_ACCOUNT, 
   REGISTRATION_SUCCESS, 
   GET_LIKED_NAMES, 
@@ -119,8 +119,8 @@ export const getLikedNames = (userId) => {
 }
 
 export const getPartnerLikedNames = (partnerId) => {
-  return dispatch => {
-    axios
+  return dispatch => {  
+     axios
       .get(`${BASE_URL}/user/${partnerId}/liked`)
       .then((liked) => {
         dispatch({
@@ -130,15 +130,15 @@ export const getPartnerLikedNames = (partnerId) => {
       })
       .catch(err => {
         toast.error('Something went wrong');
-        console.error(err);
+        console.error(err, 'e');
       });
   }
 }
 
-export const setMatches = (match) => {
+export const setMatches = (matches) => {
   return {
-    type: FIND_MATCHES,
-    payload: match
+    type: SET_MATCHES,
+    payload: matches
   };
 };
 

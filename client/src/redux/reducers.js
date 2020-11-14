@@ -5,7 +5,7 @@ import {
   SET_PARTNER,
   UPDATE_LIKED_NAMES,
   UPDATE_PARTNER_NAMES,
-  FIND_MATCHES,
+  SET_MATCHES,
   LINK_ACCOUNT,
   REGISTRATION_SUCCESS,
   SET_LOADING,
@@ -17,10 +17,9 @@ const initialState = {
   isAuthenticated: false,
   registration_success: false,
   loading: true,
-  user: {},
-  partner: {},
-  likedNames: [],
-  partnerLikedNames: [],
+  user: {data: []},
+  partner: {data: []},
+  partnerLikedNames: {data: []},
   matches: []
 }
 
@@ -51,14 +50,14 @@ function reducer(state = initialState, action) {
         partner: action.payload,
       };
 
-    case UPDATE_LIKED_NAMES: {
-      const newName = action.payload;
-      const copy = [...state.likedNames, newName];
-      return {
-        ...state,
-        likedNames: copy
-      }
-    };
+    // case UPDATE_LIKED_NAMES: {
+    //   const newName = action.payload;
+    //   const copy = [...state.likedNames, newName];
+    //   return {
+    //     ...state,
+    //     likedNames: copy
+    //   }
+    // };
 
     case UPDATE_PARTNER_NAMES: {
       const newName = action.payload;
@@ -85,15 +84,11 @@ function reducer(state = initialState, action) {
       }
     };
 
-    case FIND_MATCHES: {
-      const myNames = state.likedNames;
-      const partner = state.partnerLikedNames;
-     if(myNames.length && partner.length) {
-         myNames.filter((name) => (partner.indexOf(name) !== -1))
-      }
+    case SET_MATCHES: {
+      const copy = action.payload
       return {
         ...state,
-        matches: myNames
+        matches: copy
       }
     };
 

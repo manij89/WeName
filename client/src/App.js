@@ -8,7 +8,7 @@ import Login from './containers/Login';
 import Game from './containers/Game';
 import Profile from './containers/Profile';
 import Matches from './components/Matches';
-import Deck from './components/Deck';
+import Deck from './containers/Deck';
 
 
 
