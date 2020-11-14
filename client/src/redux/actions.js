@@ -14,6 +14,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const BASE_URL = 'http://localhost:4002';
+const apiServiceJWT = {};
 
 export const setLoading = (status) => {
   return {

@@ -13,6 +13,8 @@ import {
   GET_PARTNER_NAMES
 } from './actiontypes';
 
+import auth from './auth';
+
 const initialState = {
   isAuthenticated: false,
   registration_success: false,

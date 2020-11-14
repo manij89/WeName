@@ -1,5 +1,7 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const {secret_key} = require('../config');
 const { v4: uuidv4 } = require('uuid');
 
 exports.getUser = async (req, res) => {
@@ -7,7 +9,7 @@ exports.getUser = async (req, res) => {
     const { id } = req.params;
     const result = await db.User.findOne({
       where: {
-        id: id
+        id: +id
       }
     });
     res.send(result);
@@ -20,9 +22,19 @@ exports.getUser = async (req, res) => {
 
 exports.register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
+  const user = await db.User.findOne({
+    where: {
+      email: email
+    }
+  });
+  if (user)
+    return res
+      .status(409)
+      .send({ error: '409', message: 'User already exists' });
   try {
+    if (password === '') throw new Error();
     const hash = await bcrypt.hash(password, 10);
-    await db.User.create({
+    const newUser = await db.User.create({
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -30,8 +42,9 @@ exports.register = async (req, res) => {
       liked: [],
       matched: []
     });
-    res.send(req.body);
-    res.status(201);
+    const { id } = newUser.id;
+    const accessToken = jwt.sign({ id }, secret_key);
+    res.status(201).send({ accessToken });
   } catch (error) {
     console.error('failed creating user', error);
     res.status(500);
@@ -44,7 +57,8 @@ exports.login = async (req, res) => {
     const user = await db.User.findOne({ where: { email: email } });
     const validatedPass = await bcrypt.compare(password, user.password);
     if (!validatedPass) throw new Error();
-    res.status(200).send(user);
+    const accessToken = jwt.sign({ id: user.id }, secret_key);
+    res.status(200).send({ accessToken });
   } catch (error) {
     res
       .status(401)
