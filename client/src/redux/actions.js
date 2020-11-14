@@ -135,9 +135,10 @@ export const getPartnerLikedNames = (partnerId) => {
   }
 }
 
-export const findMatches = () => {
+export const setMatches = (match) => {
   return {
-    type: FIND_MATCHES
+    type: FIND_MATCHES,
+    payload: match
   };
 };
 

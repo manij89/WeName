@@ -6,7 +6,7 @@ import Draggable from 'react-draggable';
 import axios from 'axios';
 import {
   setPartner,
-  findMatches,
+  setMatches,
   setLoading,
   getLikedNames,
   getPartnerLikedNames,
@@ -62,16 +62,14 @@ function Deck(props) {
     props.getLikedNames(props.user.data.id);
     if (props.user.data.partnerId) {
       props.setPartner(props.user);
-      props.getPartnerLikedNames(props.user.data.partnerId)
+      props.getPartnerLikedNames(props.user.data.partnerId);
+      props.findMatches()
     };
   }, []);
 
   useEffect(() => {
-    console.log('seen', seen)
     if (names.length && seen.length) {
-      console.log(names, seen)
       const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-      console.log(results)
       setFilteredNames(results);
     } else {
       setFilteredNames(names)
@@ -87,17 +85,19 @@ function Deck(props) {
       setDirection("right");
       //TODO set liked/matched
       postSeenNames(props.user.data.id, filteredNames[index].id);
-      setSeen([...seen,filteredNames[index]]);
+      setSeen(prev => [...prev,filteredNames[index]]);
 
       postLikedNames(props.user.data.id, filteredNames[index].id)
-      setLiked([...liked,filteredNames[index]]);
+      setLiked(prev => [...prev, filteredNames[index]]);
+    
 
-      console.log('swiped right')
+
     } else {
       setDirection("left");
       postSeenNames(props.user.data.id, filteredNames[index].id);
-      setSeen([...seen,filteredNames[index]]);
+      setSeen(prev => [...prev,filteredNames[index]]);
     }
+
     setTimeout(() => {
       setIndex(index + 1);
       setDirection(null);
@@ -156,7 +156,7 @@ const mapDispatchToProps = (dispatch) => ({
   setPartner: (partnerData) => dispatch(setPartner(partnerData)),
   setLoading: (status) => dispatch(setLoading(status)),
   getLikedNames: (userId) => dispatch(getLikedNames(userId)),
-  findMatches: () => dispatch(findMatches()),
+  setMatches: (nameId) => dispatch(setMatches(nameId)),
   getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId)),
 
 })
