@@ -41,11 +41,11 @@ export const linkPartner = partner => {
 export const getUser = user => {
     return dispatch => {
       axios
-        .get(`${BASE_URL}/user/${user.data.id}`)
+        .get(`${BASE_URL}/user/${user.id}`)
         .then((user) => {
           dispatch({
             type: SET_USER,
-            payload: user
+            payload: user.data
           });
         })
         .catch(err => {
@@ -58,11 +58,11 @@ export const getUser = user => {
 export const setPartner = user => {
   return dispatch => {
     axios
-      .get(`${BASE_URL}/user/${user.data.partnerId}`)
+      .get(`${BASE_URL}/user/${user.partnerId}`)
       .then((partner) => {
         dispatch({
           type: SET_PARTNER,
-          payload: partner
+          payload: partner.data
         });
       })
       .catch(err => {
@@ -134,7 +134,7 @@ export const getLikedNames = (userId) => {
       .then((liked) => {
         dispatch({
           type: GET_LIKED_NAMES,
-          payload: liked
+          payload: liked.data
         })
       })
       .catch(err => {
@@ -151,7 +151,7 @@ export const getPartnerLikedNames = (partnerId) => {
       .then((liked) => {
         dispatch({
           type: GET_PARTNER_NAMES,
-          payload: liked
+          payload: liked.data
         })
       })
       .catch(err => {

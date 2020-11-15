@@ -9,7 +9,7 @@ import * as actions from '../redux/actions';
 import '../styles/profile.scss';
 
 
-function Profile({ user, partner, matches, loading, setLoading, setPartner}) {
+function Profile({ user, partner, loading, setLoading, setPartner, getUser}) {
 
   const history = useHistory();
 
@@ -17,7 +17,8 @@ function Profile({ user, partner, matches, loading, setLoading, setPartner}) {
     setLoading(true);
     if (!user.email) {
       history.push('/login');
-    } else if  (user.partnerId) {
+    } else if (user.partnerId) {
+      getUser(user.id)
       setPartner(user);
     }
     setLoading(false);
@@ -30,7 +31,7 @@ function Profile({ user, partner, matches, loading, setLoading, setPartner}) {
       <>
       <Header />
 
-        {!partner.id && user ? <UnlinkedProfile /> : <p>You are linked up with {partner.firstName}</p>
+        {!partner.id ? <UnlinkedProfile /> : <p>You are linked up with {partner.firstName}</p>
         }
       </>
       :

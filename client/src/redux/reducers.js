@@ -19,7 +19,7 @@ const initialState = {
   loading: true,
   user: {},
   partner: {},
-  partnerLikedNames: {data: []},
+  partnerLikedNames: [],
   matches: []
 }
 
