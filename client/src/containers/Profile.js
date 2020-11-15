@@ -1,42 +1,42 @@
 import React, { useEffect } from 'react';
 import Header from '../components/Header';
 import { connect } from 'react-redux';
-import axios from 'axios';
-const BASE_URL = 'http://localhost:4002';
 
-function Profile({ user, partner, matches }) {
+import { useHistory } from "react-router-dom";
+import UnlinkedProfile from '../components/UnlinkedProfile';
+
+import * as actions from '../redux/actions';
+import '../styles/profile.scss';
 
 
+function Profile({ user, partner, matches, loading, setLoading, setPartner}) {
 
-  function getCode() {
-    if(!user.data.linkingCode) {
-      axios
-      .post(`${BASE_URL}/user/${user.data.id}/code`)
-      .then(res => res.status <= 400 ? res : Promise.reject(res))
-      .then((res) => console.log(res))
-      .catch(err => console.error(err))
+  const history = useHistory();
+
+  useEffect(() => {
+    setLoading(true);
+    if (!user.email) {
+      history.push('/login');
+    } else if  (user.partnerId) {
+      setPartner(user);
     }
-
-  }
-
-  getCode()
+    setLoading(false);
+  }, [])
 
   return (
-    <>
+    <>{
+      !loading
+      ?
+      <>
       <Header />
-      <h1 className='logo'>WENAME</h1>
-      <div className='profile-content'>
-        <p>
-          Can't wait to find the perfect name with your partner?
-          Invite them now!
-        </p>
 
-        <p>
-          Already have a code?
-          Link up now!
-        </p>
-
-      </div>
+        {!partner.id && user ? <UnlinkedProfile /> : <p>You are linked up with {partner.firstName}</p>
+        }
+      </>
+      :
+      // TODO ad spinner
+      'LOADING'
+    }
     </>
   )
 }
@@ -49,7 +49,9 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  // setLoading: (status) => dispatch(setLoading(status)),
+  setLoading: (status) => dispatch(actions.setLoading(status)),
+  getUser: (userData) => dispatch(actions.getUser(userData)),
+  setPartner: (userData) => dispatch(actions.setPartner(userData))
   // setMatches: (matches) => dispatch(setMatches(matches)),
 })
 

@@ -13,14 +13,12 @@ import {
   GET_PARTNER_NAMES
 } from './actiontypes';
 
-import auth from './auth';
-
 const initialState = {
   isAuthenticated: false,
   registration_success: false,
   loading: true,
-  user: {data: []},
-  partner: {data: []},
+  user: {},
+  partner: {},
   partnerLikedNames: {data: []},
   matches: []
 }
@@ -51,15 +49,6 @@ function reducer(state = initialState, action) {
         ...state,
         partner: action.payload,
       };
-
-    // case UPDATE_LIKED_NAMES: {
-    //   const newName = action.payload;
-    //   const copy = [...state.likedNames, newName];
-    //   return {
-    //     ...state,
-    //     likedNames: copy
-    //   }
-    // };
 
     case UPDATE_PARTNER_NAMES: {
       const newName = action.payload;

@@ -76,12 +76,14 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
   }
 
   function setMatch(target) {
+    console.log('target', target)
     if (liked.length && partnerLikedNames.data.length) {
       const result = partnerLikedNames.data.filter(({ name: name1 }) => target === name1);
       setMatches(prev => [...prev, result]);
-      if (result.length) alert('it\'s a match!')
+      if (result.length) alert('it\'s a match!:', target)
 
-      console.log(matches)
+      console.log('liked', liked)
+      console.log('match', matches)
     }
   }
 
@@ -97,7 +99,7 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
 
   useEffect(() => {
     if (liked.length && partnerLikedNames.data.length) {
-      const result = liked.filter(({ id: id1 }) => partnerLikedNames.data.some(({ id: id2 }) => id2 === id1));
+      const result = liked.filter(({ id: id1 }) => partnerLikedNames.data.includes(({ id: id2 }) => id2 === id1));
       console.log(result)
       setMatches(result)
     } else {
@@ -108,7 +110,7 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
   const swipe = (direction) => {
     if (direction === "right") {
       setDirection("right");
-      //TODO matched
+
       postSeenNames(user.data.id, filteredNames[index].id);
       setSeen(prev => [...prev, filteredNames[index]]);
 

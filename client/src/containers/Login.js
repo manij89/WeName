@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import ErrorMessage from '../components/ErrorMessage';
 import '../styles/login.scss';
-import { Redirect, Link } from 'react-router-dom';
-import { loginUser } from '../redux/actions';
+import { Link } from 'react-router-dom';
+import { loginUser, setPartner } from '../redux/actions';
 import { connect } from 'react-redux';
 
 function Login (props) {
@@ -42,21 +42,6 @@ function Login (props) {
     props.history.push('/game');
   };
 
-  // TODO add hardcoded validation
-  //   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-  //   const validateEmail = async value => {
-  //   await sleep(1000);
-  //   if (value !== "jort@hello.com" || "elke@hello.com") {
-  //       setError("email", "validate");
-  //     } else {
-  //       clearError("email");
-  //     }
-  // };
-
-
-  // if (props.isAuthenticated) {
-  //   <Redirect to='/game' />
-  // };
 
   return (
 
@@ -100,6 +85,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loginUser: (userData) => dispatch(loginUser(userData)),
+  setPartner: (userData) => dispatch(setPartner(userData))
 })
 
 export default connect(

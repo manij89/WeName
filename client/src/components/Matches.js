@@ -4,15 +4,19 @@ import { connect } from 'react-redux';
 
 function Matches({matches}) {
   
-
+console.log(matches)
 
   return (
     <>
       <Header />
-      <div>Matches page</div>
-      {matches.map((match) => {
-        <li>match.name</li>
-      })}
+    
+      <div>Matches</div>
+      {matches.map((match) => 
+        <li key={match.id} >{match.name}</li>
+      )}
+
+      
+  
     </>
   )
 }

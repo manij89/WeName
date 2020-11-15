@@ -14,7 +14,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const BASE_URL = 'http://localhost:4002';
-const apiServiceJWT = {};
 
 export const setLoading = (status) => {
   return {
@@ -24,11 +23,37 @@ export const setLoading = (status) => {
 }
 
 export const setUser = userData => {
+  console.log('user' , userData)
   return {
     type: SET_USER,
     payload: userData
   };
 };
+
+export const linkPartner = partner => {
+  console.log('partner', partner)
+  return {
+    type: SET_PARTNER,
+    payload: partner
+  };
+};
+
+export const getUser = user => {
+    return dispatch => {
+      axios
+        .get(`${BASE_URL}/user/${user.data.id}`)
+        .then((user) => {
+          dispatch({
+            type: SET_USER,
+            payload: user
+          });
+        })
+        .catch(err => {
+          toast.error('Something went wrong');
+          console.error(err);
+        });
+    }
+  };
 
 export const setPartner = user => {
   return dispatch => {
@@ -53,19 +78,19 @@ export const registerUser = (userData) => {
   return dispatch => {
     axios
       .post(`${BASE_URL}/register`, userData)
-      .then((user) => {
-        toast.success(`Welcome ${user.data.firstName}`, {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
+      .then((user) => {console.log(user.data)
+        // toast.success(`Welcome ${user.data.firstName}`, {
+        //   position: "top-center",
+        //   autoClose: 3000,
+        //   hideProgressBar: false,
+        //   closeOnClick: false,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        // });
         dispatch({
           type: SET_USER,
-          payload: user
+          payload: user.data
         });
       })
       .catch(err => {
@@ -91,7 +116,7 @@ export const loginUser = (userData) => {
         });
         dispatch({
           type: SET_USER,
-          payload: user
+          payload: user.data
         });
       })
       .catch(err => {

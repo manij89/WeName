@@ -4,11 +4,13 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './containers/Home';
 import Info from './containers/Info';
 import Register from './containers/Register';
-import Login from './containers/Login';
+import Login from './containers/Login'; 
 import Game from './containers/Game';
 import Profile from './containers/Profile';
 import Matches from './components/Matches';
 import Deck from './containers/Deck';
+
+import {user} from './redux/actions';
 
 
 

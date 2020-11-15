@@ -36,7 +36,7 @@ export default function Info() {
       <Link to='/register'>
       <button
         className='info-button'
-      >Register</button>
+      >Sign up</button>
 
       </Link>
       </Paper>

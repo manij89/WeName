@@ -1,15 +1,16 @@
 const db = require('../models');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const {secret_key} = require('../config');
 const { v4: uuidv4 } = require('uuid');
+
+
+// TODO get linkingCode after registration and not on loading profile
 
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const result = await db.User.findOne({
       where: {
-        id: +id
+        id: id
       }
     });
     res.send(result);
@@ -22,29 +23,19 @@ exports.getUser = async (req, res) => {
 
 exports.register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
-  const user = await db.User.findOne({
-    where: {
-      email: email
-    }
-  });
-  if (user)
-    return res
-      .status(409)
-      .send({ error: '409', message: 'User already exists' });
   try {
-    if (password === '') throw new Error();
     const hash = await bcrypt.hash(password, 10);
-    const newUser = await db.User.create({
+    const user = await db.User.create({
       firstName: firstName,
       lastName: lastName,
       email: email,
       password: hash,
+      linkingCode: uuidv4(),
       liked: [],
       matched: []
     });
-    const { id } = newUser.id;
-    const accessToken = jwt.sign({ id }, secret_key);
-    res.status(201).send({ accessToken });
+    res.send(user);
+    res.status(201);
   } catch (error) {
     console.error('failed creating user', error);
     res.status(500);
@@ -57,8 +48,7 @@ exports.login = async (req, res) => {
     const user = await db.User.findOne({ where: { email: email } });
     const validatedPass = await bcrypt.compare(password, user.password);
     if (!validatedPass) throw new Error();
-    const accessToken = jwt.sign({ id: user.id }, secret_key);
-    res.status(200).send({ accessToken });
+    res.status(200).send(user);
   } catch (error) {
     res
       .status(401)
@@ -66,48 +56,29 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.createLinkingCode = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const code = uuidv4();
-    const result = await db.User.update(
-      { linkingCode: code },
-      { returning: true, where: { id: id } }
-    );
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(500);
-    console.error('no linking code created', error);
-  }
-};
-
 exports.linkPartner = async (req, res) => {
   try {
     const { linkingCode } = req.body;
     const { id } = req.params; // user 2
-    const user1 = await db.User.findOne({
-      where: { linkingCode: linkingCode }
-    });
-    await db.User.update(
-      { partnerId: id},
-      { returning: true, where: { id: user1.id } 
-      });
 
-    const user2 = await db.User.update(
-      {
-        linkingCode: linkingCode,
-        partnerId: user1.id
-      },
-      {returning: true, where: {id: id}}
-    );
-    res.status(200).send(user1, user2);
+    const user1 = await db.User.findOne({where: { linkingCode: linkingCode }});
+    user1.partnerId = +id;
+    await user1.save();
+
+    const user2 = await db.User.findOne({where: { id: +id }});
+    user2.linkingCode = linkingCode;
+    user2.partnerId = user1.id;
+    await user2.save();
+    
+    res.status(200);
+    res.send({user1, user2});
   } catch (error) {
     res.status(500);
     console.error('failed to connect partners', error);
   }
 };
 
-exports.getLikedNames = async (req,res) => {
+exports.getLikedNames = async (req, res) => {
   try {
     const { userId } = req.params;
     const user = await db.User.findOne({
@@ -123,7 +94,7 @@ exports.getLikedNames = async (req,res) => {
   }
 };
 
-exports.getSeenNames = async (req,res) => {
+exports.getSeenNames = async (req, res) => {
   try {
     const { userId } = req.params;
     const user = await db.User.findOne({
