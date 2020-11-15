@@ -12,7 +12,12 @@ import {
   getPartnerLikedNames,
 } from '../redux/actions';
 import { connect } from 'react-redux';
+import { Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const BASE_URL = 'http://localhost:4002';
 
 function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, setLoading, setMatches, getPartnerLikedNames, getLikedNames, gender }) {
@@ -25,6 +30,7 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
   const [direction, setDirection] = useState(null);
 
   let filteredNames = filterNames();
+  let open = false;
 
   function filterNames() {
     if (names.length && seen.length) {
@@ -75,17 +81,19 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
       .catch(err => console.error(err))
   }
 
-  function setMatch(target) {
-    console.log('target', target)
-    if (liked.length && partnerLikedNames.length) {
-      const result = partnerLikedNames.filter(({ name: name1 }) => target === name1);
-      setMatches(prev => [...prev, result]);
-      if (result.length) alert('it\'s a match!:', target)
-
-      console.log('liked', liked)
-      console.log('match', matches)
+   function setNewMatch(target) {
+     console.log('target', target)
+     if (liked.length && partnerLikedNames.length) {
+      const result = partnerLikedNames.filter(({ name: name1 }) => name1 === target);
+      console.log('result after filter', result);
+      if(result.id) {
+        const newMatch = [...matches, result];
+        console.log('new matches', newMatch)
+        setMatches(newMatch);
+        alert('its a match: ' + target)
+      }
+     }
     }
-  }
 
   useEffect(() => {
     getNames();
@@ -99,12 +107,10 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
 
   useEffect(() => {
     if (liked.length && partnerLikedNames.length) {
-      const result = liked.filter(({ id: id1 }) => partnerLikedNames.includes(({ id: id2 }) => id2 === id1));
-      console.log(result)
-      setMatches(result)
-    } else {
-      console.log('oh noooooo')
+      const result = liked.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
+      setMatches(result);
     }
+  
   }, [liked, partnerLikedNames, setMatches])
 
   const swipe = (direction) => {
@@ -115,12 +121,10 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
       setSeen(prev => [...prev, filteredNames[index]]);
 
       postLikedNames(user.id, filteredNames[index].id)
-      setLiked(prev => [...prev, filteredNames[index]]);
+      setLiked(prev => { const likedarray = [...prev, filteredNames[index]]; console.log('liked', likedarray); return likedarray });
 
-      setMatch(filteredNames[index].name);
-
-      console.log('liked', liked, 'match', matches)
-
+      setNewMatch(filteredNames[index]);
+   
     } else {
       setDirection("left");
       postSeenNames(user.id, filteredNames[index].id);
@@ -163,11 +167,18 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
               index={index}
             />
           </div>
+
         </Draggable>
+
         :
         //TODO add spinner
         'LOADING.....'
       }
+      <Snackbar open={open} autoHideDuration={3000}>
+        <Alert severity="success">
+          It's a Match
+        </Alert>
+      </Snackbar>
       <Header />
     </>
   )

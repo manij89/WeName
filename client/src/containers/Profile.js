@@ -15,12 +15,15 @@ function Profile({ user, partner, loading, setLoading, setPartner, getUser}) {
 
   useEffect(() => {
     setLoading(true);
-    if (!user.email) {
+    if (!user.id) {
       history.push('/login');
-    } else if (user.partnerId) {
-      getUser(user.id)
-      setPartner(user);
+    } else {
+      getUser(user);
+      if (user.partnerId) {
+        setPartner(user)
+      }
     }
+    
     setLoading(false);
   }, [])
 

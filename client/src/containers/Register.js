@@ -39,7 +39,6 @@ function Register(props) {
       password: form.password
     };
     console.log(userData)
-    // props.isAuthenticated = true;
     props.registerUser(userData);
     props.history.push('/game');
   };

@@ -162,6 +162,7 @@ export const getPartnerLikedNames = (partnerId) => {
 }
 
 export const setMatches = (matches) => {
+  console.log('matches-action', matches)
   return {
     type: SET_MATCHES,
     payload: matches

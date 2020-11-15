@@ -50,40 +50,33 @@ function reducer(state = initialState, action) {
         partner: action.payload,
       };
 
-    case UPDATE_PARTNER_NAMES: {
+    case UPDATE_PARTNER_NAMES: 
       const newName = action.payload;
-      const copy = [...state.partnerLikedNames, newName];
       return {
         ...state,
-        partnerLikedNames: copy
-      }
-    };
+        partnerLikedNames: [...state.partnerLikedNames, newName]
+      };
 
-    case GET_LIKED_NAMES: {
-      const copy = action.payload;
+    case GET_LIKED_NAMES:
       return {
         ...state,
-        likedNames: copy
-      }
-    };
+        likedNames:action.payload
+      };
 
-    case GET_PARTNER_NAMES: {
-      const copy = action.payload;
+    case GET_PARTNER_NAMES:
+  
       return {
         ...state,
-        partnerLikedNames: copy
-      }
-    };
+        partnerLikedNames: action.payload
+      };
 
-    case SET_MATCHES: {
-      const copy = action.payload
+    case SET_MATCHES:
       return {
         ...state,
-        matches: copy
-      }
-    };
+        matches: action.payload
+      };
 
-    case LINK_ACCOUNT: {
+    case LINK_ACCOUNT:
       const copyUser1 = Object.assign(state.user);
       const copyPartner = Object.assign(state.partner);
       copyUser1.data.linkingCode = action.payload.id;
@@ -93,10 +86,7 @@ function reducer(state = initialState, action) {
         loading: false,
         user: copyUser1,
         partner: copyPartner
-      }
-
-    };
-
+      };
     default:
       return state;
 
