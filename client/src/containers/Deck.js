@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import '../styles/namecard.scss';
 import '../styles/game.scss';
 import NameCard from '../components/NameCard';
 import Header from '../components/Header';
 import Draggable from 'react-draggable';
-import axios from 'axios';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { IconButton } from '@material-ui/core';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import Snack from '../components/Snack';
+import * as apiclient from '../services/apiclient';
 
 import {
   setPartner,
@@ -21,13 +19,7 @@ import {
 } from '../redux/actions';
 import { connect } from 'react-redux';
 
-const BASE_URL = 'http://localhost:4002';
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
-function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, setLoading, setMatches, getPartnerLikedNames, getLikedNames, gender }) {
+function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, gender }) {
   const [names, setNames] = useState([]);
   const [seen, setSeen] = useState([]);
   const [liked, setLiked] = useState([]);
@@ -39,8 +31,6 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
   const [direction, setDirection] = useState(null);
 
   let filteredNames = filterNames();
-  const vertical = 'top';
-  const horizontal = 'center';
 
 
   function filterNames() {
@@ -52,57 +42,21 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
     }
   }
 
-  function getNames() {
-    axios
-      .get(`${BASE_URL}/names/${gender}`)
-      .then(allnames => setNames(allnames.data))
-      .then(setLoading(false))
-      .catch(err => console.error(err))
-  }
-
-  function seenNames() {
-    axios
-      .get(`${BASE_URL}/user/${user.id}/seen`)
-      .then(res => setSeen(res.data))
-      .catch(err => console.error(err))
-  }
-
-  function postSeenNames(userId, nameId) {
-    axios
-      .post(`${BASE_URL}/user/${userId}/seen/${nameId}`)
-      .then(res => res.status <= 400 ? res : Promise.reject(res))
-      .catch(err => console.error(err))
-  }
-
-  function likedNames() {
-    axios
-      .get(`${BASE_URL}/user/${user.id}/liked`)
-      .then(res => {
-        if (res.data && Array.isArray(res.data)) {
-          setLiked(res.data)
-        }
-      })
-      .catch(err => console.error(err));
-  }
-
-  function postLikedNames(userId, nameId) {
-    axios
-      .post(`${BASE_URL}/user/${userId}/liked/${nameId}`)
-      .then(res => res.status <= 400 ? res : Promise.reject(res))
-      .catch(err => console.error(err))
-  }
+const startGame = useCallback(() => {
+  apiclient.getNames(gender, setNames, setLoading);
+  apiclient.seenNames(user.id, setSeen);
+  apiclient.likedNames(user.id, setLiked);
+  if (partner) {
+    setPartner(user);
+    getPartnerLikedNames(user.partnerId);
+  };
+}, [gender, getPartnerLikedNames, partner, setLoading, setPartner, user]) 
 
   useEffect(() => {
-    getNames();
-    seenNames();
-    likedNames();
-    if (partner) {
-      setPartner(user);
-      getPartnerLikedNames(user.partnerId);
-    };
+    startGame()
   }, []);
 
-  // with every new update of liked names, this will run
+  // with every new update of liked names, this will run and update matched names
   useEffect(() => {
     if (liked.length && partnerLikedNames.length) {
       const result = liked.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
@@ -114,10 +68,10 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
     if (direction === "right") {
       setDirection("right");
 
-      postSeenNames(user.id, filteredNames[index].id);
+      apiclient.postSeenNames(user.id, filteredNames[index].id);
       setSeen(prev => [...prev, filteredNames[index]]);
 
-      postLikedNames(user.id, filteredNames[index].id)
+      apiclient.postLikedNames(user.id, filteredNames[index].id)
       setLiked(prev => [...prev, filteredNames[index]]);
 
       const nameArray = partnerLikedNames.map(obj => (obj.name));
@@ -127,7 +81,7 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
 
     } else {
       setDirection("left");
-      postSeenNames(user.id, filteredNames[index].id);
+      apiclient.postSeenNames(user.id, filteredNames[index].id);
       setSeen(prev => [...prev, filteredNames[index]]);
     }
 
@@ -179,7 +133,7 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
                 />
               </div>
             </Draggable>
-
+            
             <div className='card-buttons'>
               <IconButton
                 onClick={() => swipe('right')}
@@ -194,18 +148,7 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
             </div>
 
           </div>
-
-          <Snackbar
-            anchorOrigin={{ vertical, horizontal }}
-            open={newMatch}
-            autoHideDuration={1000}
-            onClose={handleClose}
-          >
-            <Alert severity="success">
-              It's a Match  <FavoriteBorderIcon />
-            </Alert>
-          </Snackbar>
-
+          <Snack open={newMatch} onClose={handleClose}/>
         </div>
 
         :

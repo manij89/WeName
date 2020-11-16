@@ -1,24 +1,25 @@
-import React, {useEffect}  from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import '../styles/matches.scss';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import * as actions from '../redux/actions';
-const BASE_URL = 'http://localhost:4002';
 
-function Matches({ matches, user, getLikedNames, setMatches }) {
+function Matches({ matches, user, setMatches, getPartnerLikedNames, partnerLikedNames, getLikedNames, likedNames }) {
 
-console.log(getLikedNames(user.id));
-  async function handleClick(name) {
-    //TODO delete function
-    axios.delete(`${BASE_URL}/user/${user.id}/liked/${name.id}`)
+  useEffect(() => {
+    getLikedNames(user.id);
+    if (user.partnerId) { getPartnerLikedNames(user.partnerId) }
+  }, [getLikedNames, getPartnerLikedNames, user]);
 
-  }
-
-  useEffect(()=> {
- 
-  }, [])
+  useEffect(() => {
+    console.log('liked', likedNames, 'partnerLiked', partnerLikedNames)
+    if (likedNames.length && partnerLikedNames.length) {
+      console.log('liked', likedNames, 'partnerLiked', partnerLikedNames)
+      const result = likedNames.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
+      setMatches(result);
+    }
+  }, [partnerLikedNames, likedNames, setMatches])
 
   return (
     <>
@@ -42,7 +43,6 @@ console.log(getLikedNames(user.id));
               key={match.id}
             >
               {match.name}
-              <DeleteForeverIcon onClick={() => handleClick(match)} />
             </div>
           )}
         </div>
@@ -54,13 +54,16 @@ console.log(getLikedNames(user.id));
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  likedNames: state.likedNames,
+  partnerLikedNames: state.partnerLikedNames,
   matches: state.matches
 })
 
 
 const mapDispatchToProps = (dispatch) => ({
-  getLikedNames: (userId) => dispatch(actions.getLikedNames(userId)),
   setMatches: (matches) => dispatch(actions.setMatches(matches)),
+  getPartnerLikedNames: (partnerId) => dispatch(actions.getPartnerLikedNames(partnerId)),
+  getLikedNames: (userId) => dispatch(actions.getLikedNames(userId))
 })
 
 export default connect(

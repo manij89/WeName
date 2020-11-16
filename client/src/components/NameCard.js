@@ -1,8 +1,6 @@
 import React from 'react';
 import '../styles/namecard.scss';
-import { Paper, IconButton } from '@material-ui/core';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import { Paper} from '@material-ui/core';
 
 export default function NameCard({ names, index, direction }) {
 

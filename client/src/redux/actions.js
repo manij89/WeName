@@ -2,16 +2,10 @@ import {
   SET_LOADING, 
   SET_USER, 
   SET_PARTNER, 
-  UPDATE_LIKED_NAMES, 
-  UPDATE_PARTNER_NAMES, 
   SET_MATCHES, 
-  LINK_ACCOUNT, 
-  REGISTRATION_SUCCESS, 
   GET_LIKED_NAMES, 
   GET_PARTNER_NAMES } from './actiontypes';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const BASE_URL = 'http://localhost:4002';
 
@@ -49,7 +43,6 @@ export const getUser = user => {
           });
         })
         .catch(err => {
-          toast.error('Something went wrong');
           console.error(err);
         });
     }
@@ -66,61 +59,41 @@ export const setPartner = user => {
         });
       })
       .catch(err => {
-        toast.error('Something went wrong');
         console.error(err);
       });
   }
 };
 
 
-// TODO why toast notification not working?
+// TODO add snackbar notification ('welcome user.name')
 export const registerUser = (userData) => {
   return dispatch => {
     axios
       .post(`${BASE_URL}/register`, userData)
-      .then((user) => {console.log(user.data)
-        // toast.success(`Welcome ${user.data.firstName}`, {
-        //   position: "top-center",
-        //   autoClose: 3000,
-        //   hideProgressBar: false,
-        //   closeOnClick: false,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
+      .then((user) => {
         dispatch({
           type: SET_USER,
           payload: user.data
         });
       })
       .catch(err => {
-        toast.error('Something went wrong');
         console.error(err);
       });
   };
 }
 
+// TODO add snackbar notification ('welcome back user.name')
 export const loginUser = (userData) => {
   return dispatch => {
     axios
       .post(`${BASE_URL}/login`, userData)
       .then((user) => {
-        toast.success(`Welcome Back ${user.data.firstName}`, {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
         dispatch({
           type: SET_USER,
           payload: user.data
         });
       })
       .catch(err => {
-        toast.error('Something went wrong');
         console.error(err);
       });
   };
@@ -138,7 +111,6 @@ export const getLikedNames = (userId) => {
         })
       })
       .catch(err => {
-        toast.error('Something went wrong');
         console.error(err);
       });
   }
@@ -149,13 +121,13 @@ export const getPartnerLikedNames = (partnerId) => {
      axios
       .get(`${BASE_URL}/user/${partnerId}/liked`)
       .then((liked) => {
+        console.log('partner names' ,liked.data)
         dispatch({
           type: GET_PARTNER_NAMES,
           payload: liked.data
         })
       })
       .catch(err => {
-        toast.error('Something went wrong');
         console.error(err, 'e');
       });
   }

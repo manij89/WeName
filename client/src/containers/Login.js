@@ -20,24 +20,14 @@ function Login (props) {
     })
   };
 
-  const {
-    register,
-    errors,
-    formState: { isSubmitting }
-  } = useForm();
+  const {register, errors, formState: { isSubmitting }} = useForm();
 
-  // TODO  get data from db
-  // TODO setUser
-  // TODO check for partner and setPartner
-  // TODO isAuthenticated is true
-  // TODO setNames and if partner setPartnerNames + matches
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = {
       email: form.email,
       password: form.password
     };
-    // props.isAuthenticated = true;
     props.loginUser(userData);
     props.history.push('/game');
   };

@@ -19,6 +19,7 @@ const initialState = {
   loading: true,
   user: {},
   partner: {},
+  likedNames: [],
   partnerLikedNames: [],
   matches: []
 }
@@ -64,7 +65,6 @@ function reducer(state = initialState, action) {
       };
 
     case GET_PARTNER_NAMES:
-  
       return {
         ...state,
         partnerLikedNames: action.payload
