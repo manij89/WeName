@@ -57,9 +57,9 @@
 
 .registration-button {
   position: relative;
-  color:#17C3B2;
+  color:#FEF9EF;
   border: none;
-  background-color: #FEF9EF;
+  background-color: #0081a7;
   padding: 15px 25px;
   border-radius: 20px;
   font-weight: 600;
@@ -71,7 +71,7 @@
 .registration-input{
   background: #FEF9EF;
   color: #227C9D;
-  border: 1px solid #227C9D;
+  border: none;
   height: 3rem;
   padding: 0.5rem;
   font-size: 16px;
@@ -86,12 +86,14 @@
 h5 {
   text-align: center;
   margin-top: 2px;
-  font-size: 0.7rem;
+  font-size: 0.9rem;
+  font-weight: 700;
   background-color: transparent;
   color: #227C9D;
   a {
     background-color: inherit;
     color: inherit;
+    text-decoration: underline;
   }
 
 }

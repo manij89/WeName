@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import ErrorMessage from '../components/ErrorMessage';
 import '../styles/register.scss';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser} from '../redux/actions';
 
@@ -42,16 +42,6 @@ function Register(props) {
     props.registerUser(userData);
     props.history.push('/game');
   };
-
-  // const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-  // const validateUserName = async value => {
-  //   await sleep(1000);
-  //   if (value !== "bill") {
-  //     setError("username", "validate");
-  //   } else {
-  //     clearError("username");
-  //   }
-  // };
 
   return (
     <div className='registration'>

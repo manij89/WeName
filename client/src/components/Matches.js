@@ -23,7 +23,6 @@ function Matches({ matches, user, setMatches, getPartnerLikedNames, partnerLiked
   return (
     <>
       <Header />
-
       {!matches.length
         ?
         <div className='matches'>
@@ -34,12 +33,8 @@ function Matches({ matches, user, setMatches, getPartnerLikedNames, partnerLiked
         <div className='matches'>
           {matches.map((match) =>
             <div
-              className={match.gender === 'boy'
-                ? 'boy match'
-                : match.gender === 'girl'
-                  ? 'girl match'
-                  : 'match'}
-              key={match.id}
+            className={match.gender + ' match'}
+            key={match.id}
             >
               {match.name}
             </div>

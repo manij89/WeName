@@ -2,6 +2,7 @@ import {
   SET_LOADING, 
   SET_USER, 
   SET_PARTNER, 
+  SET_LIKED_NAMES,
   SET_MATCHES, 
   GET_LIKED_NAMES, 
   GET_PARTNER_NAMES } from './actiontypes';
@@ -17,12 +18,18 @@ export const setLoading = (status) => {
 }
 
 export const setUser = userData => {
-  console.log('user' , userData)
   return {
     type: SET_USER,
     payload: userData
   };
 };
+
+export const setLikes = (likedNames) => {
+  return {
+    type: GET_LIKED_NAMES,
+    payload: likedNames
+  };
+}
 
 export const linkPartner = partner => {
   console.log('partner', partner)

@@ -3,40 +3,21 @@ import { useHistory } from "react-router-dom";
 import { Form, Button } from 'react-bootstrap';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CheckIcon from '@material-ui/icons/Check';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
-
-const BASE_URL = 'http://localhost:4002';
+import * as apiclient from '../services/apiclient';
 
 function Unlinkedprofile({user, setUser, setPartner}) {
   const [copied, setCopied] = useState(false);
-  // const [code, setCode] = useState('');
-
   let code = user.linkingCode || '';
-  const history = useHistory();
-
 
   function handleSubmit(e) {
     e.preventDefault();
     console.log(code);
-    linkPartners();
+    apiclient.linkPartners(user.id, code, setUser, setPartner);
     console.log('user', user)
   }
   
-  function linkPartners (){
-    axios
-      .put(`${BASE_URL}/user/${user.id}/link`,
-        { linkingCode: code })
-      .then((res) => {
-        console.log(res.data.user1)
-        setUser(res.data.user2);
-        setPartner(res.data.user1)
-      })
-      .then(console.log('user', user))
-      .catch(err => console.error(err))
-  }
-
   return (
     <>
     <div className='profile'>
@@ -93,7 +74,6 @@ const mapDispatchToProps = (dispatch) => ({
   setLoading: (status) => dispatch(actions.setLoading(status)),
   setUser: (userData) => dispatch(actions.setUser(userData)),
   setPartner: (userData) => dispatch(actions.linkPartner(userData))
-  // setMatches: (matches) => dispatch(setMatches(matches)),
 })
 
 export default connect(

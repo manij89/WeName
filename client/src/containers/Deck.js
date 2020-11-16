@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import '../styles/namecard.scss';
 import '../styles/game.scss';
-import NameCard from '../components/NameCard';
 import Header from '../components/Header';
-import Draggable from 'react-draggable';
-import { IconButton } from '@material-ui/core';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import Snack from '../components/Snack';
+import ButtonGroup from '../components/buttongroup';
+import Dragcontainer from '../components/DragContainer';
 import * as apiclient from '../services/apiclient';
-
 import {
   setPartner,
   setMatches,
@@ -19,7 +15,7 @@ import {
 } from '../redux/actions';
 import { connect } from 'react-redux';
 
-function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, gender }) {
+function Deck({filteredNames, user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, gender }) {
   
   const [names, setNames] = useState([]);
   const [seen, setSeen] = useState([]);
@@ -31,8 +27,7 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
   const [dragging, setDragging] = useState(false);
   const [direction, setDirection] = useState(null);
 
-  let filteredNames = filterNames();
-
+  filteredNames   = filterNames();
 
   function filterNames() {
     if (names.length && seen.length) {
@@ -93,17 +88,6 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
     }, 400);
   };
 
-  const handleDrag = (e, d) => {
-    // swiping animations
-    if (d.x > 50) {
-      swipe("right");
-    } else if (d.x < -50) {
-      swipe("left");
-    } else {
-      setDragging(false);
-    };
-  };
-
   function handleClose(_, reason) {
     if (reason === 'clickaway') return;
     setNewMatch(status => status = false)
@@ -119,35 +103,13 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
             width: '100%',
             overflow: 'hidden'
           }}>
-            <Draggable
-              onStart={() => { setDragging(true); }}
-              onStop={handleDrag}
-              key={index}
-              position={dragging ? null : { x: 0, y: 0 }}
-            >
-              <div>
-                <NameCard
-                  direction={direction}
-                  names={filteredNames}
-                  index={index}
-                  click={swipe}
-                />
-              </div>
-            </Draggable>
-
-            <div className='card-buttons'>
-              <IconButton
-                onClick={() => swipe('right')}
-                className='card-button'>
-                <ThumbUpIcon className='card-icon' />
-              </IconButton>
-              <IconButton
-                onClick={() => swipe('left')}
-                className='card-button'>
-                <ThumbDownIcon className='card-icon' />
-              </IconButton>
-            </div>
-
+            <Dragcontainer 
+            index={index}
+            swipe={swipe}
+            direction={direction}
+            filteredNames={filteredNames}
+            />
+           <ButtonGroup swipe={swipe} />
           </div>
           <Snack open={newMatch} onClose={handleClose}/>
         </div>
@@ -156,7 +118,6 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
         //TODO add spinner
         'LOADING.....'
       }
-
       <Header />
     </>
   )

@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
-import { Navbar, NavLink, Nav } from 'react-bootstrap'
+import React from 'react';
+import { Navbar, Nav } from 'react-bootstrap'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import AccountBox from '@material-ui/icons/AccountBox';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ChildCareIcon from '@material-ui/icons/ChildCare';
-import { connect } from 'react-redux';
-import { setUser } from '../redux/actions';
 import { useHistory } from "react-router-dom";
+import StarIcon from '@material-ui/icons/Star';
 
 export default function Header(props) {
 
@@ -43,6 +42,12 @@ export default function Header(props) {
             className='header_settings'
             onClick={() => { history.push('/matches') }}>
             <FavoriteIcon className='header-icon' /> Matches
+            </Nav.Link>
+
+            <Nav.Link 
+            className='header_settings'
+            onClick={() => { history.push('/final') }}>
+            <StarIcon className='header-icon' /> Your Final Pick
             </Nav.Link>
 
             <Nav.Link

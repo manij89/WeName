@@ -7,17 +7,15 @@ export default function NameCard({ names, index, direction }) {
   return (
     <div className='namecard'>
       <Paper elevation={7} className='name'>
-        <div className={direction === "left" ? "left" : direction === "right"
-          ? "right"
+        <div className={direction === "left" || direction === "right"
+          ? direction
           : "enter"}
         >
           {names.length
             ?
-
             names[index].name
-
             :
-            'LOADING cards'
+            '...'
           }
 
         </div> 

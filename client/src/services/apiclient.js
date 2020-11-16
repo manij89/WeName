@@ -49,3 +49,14 @@ export function deleteName(userId, nameId) {
     .then(res => res.status <= 400 ? res : Promise.reject(res))
     .catch(err => console.error(err))
 }
+
+export function linkPartners (userId, code, setUser, setPartner){
+  axios
+    .put(`${BASE_URL}/user/${userId}/link`,
+      { linkingCode: code })
+    .then((res) => {
+      setUser(res.data.user2);
+      setPartner(res.data.user1)
+    })
+    .catch(err => console.error(err))
+}
