@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import Header from '../components/Header';
 import { connect } from 'react-redux';
 import '../styles/matches.scss';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import * as actions from '../redux/actions';
 
 function Matches({ matches, user, setMatches, getPartnerLikedNames, partnerLikedNames, getLikedNames, likedNames }) {

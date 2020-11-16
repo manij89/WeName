@@ -20,6 +20,7 @@ import {
 import { connect } from 'react-redux';
 
 function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, gender }) {
+  
   const [names, setNames] = useState([]);
   const [seen, setSeen] = useState([]);
   const [liked, setLiked] = useState([]);
@@ -42,7 +43,7 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
     }
   }
 
-const startGame = useCallback(() => {
+  const startGame = useCallback(() => {
   apiclient.getNames(gender, setNames, setLoading);
   apiclient.seenNames(user.id, setSeen);
   apiclient.likedNames(user.id, setLiked);
@@ -133,7 +134,7 @@ const startGame = useCallback(() => {
                 />
               </div>
             </Draggable>
-            
+
             <div className='card-buttons'>
               <IconButton
                 onClick={() => swipe('right')}
@@ -174,13 +175,10 @@ const mapDispatchToProps = (dispatch) => ({
   setLoading: (status) => dispatch(setLoading(status)),
   getLikedNames: (userId) => dispatch(getLikedNames(userId)),
   setMatches: (matches) => dispatch(setMatches(matches)),
-  getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId)),
-
+  getPartnerLikedNames: (partnerId) => dispatch(getPartnerLikedNames(partnerId))
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Deck);
-
-//TODO bug: make game redirect to login if there is no user (authorization)

@@ -8,6 +8,7 @@ import Game from './containers/Game';
 import Profile from './containers/Profile';
 import Matches from './components/Matches';
 import Deck from './containers/Deck';
+import Mylikes from './components/MyLikes';
 
 
 function App() {
@@ -28,6 +29,11 @@ function App() {
         exact
         path='/login'
         component={Login}
+      />
+      <Route
+        exact
+        path='/mynames'
+        component={Mylikes}
       />
       <Route
         exact
