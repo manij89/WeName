@@ -46,15 +46,18 @@ body {
   font-size: 3.6rem;
   height: 60vh;
   width: 70vw;
-  margin: 0 30px;
+  margin: 30px;
   background: rgb(23,195,178);
   background: linear-gradient(108deg, rgba(23,195,178,1) 0%, rgba(255,203,119,1) 88%);
 }
 
 .namecard {
 display: flex;
+flex-direction: column;
 justify-content: center;
 align-items: center;
 height: 90vh;
-background-color: #FEF9EF;
+background-color: white;
 }
+
+

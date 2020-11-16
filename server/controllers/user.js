@@ -142,8 +142,18 @@ exports.updateLikedNames = async (req, res) => {
   }
 };
 
-// exports.deleteMatch = (req, res) = {
-//   // const { userId } = req.params;
-//   // const { nameId } = req.body;
-  
-// };
+exports.deleteLikedName = async (req, res) => {
+  try {
+    const { userId, nameId } = req.params;
+    const user = await db.User.findOne({
+      where: {
+        id: +userId
+      }
+    });
+    await user.removeLiked(+nameId);
+    res.sendStatus(204);
+  } catch (error) {
+    console.error('failed deleting liked names', error);
+    res.status(500);
+  }
+};

@@ -49,3 +49,41 @@
   margin: 20px;
 }
 
+.deck {
+  height: '80%'; 
+  width: '100%'; 
+  overflow: 'hidden';
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.card-buttons {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  bottom: 6rem;
+}
+
+.card-button:hover{
+  transform: scale(1.2);
+}
+
+.card-button {
+  background-color: #FFCB77 !important;
+}
+
+.card-icon {
+  font-size: 2rem !important;
+}
+
+.card-button:hover {
+  transform: scale(1.1);
+}
+
+.card-button:focus {
+  outline:none
+}

@@ -1,8 +1,36 @@
-.link-code {
-  border: 1px solid lightgrey;
-  background-color: antiquewhite;
+.profile-container {
+  display: flex;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+  background-color: #FEF9EF;
 }
 
-.link-code:hover {
-  background-color: aquamarine;
+.profile {
+  background-color: #17C3B2;
+  height: 80vh;
+  width: 90%;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
 }
+
+.profile-content {
+  margin-bottom: 30px;
+}
+
+.profile-button {
+  color: #227C9D;
+  border: none;
+  background-color: #FFCB77 !important;
+}
+
+.profile-link {
+  border: 1px solid #227C9D;
+  border-radius: 10px;
+  padding: 30px;
+  color: white;
+  background-color: #227C9D;
+  font-size: 1.3rem;
+}
+

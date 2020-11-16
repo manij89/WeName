@@ -6,7 +6,7 @@ router.get('/user/:userId/liked', userCtrl.getLikedNames);
 router.get('/user/:userId/seen', userCtrl.getSeenNames);
 router.post('/user/:userId/liked/:nameId', userCtrl.updateLikedNames);
 router.post('/user/:userId/seen/:nameId', userCtrl.updateSeenNames);
-// router.delete('/user/:userId/matched', userCtrl.deleteMatch);
+router.delete('/user/:userId/liked/:nameId', userCtrl.deleteLikedName);
 
 router.get('/user/:id', userCtrl.getUser);
 router.post('/login', userCtrl.login);

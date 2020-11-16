@@ -13,7 +13,7 @@ export default function Header(props) {
 
   return (
     <div>
-      <Navbar fixed='bottom' variant='dark' className='header' expand='xl'>
+      <Navbar fixed='bottom' variant='dark' className='header' expand='xxl'>
       <Navbar.Brand
       onClick={() => { history.push('/') }}
        >WENAME</Navbar.Brand>

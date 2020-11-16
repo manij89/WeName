@@ -39,6 +39,7 @@ function Unlinkedprofile({user, setUser, setPartner}) {
 
   return (
     <>
+    <div className='profile'>
       <h1 className='profile-title'>Invite your partner</h1>
       <div className='profile-content'>
         <p>
@@ -50,7 +51,9 @@ function Unlinkedprofile({user, setUser, setPartner}) {
           text={code}
           onCopy={() => {setCopied({ copied: true })}}
         >
-          <Button>
+          <Button
+          className='profile-button'
+          >
             Copy your code here
             {copied && <CheckIcon />}
           </Button>
@@ -69,13 +72,14 @@ function Unlinkedprofile({user, setUser, setPartner}) {
             <Form.Control type="text" placeholder="code" />
           </Form.Group>
           <Button
-            variant="warning"
+            className='profile-button'
             type="submit"
           >
             Submit
           </Button>
         </Form>
       </div>
+    </div>
     </>
   )
 }

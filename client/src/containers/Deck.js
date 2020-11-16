@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/namecard.scss'
+import '../styles/namecard.scss';
+import '../styles/game.scss';
 import NameCard from '../components/NameCard';
 import Header from '../components/Header';
 import Draggable from 'react-draggable';
@@ -7,6 +8,9 @@ import axios from 'axios';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import { IconButton } from '@material-ui/core';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
 import {
   setPartner,
@@ -27,13 +31,16 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
   const [names, setNames] = useState([]);
   const [seen, setSeen] = useState([]);
   const [liked, setLiked] = useState([]);
-  const [newMatch, setNewMatch] = useState(true);
+
+  const [newMatch, setNewMatch] = useState(false);
 
   const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [direction, setDirection] = useState(null);
 
   let filteredNames = filterNames();
+  const vertical = 'top';
+  const horizontal = 'center';
 
 
   function filterNames() {
@@ -114,13 +121,9 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
       setLiked(prev => [...prev, filteredNames[index]]);
 
       const nameArray = partnerLikedNames.map(obj => (obj.name));
-      console.log(nameArray)
-      console.log(nameArray.includes(filteredNames[index].name), filteredNames[index].name)
-      setNewMatch(true)
       if (nameArray.includes(filteredNames[index].name)) {
-        alert('matched' + filteredNames[index].name)
+        setNewMatch(status => status = true);
       }
-
 
     } else {
       setDirection("left");
@@ -146,20 +149,21 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
     };
   };
 
-  // const handleClose = () => {
-  //   setNewMatch(false);
-  // }
-
-function handleClose (){
-  setNewMatch(false)
-};
+  function handleClose(_, reason) {
+    if (reason === 'clickaway') return;
+    setNewMatch(status => status = false)
+  };
 
   return (
     <>
       { !loading
         ?
         <div>
-          <div style={{height:'80%', width:'100%', overflow:'hidden'}}>
+          <div className='deck' style={{
+            height: '80%',
+            width: '100%',
+            overflow: 'hidden'
+          }}>
             <Draggable
               onStart={() => { setDragging(true); }}
               onStop={handleDrag}
@@ -171,16 +175,31 @@ function handleClose (){
                   direction={direction}
                   names={filteredNames}
                   index={index}
+                  click={swipe}
                 />
               </div>
-
             </Draggable>
 
+            <div className='card-buttons'>
+              <IconButton
+                onClick={() => swipe('right')}
+                className='card-button'>
+                <ThumbUpIcon className='card-icon' />
+              </IconButton>
+              <IconButton
+                onClick={() => swipe('left')}
+                className='card-button'>
+                <ThumbDownIcon className='card-icon' />
+              </IconButton>
+            </div>
+
           </div>
-          <Snackbar 
-          open={true} 
-          autoHideDuration={2000} 
-          onClose={handleClose}
+
+          <Snackbar
+            anchorOrigin={{ vertical, horizontal }}
+            open={newMatch}
+            autoHideDuration={1000}
+            onClose={handleClose}
           >
             <Alert severity="success">
               It's a Match  <FavoriteBorderIcon />

@@ -28,13 +28,22 @@ function Profile({ user, partner, loading, setLoading, setPartner, getUser}) {
   }, [])
 
   return (
-    <>{
+    <>
+    {
       !loading
       ?
       <>
       <Header />
 
-        {!partner.id ? <UnlinkedProfile /> : <p>You are linked up with {partner.firstName}</p>
+        {!partner.id 
+        ?
+        <div className='profile-container'>
+          <UnlinkedProfile /> 
+        </div>
+        : 
+        <div className='profile-container'>
+          <p className='profile-link'>You are linked up with {partner.firstName}</p>
+        </div>
         }
       </>
       :

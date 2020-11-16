@@ -1,10 +1,10 @@
 import React from 'react';
 import '../styles/namecard.scss';
-import { Paper } from '@material-ui/core';
+import { Paper, IconButton } from '@material-ui/core';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 
 export default function NameCard({ names, index, direction }) {
-
-  // console.log(names, index)
 
   return (
     <div className='namecard'>
@@ -15,12 +15,14 @@ export default function NameCard({ names, index, direction }) {
         >
           {names.length
             ?
+
             names[index].name
+
             :
-            'LOADING card'
+            'LOADING cards'
           }
 
-        </div>
+        </div> 
       </Paper>
     </div>
   )
