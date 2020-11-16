@@ -1,13 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from './Header';
 import { connect } from 'react-redux';
 import '../styles/matches.scss';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import * as apiclient from '../services/apiclient';
+import * as actions from '../redux/actions';
 
-function Mylikes({user, likedNames}) {
-  
-  function handleClick (){
-    console.log('deleted')
+function Mylikes({ user, likedNames, getLikedNames }) {
+
+  useEffect(() => {
+    getLikedNames(user.id);
+  }, [getLikedNames, user]);
+
+  function handleClick(like) {
+    apiclient.deleteName(user.id, like.id);
+    getLikedNames(user.id);
   }
 
   return (
@@ -32,7 +39,7 @@ function Mylikes({user, likedNames}) {
               key={like.id}
             >
               {like.name}
-              <DeleteForeverIcon onClick={handleClick}/>
+              <DeleteForeverIcon onClick={() => handleClick(like)} />
             </div>
           )}
         </div>
@@ -50,13 +57,11 @@ const mapStateToProps = (state) => ({
 })
 
 
-// const mapDispatchToProps = (dispatch) => ({
-//   setMatches: (matches) => dispatch(actions.setMatches(matches)),
-//   getPartnerLikedNames: (partnerId) => dispatch(actions.getPartnerLikedNames(partnerId)),
-//   getLikedNames: (userId) => dispatch(actions.getLikedNames(userId))
-// })
+const mapDispatchToProps = (dispatch) => ({
+  getLikedNames: (userId) => dispatch(actions.getLikedNames(userId))
+})
 
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(Mylikes);

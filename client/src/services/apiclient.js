@@ -42,3 +42,10 @@ export function postLikedNames(userId, nameId) {
     .then(res => res.status <= 400 ? res : Promise.reject(res))
     .catch(err => console.error(err))
 }
+
+export function deleteName(userId, nameId) {
+  axios
+    .delete(`${BASE_URL}/user/${userId}/liked/${nameId}`)
+    .then(res => res.status <= 400 ? res : Promise.reject(res))
+    .catch(err => console.error(err))
+}
