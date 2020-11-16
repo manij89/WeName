@@ -6,24 +6,40 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-
+  background-color: #FEF9EF;
 }
 
 .header {
-  background-color: #a64ac9;
+  background-color: #227C9D;
   display: flex;
   justify-content: space-between;
-  height: 10vh;
+  min-height: 10vh;
+}
+
+.nav-link {
+  min-height: 20% !important;
+  margin: 50px 0px;
+  font-size: 2rem;
+  text-align: start;
 }
 
 .header-icon {
-  color: #f5e6cc
+  color: #FEF9EF
 }
 
+.game-card {
+  width: 90%;
+  height: 60%;
+  background-color:#17C3B2 !important;
+  h2 {
+    margin-top: 15px;
+    color: #FEF9EF;
+  }
+}
 .gender-button{
   border: none;
-  background-color: #3a0ca3;
-  color: white;
+  background-color: #FFCB77;
+  color: #FEF9EF;
   padding: 15px 25px;
   border-radius: 6px;
   font-weight: 600;
@@ -32,3 +48,4 @@
   transition: 0.5s;
   margin: 20px;
 }
+

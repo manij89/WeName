@@ -1,0 +1,36 @@
+.matches {
+  padding-top: 30px;
+  min-height: 90vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #FEF9EF;
+}
+
+.match {
+    background-color: #227C9D;
+    width: 70%;
+    height: 10%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 1.7rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .girl {
+    background-color: #FE6D73 !important;
+  }
+  .boy {
+  background-color: #17C3B2 !important;
+  }
+
+
+
+

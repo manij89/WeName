@@ -1,37 +1,27 @@
 .info-container {
   display: flex;
   flex-direction: column;
-  width: 90vw;
-  height: 90vh;
+  width: 100%;
+  top:0;
+  left:0;
+  height: 100%;
   justify-content: center;
   align-items: center;
-  background-color: #f5e6cc;
-  h1 {
-    margin: 0;
-    padding: 12px
+  background-color: #ffb48f;
+  position: fixed;
+  transition: 1s;
+  transform: translateY(-100%);
+  &.active {
+    transform: none;
   }
-  a {
-    text-decoration: none;
-  }
-  h5 {
-    margin-top: 0;
-    color: inherit;
-    background-color: inherit;
- }
-}
-
-.info-card {
-  width: 90vw;
-  margin-left: 30px;
 }
 
 .info-button {
   z-index: 20;
-  background-color: #f5e6cc;
   position: relative;
   color:#41b3a3;
   border: none;
-  background-color: rgba(255,255,255, 0.5);
+  background-color: rgba(255,255,255, 0.7);
   padding: 15px 25px;
   border-radius: 20px;
   font-weight: 600;
@@ -39,4 +29,25 @@
   margin-top: 35px;
   transition: 0.5s;
 }
+
+.info-card {
+  width: 90vw;
+  height: 80vh;
+  background-color: #17c3b2 !important;
+  color: white !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+ 
+  h1 {
+    margin: 0;
+    padding: 12px
+  }
+  a {
+    text-decoration: none;
+  }
+
+}
+
 

@@ -142,4 +142,8 @@ exports.updateLikedNames = async (req, res) => {
   }
 };
 
-// exports.delete = (req, res) = {};
+// exports.deleteMatch = (req, res) = {
+//   // const { userId } = req.params;
+//   // const { nameId } = req.body;
+  
+// };

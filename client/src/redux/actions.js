@@ -161,11 +161,13 @@ export const getPartnerLikedNames = (partnerId) => {
   }
 }
 
-export const setMatches = (matches) => {
-  console.log('matches-action', matches)
+// export const deleteMatch 
+
+export const setMatches = (newMatches) => {
+  console.log('matches-action', newMatches)
   return {
     type: SET_MATCHES,
-    payload: matches
+    payload: newMatches
   };
 };
 

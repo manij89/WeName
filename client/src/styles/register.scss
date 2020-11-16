@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
   p {
-    color: red;
+    color:#FE6D73 ;
     background-color: transparent;
   }
   
@@ -18,7 +18,7 @@
   
   button:hover,
   input:hover {
-    background: #fccd04;
+    background: #FFCB77;
   }
   
   button:active,
@@ -44,11 +44,11 @@
   height: 80%;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #17C3B2;
   box-shadow: 10px 9px 26px -7px rgba(0,0,0,1);
   label, h1 {
     background-color: inherit;
-    color: #a64ac9;
+    color: #FEF9EF;
     margin: 10px 0px;
   }
   border-radius: 20px;
@@ -57,9 +57,9 @@
 
 .registration-button {
   position: relative;
-  color:white;
+  color:#17C3B2;
   border: none;
-  background-color: #a64ac9;
+  background-color: #FEF9EF;
   padding: 15px 25px;
   border-radius: 20px;
   font-weight: 600;
@@ -69,10 +69,9 @@
 }
 
 .registration-input{
-  background: white;
-  color: #a64ac9;
-  text-transform: uppercase;
-  border: 1px solid #a64ac9;
+  background: #FEF9EF;
+  color: #227C9D;
+  border: 1px solid #227C9D;
   height: 3rem;
   padding: 0.5rem;
   font-size: 16px;
@@ -89,7 +88,7 @@ h5 {
   margin-top: 2px;
   font-size: 0.7rem;
   background-color: transparent;
-  color: #17e9e0;
+  color: #227C9D;
   a {
     background-color: inherit;
     color: inherit;

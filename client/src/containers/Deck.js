@@ -4,6 +4,10 @@ import NameCard from '../components/NameCard';
 import Header from '../components/Header';
 import Draggable from 'react-draggable';
 import axios from 'axios';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+
 import {
   setPartner,
   setMatches,
@@ -12,25 +16,25 @@ import {
   getPartnerLikedNames,
 } from '../redux/actions';
 import { connect } from 'react-redux';
-import { Snackbar } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
+
+const BASE_URL = 'http://localhost:4002';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const BASE_URL = 'http://localhost:4002';
 
 function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, setLoading, setMatches, getPartnerLikedNames, getLikedNames, gender }) {
   const [names, setNames] = useState([]);
   const [seen, setSeen] = useState([]);
   const [liked, setLiked] = useState([]);
+  const [newMatch, setNewMatch] = useState(true);
 
   const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [direction, setDirection] = useState(null);
 
   let filteredNames = filterNames();
-  let open = false;
+
 
   function filterNames() {
     if (names.length && seen.length) {
@@ -81,20 +85,6 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
       .catch(err => console.error(err))
   }
 
-   function setNewMatch(target) {
-     console.log('target', target)
-     if (liked.length && partnerLikedNames.length) {
-      const result = partnerLikedNames.filter(({ name: name1 }) => name1 === target);
-      console.log('result after filter', result);
-      if(result.id) {
-        const newMatch = [...matches, result];
-        console.log('new matches', newMatch)
-        setMatches(newMatch);
-        alert('its a match: ' + target)
-      }
-     }
-    }
-
   useEffect(() => {
     getNames();
     seenNames();
@@ -105,12 +95,12 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
     };
   }, []);
 
+  // with every new update of liked names, this will run
   useEffect(() => {
     if (liked.length && partnerLikedNames.length) {
       const result = liked.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
       setMatches(result);
     }
-  
   }, [liked, partnerLikedNames, setMatches])
 
   const swipe = (direction) => {
@@ -121,10 +111,17 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
       setSeen(prev => [...prev, filteredNames[index]]);
 
       postLikedNames(user.id, filteredNames[index].id)
-      setLiked(prev => { const likedarray = [...prev, filteredNames[index]]; console.log('liked', likedarray); return likedarray });
+      setLiked(prev => [...prev, filteredNames[index]]);
 
-      setNewMatch(filteredNames[index]);
-   
+      const nameArray = partnerLikedNames.map(obj => (obj.name));
+      console.log(nameArray)
+      console.log(nameArray.includes(filteredNames[index].name), filteredNames[index].name)
+      setNewMatch(true)
+      if (nameArray.includes(filteredNames[index].name)) {
+        alert('matched' + filteredNames[index].name)
+      }
+
+
     } else {
       setDirection("left");
       postSeenNames(user.id, filteredNames[index].id);
@@ -149,36 +146,54 @@ function Deck({ user, partner, partnerLikedNames, loading, matches, setPartner, 
     };
   };
 
+  // const handleClose = () => {
+  //   setNewMatch(false);
+  // }
+
+function handleClose (){
+  setNewMatch(false)
+};
 
   return (
     <>
       { !loading
         ?
-        <Draggable
-          onStart={() => { setDragging(true); }}
-          onStop={handleDrag}
-          key={index}
-          position={dragging ? null : { x: 0, y: 0 }}
-        >
-          <div>
-            <NameCard
-              direction={direction}
-              names={filteredNames}
-              index={index}
-            />
-          </div>
+        <div>
+          <div style={{height:'80%', width:'100%', overflow:'hidden'}}>
+            <Draggable
+              onStart={() => { setDragging(true); }}
+              onStop={handleDrag}
+              key={index}
+              position={dragging ? null : { x: 0, y: 0 }}
+            >
+              <div>
+                <NameCard
+                  direction={direction}
+                  names={filteredNames}
+                  index={index}
+                />
+              </div>
 
-        </Draggable>
+            </Draggable>
+
+          </div>
+          <Snackbar 
+          open={true} 
+          autoHideDuration={2000} 
+          onClose={handleClose}
+          >
+            <Alert severity="success">
+              It's a Match  <FavoriteBorderIcon />
+            </Alert>
+          </Snackbar>
+
+        </div>
 
         :
         //TODO add spinner
         'LOADING.....'
       }
-      <Snackbar open={open} autoHideDuration={3000}>
-        <Alert severity="success">
-          It's a Match
-        </Alert>
-      </Snackbar>
+
       <Header />
     </>
   )

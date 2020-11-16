@@ -11,10 +11,16 @@
   width: 100vw;
   padding: 10px;
   position: relative;
+  transition: 1s;
   a {
     text-decoration: none;
   }
+  &.active {
+    transform: translateY(100%)
+  }
 }
+
+
 
 .logo {
   margin-bottom: 0px;
