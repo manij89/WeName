@@ -107,10 +107,12 @@ export const loginUser = (userData) => {
 
 
 export const getLikedNames = (userId) => {
+  console.log(userId)
   return dispatch => {
     axios
       .get(`${BASE_URL}/user/${userId}/liked`)
       .then((liked) => {
+        console.log('liked', liked)
         dispatch({
           type: GET_LIKED_NAMES,
           payload: liked.data

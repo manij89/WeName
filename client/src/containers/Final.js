@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect} from 'react';
 import Header from '../components/Header';
 import '../styles/matches.scss';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
-import Dragcontainer from '../components/DragContainer';
-import { ButtonGroup } from 'react-bootstrap';
 import * as apiclient from '../services/apiclient';
 import Counter from '../components/counter';
+import Draggable from 'react-draggable';
+import NameCard from '../components/NameCard';
 
 function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, likedNames, matches, getLikedNames }) {
 
   const [direction, setDirection] = useState(null);
+  const [index, setIndex] = useState(0);
+  const [dragging, setDragging] = useState(false);
 
   const startGame = () => {
     getLikedNames(user.id);
@@ -30,7 +32,7 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
       setMatches(result);
       setLoading(false);
     }
-  }, [likedNames, partnerLikedNames])
+  }, [likedNames, partnerLikedNames, setMatches, setLoading])
 
   const swipe = (direction) => {
     if (direction === "right") {
@@ -49,11 +51,26 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
       setMatches(copy);
       apiclient.deleteName(user.id, matches[index].id);
     }
-    // setIndex((prevIndex) => prevIndex + 1)
-    // setTimeout(() => {
-    //   setDirection(null);
-    //   setDragging(false);
-    // }, 400)
+
+    setTimeout(() => {
+      setIndex(index + 1);
+      setDirection(null);
+      setDragging(false);
+    }, 400)
+  };
+
+  const handleDrag = (e, d) => {
+    // swiping animations
+    if (d.x > 50) {
+      console.log('dragging right')
+      swipe("right");
+    } else if (d.x < -50) {
+      console.log('dragging left')
+      swipe("left");
+    } else {
+      console.log('dragging else')
+      setDragging(false);
+    };
   };
 
   return (
@@ -66,13 +83,19 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
             width: '100%',
             overflow: 'hidden'
           }}>
-            <Dragcontainer
-              index={0}
-              swipe={swipe}
-              direction={direction}
-              setDirection={setDirection}
-              names={matches}
-            />
+            <Draggable
+              onStart={() => { setDragging(true); }}
+              onStop={handleDrag}
+              key={index}
+              position={dragging ? null : { x: 0, y: 0 }}
+            >
+              <div>
+                <NameCard
+                  direction={direction}
+                  names={matches}
+                />
+              </div>
+            </Draggable>
             <Counter matches={matches} />
           </div>
         </div>

@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/namecard.scss';
 import '../styles/game.scss';
 import Header from '../components/Header';
 import Snack from '../components/Snack';
 import ButtonGroup from '../components/buttongroup';
-import Dragcontainer from '../components/DragContainer';
 import * as apiclient from '../services/apiclient';
+import Draggable from 'react-draggable';
+import NameCard from '../components/NameCard';
 import {
   setPartner,
   setMatches,
@@ -15,58 +16,67 @@ import {
 } from '../redux/actions';
 import { connect } from 'react-redux';
 
-function Deck({filteredNames, user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, gender }) {
-  
+function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, gender }) {
+
   const [names, setNames] = useState([]);
   const [seen, setSeen] = useState([]);
   const [liked, setLiked] = useState([]);
-
+  const [filteredNames, setFilteredNames] = useState([]);
   const [newMatch, setNewMatch] = useState(false);
-
   const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [direction, setDirection] = useState(null);
 
-  filteredNames   = filterNames();
-
-  function filterNames() {
+  function filterNames(names, seen) {
     if (names.length && seen.length) {
       const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-      return results;
+      console.log('results', results)
+      setFilteredNames(results);
     } else {
-      return names;
+      console.log('else')
+      setFilteredNames(names);
     }
   }
 
-  const startGame = useCallback(() => {
-  apiclient.getNames(gender, setNames, setLoading);
-  apiclient.seenNames(user.id, setSeen);
-  apiclient.likedNames(user.id, setLiked);
-  if (partner) {
-    setPartner(user);
-    getPartnerLikedNames(user.partnerId);
-  };
-}, [gender, getPartnerLikedNames, partner, setLoading, setPartner, user]) 
+  const startGame = async () => {
+    const namestoFilter = await apiclient.getNames(gender, setNames, setLoading);
+    const seentoFilter = await apiclient.seenNames(user.id, setSeen);
+    filterNames(namestoFilter, seentoFilter)
+    await apiclient.likedNames(user.id, setLiked);
+
+    if (partner) {
+      setPartner(user);
+      getPartnerLikedNames(user.partnerId);
+    };
+  }
 
   useEffect(() => {
     startGame()
+
   }, []);
 
-  // with every new update of liked names, this will run and update matched names
+  // useEffect(() => {
+  //   if (isFetched) {
+  //     filterNames();
+  //   }
+  // }, [names, seen, liked])
+
+  // with every new update of liked names, this will run
   useEffect(() => {
     if (liked.length && partnerLikedNames.length) {
       const result = liked.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
       setMatches(result);
     }
-  }, [liked, partnerLikedNames, setMatches])
+  }, [liked, partnerLikedNames, setMatches, names])
+
 
   const swipe = (direction) => {
+    console.log('swipe')
+
     if (direction === "right") {
       setDirection("right");
-
       apiclient.postSeenNames(user.id, filteredNames[index].id);
       setSeen(prev => [...prev, filteredNames[index]]);
-
       apiclient.postLikedNames(user.id, filteredNames[index].id)
       setLiked(prev => [...prev, filteredNames[index]]);
 
@@ -81,16 +91,29 @@ function Deck({filteredNames, user, partner, partnerLikedNames, loading, setPart
       setSeen(prev => [...prev, filteredNames[index]]);
     }
 
-    // setTimeout(() => {
-    //   setIndex(index + 1);
-    //   setDirection(null);
-    //   setDragging(false);
-    // }, 400);
+    console.log('index', index)
+    setTimeout(() => {
+      console.log('index st', index)
+      setIndex((previousIndex) => previousIndex + 1);
+      setDirection(null);
+      setDragging(false);
+    }, 400);
   };
 
   function handleClose(_, reason) {
     if (reason === 'clickaway') return;
     setNewMatch(status => status = false)
+  };
+
+  const handleDrag = (e, d) => {
+    // swiping animations
+    if (d.x > 70) {
+      swipe("right");
+    } else if (d.x < -70) {
+      swipe("left");
+    } else {
+      setDragging(false);
+    };
   };
 
   return (
@@ -103,19 +126,23 @@ function Deck({filteredNames, user, partner, partnerLikedNames, loading, setPart
             width: '100%',
             overflow: 'hidden'
           }}>
-            <Dragcontainer 
-            index={index}
-            swipe={swipe}
-            direction={direction}
-            setDirection={setDirection}
-            dragging={dragging}
-            setDragging={setDragging}
-            names={filteredNames}
-
-            />
-           <ButtonGroup swipe={swipe} />
+            <Draggable
+              onStart={() => { setDragging(true) }}
+              onStop={handleDrag}
+              key={index}
+              position={dragging ? null : { x: 0, y: 0 }}
+            >
+              <div>
+                <NameCard
+                  direction={direction}
+                  names={filteredNames}
+                  index={index}
+                />
+              </div>
+            </Draggable>
+            <ButtonGroup swipe={swipe} />
           </div>
-          <Snack open={newMatch} onClose={handleClose} text='You have a Match'/>
+          <Snack open={newMatch} onClose={handleClose} text='You have a Match' />
         </div>
 
         :

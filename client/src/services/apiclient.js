@@ -3,22 +3,29 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:4002';
 
 export function getNames(gender, setState, setLoading) {
-  axios
+  return axios
     .get(`${BASE_URL}/names/${gender}`)
-    .then(allnames => setState(allnames.data))
-    .then(setLoading(false))
+    .then(allnames => {
+      setState(allnames.data)
+      return allnames.data;
+    })
+    .then((res) => {
+      setLoading(false)
+      console.log('res', res)
+      return res;
+    })
     .catch(err => console.error(err))
 }
 
 export function seenNames(userId, setState) {
-  axios
+  return axios
     .get(`${BASE_URL}/user/${userId}/seen`)
-    .then(res => setState(res.data))
+    .then(res => { console.log('seen', res.data); setState(res.data); return res.data;})
     .catch(err => console.error(err))
 }
 
 export function postSeenNames(userId, nameId) {
-  axios
+  return axios
     .post(`${BASE_URL}/user/${userId}/seen/${nameId}`)
     .then(res => res.status <= 400 ? res : Promise.reject(res))
     .catch(err => console.error(err))
@@ -28,6 +35,7 @@ export function likedNames(userId, setState) {
   axios
     .get(`${BASE_URL}/user/${userId}/liked`)
     .then(res => {
+      console.log('liked', res.data)
       if (res.data && Array.isArray(res.data)) {
         setState(res.data)
       }
