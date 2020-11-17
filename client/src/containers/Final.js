@@ -11,7 +11,7 @@ import NameCard from '../components/NameCard';
 function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, likedNames, matches, getLikedNames }) {
 
   const [direction, setDirection] = useState(null);
-  const [index, setIndex] = useState(0);
+  // const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
 
   const startGame = () => {
@@ -38,7 +38,7 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
     if (direction === "right") {
       setDirection("right");
       let copy = [...matches];
-      copy.push(matches[index])
+      copy.push(matches[0])
       copy.shift();
       setMatches(copy);
 
@@ -49,11 +49,11 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
       copy.shift();
       console.log('copy left', copy)
       setMatches(copy);
-      apiclient.deleteName(user.id, matches[index].id);
+      apiclient.deleteName(user.id, matches[0].id);
     }
 
     setTimeout(() => {
-      setIndex(index + 1);
+      // setIndex(index + 1);
       setDirection(null);
       setDragging(false);
     }, 400)
@@ -81,18 +81,19 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
           <div className='deck' style={{
             height: '80%',
             width: '100%',
-            overflow: 'hidden'
+            overflowY: 'hidden'
           }}>
             <Draggable
               onStart={() => { setDragging(true); }}
               onStop={handleDrag}
-              key={index}
+              key={matches.length}
               position={dragging ? null : { x: 0, y: 0 }}
             >
               <div>
                 <NameCard
                   direction={direction}
                   names={matches}
+                  index={0}
                 />
               </div>
             </Draggable>

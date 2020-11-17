@@ -70,6 +70,17 @@
     font-weight: 600;
   }
 
+  .final-end {
+    height: 65vh;
+    width: 80%;
+    bottom: 580px;
+    display: flex;
+    text-align: center;
+    font-size: 2rem;
+    background-color: white;
+    padding-top: 100px
+  }
+
   @keyframes shake-fade {
     0%{transform:translateX(0);
         opacity:1}

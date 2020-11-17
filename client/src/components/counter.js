@@ -5,7 +5,7 @@ export default function Counter({matches}) {
 
   return (
     <>
-    {matches !== 1
+    {matches.length > 1
     ?
       <div className='final-count'>
         Matches left: {matches.length}
