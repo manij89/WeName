@@ -12,9 +12,7 @@ function Matches({ matches, user, setMatches, getPartnerLikedNames, partnerLiked
   }, [getLikedNames, getPartnerLikedNames, user]);
 
   useEffect(() => {
-    console.log('liked', likedNames, 'partnerLiked', partnerLikedNames)
     if (likedNames.length && partnerLikedNames.length) {
-      console.log('liked', likedNames, 'partnerLiked', partnerLikedNames)
       const result = likedNames.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
       setMatches(result);
     }

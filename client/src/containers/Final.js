@@ -1,22 +1,68 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Header';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
-import Deck from '../containers/Deck';
 import Dragcontainer from '../components/DragContainer';
 import { ButtonGroup } from 'react-bootstrap';
-// import * as apiclient from '../services/apiclient';
+import * as apiclient from '../services/apiclient';
 
-export default function Final({matches, user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, gender }) {
+function Final({user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, likedNames, matches, getLikedNames }) {
 
   const [direction, setDirection] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [index, setIndex] = useState(0);
 
+  const [newMatch, setNewMatch] = useState(false);
+
+  // useEffect(() => {
+  //   getLikedNames(user.id);
+  //   if (user.partnerId) { getPartnerLikedNames(user.partnerId) }
+  // }, [getLikedNames, getPartnerLikedNames, user]);
+
+  // useEffect(() => {
+  //   if (likedNames.length && partnerLikedNames.length) {
+  //     const result = likedNames.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
+  //     setMatches(result);
+  //   }
+  // }, [partnerLikedNames, likedNames, setMatches])
+
+
+  // filteredNames   = filterNames();
+
+  // function filterNames() {
+  //   if (names.length && seen.length) {
+  //     const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
+  //     return results;
+  //   } else {
+  //     return names;
+  //   }
+  // }
+
+  const startGame = useCallback(() => {
+    getLikedNames(user.id);
+    if (partner) {
+      setPartner(user);
+      getPartnerLikedNames(user.partnerId);
+    };
+  }, [getPartnerLikedNames, partner, setPartner, user])
+
+
+  useEffect(() => {
+    startGame()
+  }, []);
+
+  useEffect(() => {
+    console.log('liked', likedNames, 'partner', partnerLikedNames)
+    if (likedNames.length && partnerLikedNames.length) {
+      const result = likedNames.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
+      setMatches(result);
+      setLoading(false);
+    }
+  }, [likedNames, partnerLikedNames, setMatches])
+
   const swipe = (direction) => {
     if (direction === "right") {
       setDirection("right");
-      // TODO 
 
       // apiclient.postSeenNames(user.id, filteredNames[index].id);
       // setSeen(prev => [...prev, filteredNames[index]]);
@@ -30,7 +76,7 @@ export default function Final({matches, user, partner, partnerLikedNames, loadin
       // }
 
     } else {
-      // setDirection("left");
+      setDirection("left");
       // apiclient.postSeenNames(user.id, filteredNames[index].id);
       // setSeen(prev => [...prev, filteredNames[index]]);
     }
@@ -40,6 +86,11 @@ export default function Final({matches, user, partner, partnerLikedNames, loadin
       setDirection(null);
       setDragging(false);
     }, 400);
+  };
+
+  function handleClose(_, reason) {
+    if (reason === 'clickaway') return;
+    setNewMatch(status => status = false)
   };
 
   return (
@@ -52,14 +103,15 @@ export default function Final({matches, user, partner, partnerLikedNames, loadin
             width: '100%',
             overflow: 'hidden'
           }}>
-            <Dragcontainer 
-            index={index}
-            swipe={swipe}
-            direction={direction}
-            filteredNames={matches}
+            <Dragcontainer
+              index={index}
+              swipe={swipe}
+              direction={direction}
+              filteredNames={matches}
             />
-           <ButtonGroup swipe={swipe} />
+            <ButtonGroup swipe={swipe} />
           </div>
+
         </div>
 
         :
@@ -71,22 +123,24 @@ export default function Final({matches, user, partner, partnerLikedNames, loadin
   )
 }
 
-// const mapStateToProps = (state) => ({
-//   loading: state.loading,
-//   matches: state.matches,
-//   user: state.user,
-//   partner: state.partner
-// })
+const mapStateToProps = (state) => ({
+  loading: state.loading,
+  user: state.user,
+  partner: state.partner,
+  partnerLikedNames: state.partnerLikedNames,
+  likedNames: state.likedNames,
+  matches: state.matches
+})
 
-// const mapDispatchToProps = (dispatch) => ({
-//   setPartner: (partnerData) => dispatch(actions.setPartner(partnerData)),
-//   setLoading: (status) => dispatch(actions.setLoading(status)),
-//   getLikedNames: (userId) => dispatch(actions.getLikedNames(userId)),
-//   setMatches: (matches) => dispatch(actions.setMatches(matches)),
-//   getPartnerLikedNames: (partnerId) => dispatch(actions.getPartnerLikedNames(partnerId))
-// })
+const mapDispatchToProps = (dispatch) => ({
+  setPartner: (partnerData) => dispatch(actions.setPartner(partnerData)),
+  setLoading: (status) => dispatch(actions.setLoading(status)),
+  getLikedNames: (userId) => dispatch(actions.getLikedNames(userId)),
+  setMatches: (matches) => dispatch(actions.setMatches(matches)),
+  getPartnerLikedNames: (partnerId) => dispatch(actions.getPartnerLikedNames(partnerId))
+})
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Final);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Final);

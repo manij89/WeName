@@ -32,7 +32,6 @@ export const setLikes = (likedNames) => {
 }
 
 export const linkPartner = partner => {
-  console.log('partner', partner)
   return {
     type: SET_PARTNER,
     payload: partner
@@ -128,7 +127,6 @@ export const getPartnerLikedNames = (partnerId) => {
      axios
       .get(`${BASE_URL}/user/${partnerId}/liked`)
       .then((liked) => {
-        console.log('partner names' ,liked.data)
         dispatch({
           type: GET_PARTNER_NAMES,
           payload: liked.data
@@ -141,7 +139,6 @@ export const getPartnerLikedNames = (partnerId) => {
 }
 
 export const setMatches = (newMatches) => {
-  console.log('matches-action', newMatches)
   return {
     type: SET_MATCHES,
     payload: newMatches

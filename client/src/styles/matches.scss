@@ -38,6 +38,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    &.delete{
+      animation:shake-fade 1.5s linear
+    }
   }
 
   .match:hover {
@@ -55,8 +58,22 @@
   background-color: #17C3B2 !important;
   }
 
-  
-
+  @keyframes shake-fade {
+    0%{transform:translateX(0);
+        opacity:1}
+        10%{transform:translateX(40px);
+          opacity:0.8}
+          20%{transform:translateX(0px);
+            opacity:0.6}
+            30%{transform:translateX(-40px);
+              opacity:0.4}
+              40%{transform:translateX(0px);
+                opacity:0.2}
+                70%{transform:translateX(120px);
+                  opacity:0}
+                  100%{transform:translateX(120px);
+                    opacity:0}
+  }
 
 
 

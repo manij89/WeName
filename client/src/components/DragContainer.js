@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Draggable from 'react-draggable';
 import NameCard from '../components/NameCard';
 
-export default function Dragcontainer({index, swipe, filteredNames, direction}) {
+export default function Dragcontainer({ index, swipe, filteredNames, direction }) {
   const [dragging, setDragging] = useState(false);
 
   const handleDrag = (e, d) => {

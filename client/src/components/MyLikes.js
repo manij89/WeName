@@ -7,16 +7,22 @@ import * as apiclient from '../services/apiclient';
 import * as actions from '../redux/actions';
 
 function Mylikes({ user, likedNames, getLikedNames, setLikes }) {
+  const [deletingName,setDeletingName]=useState("")
 
   useEffect(() => {
     getLikedNames(user.id);
   }, [getLikedNames, user]);
 
+
   function handleClick(like) {
     apiclient.deleteName(user.id, like.id);
-    const copy = [...likedNames];
-    let result = copy.filter((name) => name.id !== like.id);
-    setLikes(result);
+    setDeletingName(like.id)
+    setTimeout(()=>{
+      const copy = [...likedNames];
+      let result = copy.filter((name) => name.id !== like.id);
+      setLikes(result);
+      setDeletingName('')
+    },1500)
   }
 
   return (
@@ -33,7 +39,9 @@ function Mylikes({ user, likedNames, getLikedNames, setLikes }) {
         <div className='likes'>
           {likedNames.map((like) =>
             <div
-            className={like.gender + ' like'}
+            className={deletingName === like.id ? 
+              like.gender + ' like delete':
+              like.gender + ' like'}
             key={like.id}
             >
               {like.name}
