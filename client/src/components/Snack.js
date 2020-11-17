@@ -7,7 +7,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function Snack({open, onClose}) {
+export default function Snack({open, onClose, text}) {
   const vertical = 'top';
   const horizontal = 'center';
 
@@ -16,11 +16,11 @@ export default function Snack({open, onClose}) {
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
         open={open}
-        autoHideDuration={2000}
+        autoHideDuration={1500}
         onClose={onClose}
       >
         <Alert severity="success">
-          It's a Match  <FavoriteBorderIcon />
+          {text}  <FavoriteBorderIcon />
         </Alert>
       </Snackbar>
     </>

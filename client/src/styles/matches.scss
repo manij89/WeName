@@ -58,6 +58,18 @@
   background-color: #17C3B2 !important;
   }
 
+  .final-count {
+    border: 1px solid #FE6D73;
+    border-radius: 25px;
+    padding: 15px;
+    font-size: 1.3rem;
+    margin-top: 20px;
+    position: relative;
+    bottom: 6.4rem;
+    color: #FE6D73;
+    font-weight: 600;
+  }
+
   @keyframes shake-fade {
     0%{transform:translateX(0);
         opacity:1}

@@ -81,11 +81,11 @@ function Deck({filteredNames, user, partner, partnerLikedNames, loading, setPart
       setSeen(prev => [...prev, filteredNames[index]]);
     }
 
-    setTimeout(() => {
-      setIndex(index + 1);
-      setDirection(null);
-      setDragging(false);
-    }, 400);
+    // setTimeout(() => {
+    //   setIndex(index + 1);
+    //   setDirection(null);
+    //   setDragging(false);
+    // }, 400);
   };
 
   function handleClose(_, reason) {
@@ -107,11 +107,15 @@ function Deck({filteredNames, user, partner, partnerLikedNames, loading, setPart
             index={index}
             swipe={swipe}
             direction={direction}
-            filteredNames={filteredNames}
+            setDirection={setDirection}
+            dragging={dragging}
+            setDragging={setDragging}
+            names={filteredNames}
+
             />
            <ButtonGroup swipe={swipe} />
           </div>
-          <Snack open={newMatch} onClose={handleClose}/>
+          <Snack open={newMatch} onClose={handleClose} text='You have a Match'/>
         </div>
 
         :

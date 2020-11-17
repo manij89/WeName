@@ -2,8 +2,8 @@ import React from 'react';
 import '../styles/namecard.scss';
 import { Paper} from '@material-ui/core';
 
-export default function NameCard({ names, index, direction }) {
-
+export default function NameCard({ names, index, direction, nameObj }) {
+  console.log(nameObj)
   return (
     <div className='namecard'>
       <Paper elevation={7} className='name'>
@@ -11,13 +11,13 @@ export default function NameCard({ names, index, direction }) {
           ? direction
           : "enter"}
         >
-          {names.length
+          {/* {names && names.length
             ?
             names[index].name
             :
             '...'
-          }
-
+          } */}
+          {nameObj && nameObj.name ? nameObj.name : '...'}
         </div> 
       </Paper>
     </div>

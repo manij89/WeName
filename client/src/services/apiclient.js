@@ -30,7 +30,6 @@ export function likedNames(userId, setState) {
     .then(res => {
       if (res.data && Array.isArray(res.data)) {
         setState(res.data)
-        console.log(res.data)
       }
     })
     .catch(err => console.error(err));

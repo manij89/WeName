@@ -1,96 +1,59 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Header from '../components/Header';
+import '../styles/matches.scss';
 import { connect } from 'react-redux';
 import * as actions from '../redux/actions';
 import Dragcontainer from '../components/DragContainer';
 import { ButtonGroup } from 'react-bootstrap';
 import * as apiclient from '../services/apiclient';
+import Counter from '../components/counter';
 
-function Final({user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, likedNames, matches, getLikedNames }) {
+function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, likedNames, matches, getLikedNames }) {
 
   const [direction, setDirection] = useState(null);
-  const [dragging, setDragging] = useState(false);
-  const [index, setIndex] = useState(0);
 
-  const [newMatch, setNewMatch] = useState(false);
-
-  // useEffect(() => {
-  //   getLikedNames(user.id);
-  //   if (user.partnerId) { getPartnerLikedNames(user.partnerId) }
-  // }, [getLikedNames, getPartnerLikedNames, user]);
-
-  // useEffect(() => {
-  //   if (likedNames.length && partnerLikedNames.length) {
-  //     const result = likedNames.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
-  //     setMatches(result);
-  //   }
-  // }, [partnerLikedNames, likedNames, setMatches])
-
-
-  // filteredNames   = filterNames();
-
-  // function filterNames() {
-  //   if (names.length && seen.length) {
-  //     const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-  //     return results;
-  //   } else {
-  //     return names;
-  //   }
-  // }
-
-  const startGame = useCallback(() => {
+  const startGame = () => {
     getLikedNames(user.id);
     if (partner) {
       setPartner(user);
       getPartnerLikedNames(user.partnerId);
     };
-  }, [getPartnerLikedNames, partner, setPartner, user])
-
+  }
 
   useEffect(() => {
     startGame()
   }, []);
 
   useEffect(() => {
-    console.log('liked', likedNames, 'partner', partnerLikedNames)
     if (likedNames.length && partnerLikedNames.length) {
       const result = likedNames.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
       setMatches(result);
       setLoading(false);
     }
-  }, [likedNames, partnerLikedNames, setMatches])
+  }, [likedNames, partnerLikedNames])
 
   const swipe = (direction) => {
     if (direction === "right") {
       setDirection("right");
+      let copy = [...matches];
+      copy.push(matches[index])
+      copy.shift();
+      setMatches(copy);
 
-      // apiclient.postSeenNames(user.id, filteredNames[index].id);
-      // setSeen(prev => [...prev, filteredNames[index]]);
-
-      // apiclient.postLikedNames(user.id, filteredNames[index].id)
-      // setLiked(prev => [...prev, filteredNames[index]]);
-
-      // const nameArray = partnerLikedNames.map(obj => (obj.name));
-      // if (nameArray.includes(filteredNames[index].name)) {
-      //   setNewMatch(status => status = true);
-      // }
 
     } else {
       setDirection("left");
-      // apiclient.postSeenNames(user.id, filteredNames[index].id);
-      // setSeen(prev => [...prev, filteredNames[index]]);
+      let copy = [...matches];
+      copy.shift();
+      console.log('copy left', copy)
+      setMatches(copy);
+      apiclient.deleteName(user.id, matches[index].id);
     }
-
-    setTimeout(() => {
-      setIndex(index + 1);
-      setDirection(null);
-      setDragging(false);
-    }, 400);
-  };
-
-  function handleClose(_, reason) {
-    if (reason === 'clickaway') return;
-    setNewMatch(status => status = false)
+    // setIndex((prevIndex) => prevIndex + 1)
+    // setTimeout(() => {
+    //   setDirection(null);
+    //   setDragging(false);
+    // }, 400)
   };
 
   return (
@@ -104,19 +67,17 @@ function Final({user, partner, partnerLikedNames, loading, setPartner, setLoadin
             overflow: 'hidden'
           }}>
             <Dragcontainer
-              index={index}
+              index={0}
               swipe={swipe}
               direction={direction}
-              filteredNames={matches}
+              setDirection={setDirection}
+              names={matches}
             />
-            <ButtonGroup swipe={swipe} />
+            <Counter matches={matches} />
           </div>
-
         </div>
-
         :
-        //TODO add spinner
-        'LOADING.....'
+        'LOADING..'
       }
       <Header />
     </>
