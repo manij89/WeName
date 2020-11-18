@@ -1,7 +1,6 @@
 export const SET_USER = "SET_USER";
 export const SET_PARTNER = "SET_PARTNER";
 export const SET_LIKED_NAMES = "SET_LIKED_NAMES";
-export const UPDATE_LIKED_NAMES = "UPDATE_LIKED_NAMES";
 export const UPDATE_SEEN_NAMES = "UPDATE_SEEN_NAMES";
 export const GET_LIKED_NAMES = "GET_LIKED_NAMES";
 export const GET_SEEN_NAMES = "GET_SEEN_NAMES";

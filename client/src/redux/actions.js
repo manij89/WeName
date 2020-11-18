@@ -2,7 +2,6 @@ import {
   SET_LOADING, 
   SET_USER, 
   SET_PARTNER, 
-  SET_LIKED_NAMES,
   SET_MATCHES, 
   GET_LIKED_NAMES, 
   GET_PARTNER_NAMES } from './actiontypes';

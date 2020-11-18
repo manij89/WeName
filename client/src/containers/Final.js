@@ -61,10 +61,10 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
 
   const handleDrag = (e, d) => {
     // swiping animations
-    if (d.x > 50) {
+    if (d.x > 80) {
       console.log('dragging right')
       swipe("right");
-    } else if (d.x < -50) {
+    } else if (d.x < -80) {
       console.log('dragging left')
       swipe("left");
     } else {
