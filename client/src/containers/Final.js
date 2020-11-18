@@ -8,6 +8,10 @@ import Counter from '../components/counter';
 import Draggable from 'react-draggable';
 import NameCard from '../components/NameCard';
 
+
+// TODO bug: lagging in the drag function, which does not trigger the 'swipe'
+// function in the correct way
+
 function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, likedNames, matches, getLikedNames }) {
 
   const [direction, setDirection] = useState(null);
