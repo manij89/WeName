@@ -4,10 +4,11 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const {db_name, db_user, db_password, db_host} = require('../config')
+const {db_name, db_user, db_password, db_host} = require('../config');
 const db = {};
 
 // TODO : config file with db keys 
+//TODO: config file with .env file 
 const sequelize = new Sequelize(db_name, db_user, db_password, {
   host: db_host,
   dialect: 'postgres',
@@ -29,13 +30,13 @@ fs
   .forEach(file => {
     var model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
-  })
+  });
 
-  Object.keys(db).forEach(model => {
-    if(db[model].associate) {
-      db[model].associate(db)
-    }
-  })
+Object.keys(db).forEach(model => {
+  if(db[model].associate) {
+    db[model].associate(db);
+  }
+});
 
 
 db.sequelize = sequelize;
