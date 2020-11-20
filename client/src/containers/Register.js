@@ -38,7 +38,7 @@ function Register(props) {
       email: form.email,
       password: form.password
     };
-    console.log(userData)
+    console.log('props', props)
     props.registerUser(userData);
     props.history.push('/game');
   };
@@ -52,23 +52,26 @@ function Register(props) {
         onChange={onChange}
         >
         <h1>Sign Up</h1>
-        <label>First Name:</label>
+        <label htmlFor='firstName'>First Name:</label>
         <input
+          id='firstName'
           className='registration-input'
           name='firstName'
           required />
         <ErrorMessage error={errors.firstName} />
 
-        <label>Last Name:</label>
+        <label htmlFor='lastName'>Last Name:</label>
         <input
+          id='lastName'
           className='registration-input'
           name="lastName"
           required  
           ref={register({ required: true, minLength: 2 })} />
         <ErrorMessage error={errors.firstName} />
 
-        <label>Email</label>
+        <label htmlFor='email'>Email</label>
         <input
+          id='email'
           className='registration-input'
           name="email"
           type="email"
@@ -77,15 +80,16 @@ function Register(props) {
         />
         <ErrorMessage error={errors.email || errors.validate} />
 
-        <label>Password</label>
+        <label htmlFor='password'>Password</label>
         <input className='registration-input'
+          id='password'
           name="password"
           type="password"
           required 
           ref={register({ required: true, minLength: 8 })}
         />
         <ErrorMessage error={errors.email} />
-          <input className='registration-button' disabled={isSubmitting} type="submit" />
+          <input  data-testid='submit' className='registration-button' disabled={isSubmitting} type="submit" />
         <h5>Already Registered? <Link to='/login'>Login</Link> here</h5>
       </form>
 
