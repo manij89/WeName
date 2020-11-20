@@ -157,6 +157,3 @@ exports.deleteLikedName = async (req, res) => {
     res.status(500);
   }
 };
-
-
-//TODO: why is there a liked and matched array on each user and not in the schema????
