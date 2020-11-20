@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App renders without crashing 1`] = `
+<body>
+  <div>
+    <div>
+      <div
+        class="home"
+      >
+        <div
+          class="logo"
+        >
+          <div>
+            <span
+              style="display: inline-block; width: auto;"
+            >
+              <span
+                style="animation-name: textAnim_verticalFadeIn_59574; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0s; animation-fill-mode: both; display: inline-block;"
+              >
+                W
+              </span>
+            </span>
+            <span
+              style="display: inline-block; width: auto;"
+            >
+              <span
+                style="animation-name: textAnim_verticalFadeIn_59574; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.14285714285714285s; animation-fill-mode: both; display: inline-block;"
+              >
+                E
+              </span>
+            </span>
+            <span
+              style="display: inline-block; width: auto;"
+            >
+              <span
+                style="animation-name: textAnim_verticalFadeIn_59574; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.2857142857142857s; animation-fill-mode: both; display: inline-block;"
+              >
+                N
+              </span>
+            </span>
+            <span
+              style="display: inline-block; width: auto;"
+            >
+              <span
+                style="animation-name: textAnim_verticalFadeIn_59574; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.42857142857142855s; animation-fill-mode: both; display: inline-block;"
+              >
+                A
+              </span>
+            </span>
+            <span
+              style="display: inline-block; width: auto;"
+            >
+              <span
+                style="animation-name: textAnim_verticalFadeIn_59574; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.5714285714285714s; animation-fill-mode: both; display: inline-block;"
+              >
+                M
+              </span>
+            </span>
+            <span
+              style="display: inline-block; width: auto;"
+            >
+              <span
+                style="animation-name: textAnim_verticalFadeIn_59574; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.7142857142857142s; animation-fill-mode: both; display: inline-block;"
+              >
+                E
+              </span>
+            </span>
+          </div>
+        </div>
+        <button
+          class="home_button"
+        >
+          Start
+        </button>
+        <img
+          alt="stork"
+          class="stork"
+          src="stork.svg"
+        />
+        <img
+          alt="grass"
+          class="grass"
+          src="grass.svg"
+        />
+      </div>
+      <div
+        class="info-container"
+      >
+        <div
+          class="MuiPaper-root info-card MuiPaper-elevation7 MuiPaper-rounded"
+        >
+          <h1>
+            Find your favorite baby names
+          </h1>
+          <ul
+            class="MuiList-root MuiList-padding"
+          >
+            <div>
+              <li
+                class="MuiListItem-root MuiListItem-gutters"
+              >
+                <div
+                  class="MuiListItemText-root"
+                >
+                  <span
+                    class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                  >
+                    Register and go to your "Account"
+                  </span>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root MuiListItem-gutters"
+              >
+                <div
+                  class="MuiListItemText-root"
+                >
+                  <span
+                    class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                  >
+                    Share or enter the personal code to play with your partner
+                  </span>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root MuiListItem-gutters"
+              >
+                <div
+                  class="MuiListItemText-root"
+                >
+                  <span
+                    class="MuiTypography-root MuiListItemText-primary MuiTypography-body1 MuiTypography-displayBlock"
+                  >
+                    Keep swiping and check your matches
+                  </span>
+                </div>
+              </li>
+            </div>
+          </ul>
+          <div>
+            <a
+              href="/register"
+            >
+              <button
+                class="info-button"
+              >
+                Sign up
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

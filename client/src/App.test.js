@@ -1,11 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react'
 import App from './App';
-import ReactDOM from 'react-dom'
 
+describe('App', () => {
+  it('renders without crashing', () => {
+    const component = render(<App />);
+    expect(component.baseElement).toMatchSnapshot();
+  });
+});
 
-it ('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App/>, div)
-})
+it('renders the tagline in the welcome screen', () => {
+  render(<App/>);
+  expect(screen.getByText('Find your favorite baby names')).toBeInTheDocument();
+});
+
 
