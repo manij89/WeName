@@ -4,13 +4,10 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const {db_name, db_user, db_password, db_host} = require('../config');
 const db = {};
 
-// TODO : config file with db keys 
-//TODO: config file with .env file 
-const sequelize = new Sequelize(db_name, db_user, db_password, {
-  host: db_host,
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
   dialect: 'postgres',
   pool: {
     max: 5,
