@@ -18,9 +18,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Name.associate = db => {
-      db.Name.belongsToMany(db.User, {through: 'SeenNames'});
-      db.Name.belongsToMany(db.User, {through: 'LikedNames'});
-  }
+    db.Name.belongsToMany(db.User, {through: 'SeenNames'});
+    db.Name.belongsToMany(db.User, {through: 'LikedNames'});
+  };
 
   return Name;
-}
+};
+
+//TODO: why is timestamps false??
+//TODO: Question for M - what is this seennames and liked name situation association??

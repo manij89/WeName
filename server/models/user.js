@@ -29,12 +29,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = db => {
-      db.User.hasOne(db.User, {
-        foreignKey: 'partnerId'
-      });
-      db.User.belongsToMany(db.Name, {through: 'SeenNames', as: 'Seen'})
-      db.User.belongsToMany(db.Name, {through: 'LikedNames', as: 'Liked'})
-  }
+    db.User.hasOne(db.User, {
+      foreignKey: 'partnerId'
+    });
+    db.User.belongsToMany(db.Name, {through: 'SeenNames', as: 'Seen'});
+    db.User.belongsToMany(db.Name, {through: 'LikedNames', as: 'Liked'});
+  };
 
   return User;
-}
+};
