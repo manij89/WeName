@@ -11,7 +11,14 @@ exports.getUser = async (req, res) => {
     const result = await db.User.findOne({
       where: {
         id: id
-      }
+      },
+      include: [{
+        model: db.Name,
+        as: 'Seen'
+      },{
+        model: db.Name,
+        as: 'Liked'
+      }]
     });
     res.send(result);
     res.status(200);
