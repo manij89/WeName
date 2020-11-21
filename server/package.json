@@ -4,7 +4,7 @@
   "description": "server WeName",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest",
+    "test": "jest",
     "dev": "nodemon index.js"
   },
   "author": "Mandy Nijssen",
