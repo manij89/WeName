@@ -17,4 +17,16 @@ describe('Home', () => {
     render(<Home />);
     expect(screen.findByText("Find your favourite baby names")).toBeTruthy();
   });
-});
+
+  test('renders start button', () => {
+    render(<Home/>)
+    expect(screen.getByText('Start')).toBeInTheDocument();
+  });
+
+  test('renders sign up button', () => {
+    render(<Home/>)
+    expect(screen.getByText('Sign up')).toBeInTheDocument();
+  });
+
+
+  })
