@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
@@ -20,9 +19,9 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+   
       <App className='app'/>
-    </BrowserRouter>
+    
    </Provider>,
   document.getElementById('root')
 );
