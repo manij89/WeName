@@ -64,9 +64,9 @@ describe('Register component happy path', () => {
     // render(<Provider store={store}><Router history={history}><App /></Router></Provider>);
 
     // Question: is it ok to pass the history as a prop directly into the Register component to init the route?
-    // customRender(<Register history={history} />);
+    customRender(<Register history={history} />);
 
-    customRender(<App />, { history });
+    // customRender(<App />, { history });
     const signUpLink = screen.getByText(/sign up/i);
     expect(signUpLink).toBeInTheDocument();
 
