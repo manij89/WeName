@@ -46,60 +46,63 @@ const customRender = (
     store,
   };
 }
+describe('Register component happy path', () => {
+  test('should render Pick Gender after Register correctly', async () => {
+    const mockAPIpost = axios.post.mockResolvedValue({
+      "id":3,
+      "firstName":"Name",
+      "lastName":"Last Name",
+      "email":"email@email.com",
+      "password":"password",
+      "linkingCode":"linkinCode",
+      "partnerId":null
+    });
 
-test('should render Pick Gender after Register correctly', async () => {
-  const mockAPIpost = axios.post.mockResolvedValue({
-    "id":3,
-    "firstName":"Name",
-    "lastName":"Last Name",
-    "email":"email@email.com",
-    "password":"password",
-    "linkingCode":"linkinCode",
-    "partnerId":null
-  });
+    const history = createMemoryHistory();
+    history.push('/register');
 
-  const history = createMemoryHistory();
-  history.push('/register');
+    // render(<Provider store={store}><Router history={history}><App /></Router></Provider>);
 
-  // render(<Provider store={store}><Router history={history}><App /></Router></Provider>);
+    // Question: is it ok to pass the history as a prop directly into the Register component to init the route?
+    // customRender(<Register history={history} />);
 
-  // Question: is it ok to pass the history as a prop directly into the Register component to init the route?
-  // customRender(<Register history={history} />);
+    customRender(<App />, { history });
+    const signUpLink = screen.getByText(/sign up/i);
+    expect(signUpLink).toBeInTheDocument();
 
-  customRender(<App />, { history });
-  const signUpLink = screen.getByText(/sign up/i);
-  expect(signUpLink).toBeInTheDocument();
+    const firstName = screen.getByLabelText(/first name/i);
+    expect(firstName).toBeInTheDocument();
+    userEvent.type(firstName, 'Name')
+    expect(firstName).toHaveValue('Name');
+    
+    const lastName = screen.getByLabelText(/last name/i);
+    expect(lastName).toBeInTheDocument();
+    userEvent.type(lastName, 'Last Name')
+    expect(lastName).toHaveValue('Last Name');
 
-  const firstName = screen.getByLabelText(/first name/i);
-  const lastName = screen.getByLabelText(/last name/i);
-  
-  expect(firstName).toBeInTheDocument();
-  userEvent.type(firstName, 'Name')
-  expect(firstName).toHaveValue('Name');
+    
+    const email = screen.getByLabelText(/Email/i);
+    expect(email).toBeInTheDocument();
+    userEvent.type(email, 'email@email.com')
+    expect(email).toHaveValue('email@email.com');
 
-  //TODO: refctor
-  fireEvent.change(screen.getByLabelText(/Last Name:/i), {
-    target: {value: 'Last Name'},
+    const password = screen.getByLabelText(/Password/i);
+    expect(password).toBeInTheDocument();
+    userEvent.type(password, 'password')
+    expect(password).toHaveValue('password');
+
+    const button = screen.getByTestId(/submit/i);
+    expect(button).toBeInTheDocument();
+    userEvent.click(button);
+
+    // const user = await registerUser();
+    expect(mockAPIpost).toHaveBeenCalledWith(`${BASE_URL}/register`,{
+      "firstName":"Name",
+      "lastName":"Last Name",
+      "email":"email@email.com",
+      "password":"password"
+    })
+    expect(mockAPIpost).toHaveBeenCalledTimes(1);
+    //await waitFor(()=>screen.getByText(/What type of name are you looking for/i));
   })
-  expect(lastName).toHaveValue('Last Name');
-  fireEvent.change(screen.getByLabelText(/Email/i), {
-    target: {value: 'email@email.com'},
-  })
-  fireEvent.change(screen.getByLabelText(/Password/i), {
-    target: {value: 'password'},
-  })
-
-  const button = screen.getByTestId(/submit/i);
-  expect(button).toBeInTheDocument();
-  fireEvent.click(button);
-  
-  // const user = await registerUser();
-  expect(mockAPIpost).toHaveBeenCalledWith(`${BASE_URL}/register`,{
-    "firstName":"Name",
-    "lastName":"Last Name",
-    "email":"email@email.com",
-    "password":"password"
-  })
-  expect(mockAPIpost).toHaveBeenCalledTimes(1);
-  //await waitFor(()=>screen.getByText(/What type of name are you looking for/i));
 });
