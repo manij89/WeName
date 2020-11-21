@@ -7,7 +7,7 @@ describe('App', () => {
     const component = render(<App />);
     expect(component.baseElement).toMatchSnapshot();
   });
-});
+
 
 it('renders the tagline in the welcome screen', () => {
   render(<App/>);
