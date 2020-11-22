@@ -1,6 +1,5 @@
 const db = require('../models');
 
-
 let user;
 describe('Get user', () => {
  
@@ -36,16 +35,13 @@ describe('Get user', () => {
           as: 'Liked'
         }]
       });
-  })
+  });
       
     console.log(user);
 
-    
-
     it('should have 1 like', () => {
       expect(result.Liked.length).toBe(1);
-    })
-
+    });
   })
 
   describe('User does not have liked names',() => {})
@@ -53,8 +49,6 @@ describe('Get user', () => {
     expect(true).toBe(true)
   });
   
-
-
   // After all tersts have finished, close the DB connection
   afterAll(async () => {
     await db.sequelize.close()
