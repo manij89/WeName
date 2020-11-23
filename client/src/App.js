@@ -1,6 +1,6 @@
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Home from './containers/Home';
 import Register from './containers/Register';
 import Login from './containers/Login';
@@ -14,7 +14,6 @@ import Final from './containers/Final';
 function App() {
   return (
 
-    <BrowserRouter>
     <Switch>
       <Route
         exact
@@ -66,7 +65,6 @@ function App() {
         component={Matches}
       />
     </Switch>
-    </BrowserRouter>
 
   );
 }
