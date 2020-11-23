@@ -5,7 +5,7 @@ import stork from '../assets/stork.svg';
 import grass from '../assets/grass.svg';
 
 import '../styles/info.scss';
-import { Link } from 'react-router-dom';
+import { BrowserRouter, Link } from 'react-router-dom';
 import { Paper, List, ListItemText, ListItem } from '@material-ui/core';
 
 
@@ -65,11 +65,13 @@ export default function Home(props) {
             </div>
           </List>
           <div>
+          <BrowserRouter>
             <Link to='/register'>
               <button
                 className='info-button'
               >Sign up</button>
             </Link>
+            </BrowserRouter>
           </div>
 
         </Paper>
