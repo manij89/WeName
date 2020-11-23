@@ -40,8 +40,8 @@ exports.register = async (req, res) => {
       liked: [],
       matched: []
     });
-    res.send(user);
-    res.status(201);
+    res.status(201).send(user);
+
   } catch (error) {
     console.error('failed creating user', error);
     res.status(500);
@@ -76,8 +76,8 @@ exports.linkPartner = async (req, res) => {
     user2.partnerId = user1.id;
     await user2.save();
     
-    res.status(200);
-    res.send({user1, user2});
+    res.status(200).send({user1, user2});
+  
   } catch (error) {
     res.status(500);
     console.error('failed to connect partners', error);
@@ -163,3 +163,5 @@ exports.deleteLikedName = async (req, res) => {
     res.status(500);
   }
 };
+
+
