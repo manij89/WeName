@@ -4,7 +4,7 @@
   "description": "server WeName",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
+    "test": "NODE_ENV=test jest --watch",
     "dev": "nodemon index.js"
   },
   "jest": {

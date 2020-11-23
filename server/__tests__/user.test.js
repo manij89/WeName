@@ -1,3 +1,4 @@
+
 const request = require('supertest');
 const app = require('../app');
 const db = require('../models');
@@ -103,6 +104,7 @@ describe('User\'s operations', () => {
     await db.sequelize.close();
   });
 });
+
 
 
 
