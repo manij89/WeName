@@ -10,7 +10,7 @@ describe("User's operations", () => {
       lastName: 'De Souza',
       email: 'test@test.com',
       password: 'secret',
-      linkingCode: 'oindenfiensfoensf',
+      linkingCode: 'carloslinkingcode',
       liked: [],
       matched: []
     });
@@ -63,7 +63,39 @@ describe("User's operations", () => {
   });
 
   describe('User seen names', () => {
- 
+    test('Should have no seen names after user creation', async () => {
+      const { body } = await request(app).get(`/user/${user.id}`);
+      expect(body.Seen.length).toBe(0);
+    });
+
+    test('Should have a seen name if a name has been seen', async () => {
+      await request(app).post(`/user/${user.id}/seen/666`);
+      const { body } = await request(app).get(`/user/${user.id}`);
+      expect(body.Seen.length).toBe(1);
+    })
+  });
+
+  describe('Linking users', () => {
+    let user2
+    beforeAll(async () => {
+        user2 = await db.User.create({
+        firstName: 'Gui',
+        lastName: 'Schmithalter',
+        email: 'guit@test.com',
+        password: 'grasp',
+        linkingCode: 'guilinkingcode',
+        liked: [],
+        matched: []
+      });
+  });
+    test('Should link two users correctly', async () => {
+      await request(app).put(`/user/${user2.id}/link`).send({
+        linkingCode: user.linkingCode
+      });
+
+      const { body } = await request(app).get(`/user/${user2.id}`);
+      expect(body.linkingCode).toBe(user.linkingCode);
+    });
   });
 
   afterAll(async () => {
