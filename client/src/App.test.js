@@ -1,18 +1,26 @@
-import { render, screen } from '@testing-library/react';
-import React from 'react'
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.scss';
 import App from './App';
 
-describe('App', () => {
-  it('renders without crashing', () => {
-    const component = render(<BrowserRouter><App /></BrowserRouter>);
-    expect(component.baseElement).toMatchSnapshot();
-  });
-  it('renders the tagline in the welcome screen', () => {
-    render(<App/>);
-    expect(screen.getByText('Find your favorite baby names')).toBeInTheDocument();
-  });
-  
+import { BrowserRouter } from 'react-router-dom';
+
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import reducer from './redux/reducers';
+
+
+const middleware = [thunk];
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(...middleware))
+);
+
+
+it('renders without crashing', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<Provider store = {store}><BrowserRouter><App /></BrowserRouter></Provider>, div);
 });
-
-

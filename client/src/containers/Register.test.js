@@ -1,50 +1,17 @@
 import React from 'react'
 import '@testing-library/jest-dom'
-import { render, screen, waitFor, cleanup } from '@testing-library/react';
+import { screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axios from 'axios';
-import { Provider } from "react-redux";
-import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import reducer from '../redux/reducers';
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
 import App from '../App';
 import { BASE_URL } from '../redux/actions'
-const middleware = [thunk];
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+
+import customRender from '../utils/customRender'
 
 jest.mock('axios');
 
-const customStore = createStore(
-  reducer,
-  composeEnhancers(applyMiddleware(...middleware))
-);
-
-const customRender = (
-  ui,
-  {
-    route = '/',
-    history = createMemoryHistory({ initialEntries: [route] }),
-    initialState,
-    store=customStore,
-    ...renderOptions
-  } = {}) => {
-  const Wrapper = ({ children }) => (
-    <Provider store={store}>
-      <Router history={history}>{children}</Router>
-    </Provider>
-  )
-
-  return {
-    ...render(ui, {
-      wrapper: Wrapper,
-      ...renderOptions,
-    }), 
-    history,
-    store,
-  };
-}
 
 describe.only('Register component happy path', () => {
   afterEach(() => {
@@ -66,9 +33,9 @@ describe.only('Register component happy path', () => {
     history.push('/register');
 
     // Question: is it ok to pass the history as a prop directly into the Register component to init the route?
-    customRender(<Register history={history} />);
+    // customRender(<Register history={history} />);
 
-    // customRender(<App />, { history });
+    customRender(<App />, { history });
     const signUpLink = screen.getByText(/sign up/i);
     expect(signUpLink).toBeInTheDocument();
 

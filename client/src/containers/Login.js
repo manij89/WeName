@@ -60,7 +60,7 @@ function Login (props) {
         />
         <ErrorMessage error={errors.email} />
 
-        <button data-testid='login' className='registration-button' disabled={isSubmitting} type="submit"> Login
+        <button data-testid='loginBtn' className='registration-button' disabled={isSubmitting} type="submit"> Login
         </button>
 
         <h5>Not Registered? <Link to='/register'>Register</Link> here</h5>
