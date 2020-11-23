@@ -30,7 +30,6 @@ function Register(props) {
   } = useForm();
 
   const handleSubmit = (e) => {
-    console.log('trying to register')
     e.preventDefault();
     const userData = {
       firstName: form.firstName,
@@ -38,7 +37,6 @@ function Register(props) {
       email: form.email,
       password: form.password
     };
-    console.log('props', props)
     props.registerUser(userData);
     props.history.push('/game');
   };

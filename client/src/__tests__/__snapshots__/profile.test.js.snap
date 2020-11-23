@@ -15,7 +15,7 @@ exports[`Profile render correctly 1`] = `
               style="display: inline-block; width: auto;"
             >
               <span
-                style="animation-name: textAnim_verticalFadeIn_1694; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0s; animation-fill-mode: both; display: inline-block;"
+                style="animation-name: textAnim_verticalFadeIn_85067; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0s; animation-fill-mode: both; display: inline-block;"
               >
                 W
               </span>
@@ -24,7 +24,7 @@ exports[`Profile render correctly 1`] = `
               style="display: inline-block; width: auto;"
             >
               <span
-                style="animation-name: textAnim_verticalFadeIn_1694; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.14285714285714285s; animation-fill-mode: both; display: inline-block;"
+                style="animation-name: textAnim_verticalFadeIn_85067; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.14285714285714285s; animation-fill-mode: both; display: inline-block;"
               >
                 E
               </span>
@@ -33,7 +33,7 @@ exports[`Profile render correctly 1`] = `
               style="display: inline-block; width: auto;"
             >
               <span
-                style="animation-name: textAnim_verticalFadeIn_1694; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.2857142857142857s; animation-fill-mode: both; display: inline-block;"
+                style="animation-name: textAnim_verticalFadeIn_85067; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.2857142857142857s; animation-fill-mode: both; display: inline-block;"
               >
                 N
               </span>
@@ -42,7 +42,7 @@ exports[`Profile render correctly 1`] = `
               style="display: inline-block; width: auto;"
             >
               <span
-                style="animation-name: textAnim_verticalFadeIn_1694; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.42857142857142855s; animation-fill-mode: both; display: inline-block;"
+                style="animation-name: textAnim_verticalFadeIn_85067; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.42857142857142855s; animation-fill-mode: both; display: inline-block;"
               >
                 A
               </span>
@@ -51,7 +51,7 @@ exports[`Profile render correctly 1`] = `
               style="display: inline-block; width: auto;"
             >
               <span
-                style="animation-name: textAnim_verticalFadeIn_1694; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.5714285714285714s; animation-fill-mode: both; display: inline-block;"
+                style="animation-name: textAnim_verticalFadeIn_85067; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.5714285714285714s; animation-fill-mode: both; display: inline-block;"
               >
                 M
               </span>
@@ -60,7 +60,7 @@ exports[`Profile render correctly 1`] = `
               style="display: inline-block; width: auto;"
             >
               <span
-                style="animation-name: textAnim_verticalFadeIn_1694; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.7142857142857142s; animation-fill-mode: both; display: inline-block;"
+                style="animation-name: textAnim_verticalFadeIn_85067; animation-duration: 0.8571428571428571s; animation-iteration-count: 1; animation-delay: 0.7142857142857142s; animation-fill-mode: both; display: inline-block;"
               >
                 E
               </span>

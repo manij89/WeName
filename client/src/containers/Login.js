@@ -40,7 +40,7 @@ function Login (props) {
         className='login-form'
         onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <label htmlFor='email'>Email</label>
+        <label htmlFor="email">Email</label>
         <input className='registration-input'
           id='email'
           name="email"
@@ -50,9 +50,9 @@ function Login (props) {
         />
         <ErrorMessage error={errors.email || errors.validate} />
 
-        <label htmlFor='password'>Password</label>
+        <label htmlFor="password">Password</label>
         <input className='registration-input'
-          id='password'
+          id= "password"
           name="password"
           type="password"
           ref={register({ required: true, minLength: 8 })}
@@ -60,7 +60,7 @@ function Login (props) {
         />
         <ErrorMessage error={errors.email} />
 
-        <button data-testid='loginBtn' className='registration-button' disabled={isSubmitting} type="submit"> Login
+        <button data-testid='login' className='registration-button' disabled={isSubmitting} type="submit"> Login
         </button>
 
         <h5>Not Registered? <Link to='/register'>Register</Link> here</h5>

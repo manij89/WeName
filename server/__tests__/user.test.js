@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../app');
 const db = require('../models');
 
-describe("User's operations", () => {
+describe('User\'s operations', () => {
   let user;
   beforeAll(async () => {
     user = await db.User.create({
@@ -14,30 +14,30 @@ describe("User's operations", () => {
       liked: [],
       matched: []
     });
-});
+  });
 
   describe('Authentication' , () => {
 
     test('Should register a new user', async () => {
-        await request(app).post('/register').send({
-        firstName: "Ritam",
-        lastName: "Verma",
-        email: "algoritam@test.com",
-        password: "muchas"
+      await request(app).post('/register').send({
+        firstName: 'Ritam',
+        lastName: 'Verma',
+        email: 'algoritam@test.com',
+        password: 'muchas'
       }).expect(201);
     });
 
     test('Should login existing user', async () => {
       await request(app).post('/login').send({
-        email: "algoritam@test.com",
-        password: "muchas"
+        email: 'algoritam@test.com',
+        password: 'muchas'
       }).expect(200);
     });
 
     test('Should not login nonexisting user or with wrong credentials', async () => {
       await request(app).post('/login').send({
-        email: "algoritam@test.com",
-        password: "wrongpassword"
+        email: 'algoritam@test.com',
+        password: 'wrongpassword'
       }).expect(401);
     });
   });
@@ -72,13 +72,13 @@ describe("User's operations", () => {
       await request(app).post(`/user/${user.id}/seen/666`);
       const { body } = await request(app).get(`/user/${user.id}`);
       expect(body.Seen.length).toBe(1);
-    })
+    });
   });
 
   describe('Linking users', () => {
-    let user2
+    let user2;
     beforeAll(async () => {
-        user2 = await db.User.create({
+      user2 = await db.User.create({
         firstName: 'Gui',
         lastName: 'Schmithalter',
         email: 'guit@test.com',
@@ -87,7 +87,7 @@ describe("User's operations", () => {
         liked: [],
         matched: []
       });
-  });
+    });
     test('Should link two users correctly', async () => {
       await request(app).put(`/user/${user2.id}/link`).send({
         linkingCode: user.linkingCode
