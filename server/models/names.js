@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = (sequelize, DataTypes) => {
   const Name = sequelize.define('Name', {
     name: {
@@ -24,6 +23,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return Name;
 };
-
-//TODO: why is timestamps false??
-//TODO: Question for M - what is this seennames and liked name situation association??

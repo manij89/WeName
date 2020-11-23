@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 
 const fs = require('fs');
 const path = require('path');
@@ -6,7 +7,11 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+const dbName = process.env.NODE_ENV === 'test' ? 
+               process.env.DB_NAME_TEST : 
+               process.env.DB_NAME;
+
+const sequelize = new Sequelize(dbName, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
   dialect: 'postgres',
   pool: {
@@ -15,9 +20,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
     acquire: 30000,
     idle: 10000
   },
-  operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
+  // operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
 });
-
 
 fs
   .readdirSync(__dirname)
@@ -34,7 +38,6 @@ Object.keys(db).forEach(model => {
     db[model].associate(db);
   }
 });
-
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
