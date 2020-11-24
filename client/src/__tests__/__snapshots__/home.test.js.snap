@@ -154,3 +154,57 @@ exports[`Home render correctly 1`] = `
   </div>
 </body>
 `;
+
+exports[`register snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="login"
+  >
+    <form
+      class="login-form"
+    >
+      <h1>
+        Login
+      </h1>
+      <label
+        for="email"
+      >
+        Email
+      </label>
+      <input
+        class="registration-input"
+        id="email"
+        name="email"
+        type="email"
+      />
+      <label
+        for="password"
+      >
+        Password
+      </label>
+      <input
+        class="registration-input"
+        id="password"
+        name="password"
+        type="password"
+      />
+      <button
+        class="registration-button"
+        data-testid="loginBtn"
+        type="submit"
+      >
+         Login
+      </button>
+      <h5>
+        Not Registered? 
+        <a
+          href="/register"
+        >
+          Register
+        </a>
+         here
+      </h5>
+    </form>
+  </div>
+</DocumentFragment>
+`;

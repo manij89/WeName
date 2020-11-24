@@ -1,16 +1,18 @@
 import React from 'react';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup} from '@testing-library/react'
+import { createMemoryHistory } from 'history';
+import App from '../App';
+import Login from '../containers/Login';
 
-import Login from '../containers/Home'
 
-describe('Login', () => {
-  afterEach(() => {
-    cleanup();
-  });
+import customRender from '../utils/customRender'
 
-  test('render correctly', () => {
-    const login = render(<Login />);
-    expect(login.baseElement).toMatchSnapshot();
-  });
+afterEach(cleanup)
 
-});
+it('register snapshot', () => {
+  const history = createMemoryHistory();
+  history.push('/profile');
+  const { asFragment } = customRender(<App />, { history });
+  
+  expect(asFragment(<Login />)).toMatchSnapshot()
+})
