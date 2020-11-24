@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const users = [
   {
     userId: 3,
+    id: 3,
     firstName: 'Berta',
     lastName: 'Banana',
     email : 'berta@codeworks.me',
@@ -16,7 +17,8 @@ const users = [
     matched: []
   },
   {
-    userId: 3,
+    userId: 5,
+    id: 5,
     firstName: 'Leo',
     lastName: 'Banana',
     email : 'leo@codeworks.me',
@@ -43,7 +45,7 @@ describe('Mock tests', () => {
     db.User.findOne = jest.fn();
     db.User.findOne.mockResolvedValue(users[0]);
 
-    test('User.findOne should be called correctly', async () => {
+    test('getUser should be called successfully', async () => {
       await getUser(req, res);
       expect(db.User.findOne).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(200);
@@ -63,7 +65,7 @@ describe('Mock tests', () => {
     db.User.create = jest.fn();
     db.User.create.mockResolvedValue(users[0]);
 
-    test ('User.create should have been called once', async() => {
+    test ('user should be able to register successfully', async() => {
       await register(req, res);
       expect(db.User.create).toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(201);
@@ -80,24 +82,17 @@ describe('Mock tests', () => {
 
     db.User.findOne = jest.fn();
     db.User.findOne.mockResolvedValue(users[0]);
+
     bcrypt.hash = jest.fn((password, salt) => Promise.resolve(password + salt));
     bcrypt.compare = jest.fn((password, hash) => Promise.resolve(password === hash.slice(0, -2)));
     
-    test ('User.findOne should have been called once', async() => {
+    test ('user should be able to login successfully', async() => {
       await login(req, res);
       expect(db.User.findOne).toHaveBeenCalled();
-
-    });
-
-    test ('login should return a status of 200 if successful', async () => {
-      await login(req, res);
       expect(res.status).toHaveBeenCalledWith(200);
-    });
-
-    test ('if registered successfully, returns the user', async () => {
-      await login(req, res);
       expect(res.send).toHaveBeenCalledWith(users[0]);
     });
+
 
     test ('checking that password hashing works', async () => {
       req.body = {
@@ -126,6 +121,39 @@ describe('Mock tests', () => {
     });
     
   });
+
+  describe('Linking Partners', () => {
+    users[0].save = jest.fn();
+    users[1].save = jest.fn();
+    
+    test ('should successfully link partners', async() => {
+      req.body = {
+        linkingCode: users[0].linkingCode,
+        
+      };
+    
+      req.params = {
+        id: users[1].userId // 5
+      };
+      
+      db.User.findOne = jest.fn().mockReturnValueOnce(users[0]).mockReturnValueOnce(users[1]);
+      await linkPartner(req, res);
+
+      expect(users[1].partnerId).toEqual(users[0].id);
+      expect(users[0].partnerId).toEqual(users[1].id);
+      expect(users[0].linkingCode).toEqual(users[1].linkingCode);
+      
+    });
+    
+  });
+
+
+
+
+
+
+
+
 
 });
 
