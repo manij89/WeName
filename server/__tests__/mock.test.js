@@ -1,5 +1,5 @@
 
-const { getUser, register, login, linkPartner } = require( '../controllers/user');
+const { getUser, register, login, linkPartner, getLikedNames } = require( '../controllers/user');
 const db = require('../models');
 const bcrypt = require('bcrypt');
 
@@ -29,6 +29,12 @@ const users = [
     matched: []
   },
 ];
+
+const name = {
+  id: 100,
+  name: 'Ewa',
+  gender: 'girl'
+};
 
 describe('Mock tests', () => {
   const req = {};
@@ -129,7 +135,6 @@ describe('Mock tests', () => {
     test ('should successfully link partners', async() => {
       req.body = {
         linkingCode: users[0].linkingCode,
-        
       };
     
       req.params = {
@@ -144,20 +149,21 @@ describe('Mock tests', () => {
       expect(users[0].linkingCode).toEqual(users[1].linkingCode);
       
     });
-    
   });
 
 
-
-
-
-
-
-
-
+  describe('Get Liked Names', () => {
+      
+    test ('should successfully retrieve liked names', async() => {
+      users[0].getLiked = jest.fn();
+      
+      req.params = {
+        id: users[0].userId 
+      };
+      
+      db.User.findOne = jest.fn();
+      await getLikedNames(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+  });
 });
-
-
-
-
-
