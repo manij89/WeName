@@ -1,4 +1,4 @@
-import { BrowserRouter, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import Header from "../components/Header";
 import "../styles/game.scss";
 import { Paper } from "@material-ui/core";
@@ -6,7 +6,7 @@ import { Paper } from "@material-ui/core";
 export default function Game(props) {
   return (
     <div className="game">
-      <BrowserRouter>
+      
         <Header />
         <Paper elevation={7} className="game-card">
           <h2>What type of name are you looking for?</h2>
@@ -34,7 +34,7 @@ export default function Game(props) {
             </div>
           </div>
         </Paper>
-      </BrowserRouter>
+      
     </div>
   );
 }
