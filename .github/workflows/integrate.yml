@@ -15,8 +15,7 @@ jobs:
 
       - name: Install Dependencies
         working-directory: server
-        run: |
-          npm ci
+        run: npm ci
 
       - name: Connect to PostgreSQL database
         env:
