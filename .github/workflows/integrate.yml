@@ -43,3 +43,5 @@ jobs:
       - run: npm ci --prefix server
       - name: Connect to PostgreSQL
         run: node ./server/models/index.js
+      - name: Run Tests
+        run: npm test
