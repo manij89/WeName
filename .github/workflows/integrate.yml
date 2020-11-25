@@ -44,4 +44,4 @@ jobs:
       - name: Connect to PostgreSQL
         run: node ./server/models/index.js
       - name: Run Tests
-        run: npm test
+        run: npm test --prefix server
