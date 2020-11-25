@@ -1,4 +1,4 @@
-name: Node Continuous Integration
+ name: Node Continuous Integration
 
 on:
   pull_request:
@@ -12,8 +12,16 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: "12"
-      - name: NPM CI
+
+      - name: Install Dependencies
         working-directory: server
         run: |
-          npm ci 
-          npm test
+          npm ci
+
+      - name: Connect to PostgreSQL database
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+
+      - name: Testing
+        run: npm test
