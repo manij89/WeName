@@ -38,6 +38,7 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
     }
   }
 
+
   const startGame = async () => {
     const namestoFilter = await apiclient.getNames(gender, setNames, setLoading);
     const seentoFilter = await apiclient.seenNames(user.id, setSeen);

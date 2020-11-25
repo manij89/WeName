@@ -3,15 +3,17 @@ import axios from 'axios';
 const BASE_URL = 'http://localhost:4002';
 
 export function getNames(gender, setState, setLoading) {
+
   return axios
-    .get(`${BASE_URL}/names/${gender}`)
+    .get(`${BASE_URL}/names/gender/${gender}`)
+    
     .then(allnames => {
       setState(allnames.data)
+      console.log('names' ,allnames.data);
       return allnames.data;
     })
     .then((res) => {
       setLoading(false)
-      console.log('res', res)
       return res;
     })
     .catch(err => console.error(err))
