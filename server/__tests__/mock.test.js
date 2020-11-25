@@ -30,6 +30,7 @@ const users = [
   },
 ];
 
+// mock name not used
 const name = {
   id: 100,
   name: 'Ewa',
