@@ -1,0 +1,12 @@
+name: React Test
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies for client
+        run: npm ci --prefix client
+      - name: Run tests for client
+        run: npm test --prefix client
+ 
