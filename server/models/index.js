@@ -24,11 +24,14 @@ const sequelize = new Sequelize(dbName, process.env.DB_USERNAME, process.env.DB_
   // operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
 });
 
-try {
-  await sequelize.authenticate()
-} catch (err) {
-  console.error('Unable to connect to the database:', err)
-}
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 fs
   .readdirSync(__dirname)
