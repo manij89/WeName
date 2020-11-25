@@ -11,7 +11,7 @@ afterEach(cleanup)
 
 it('register snapshot', () => {
   const history = createMemoryHistory();
-  history.push('/profile');
+  history.push('/home');
   const { asFragment } = customRender(<App />, { history });
   
   expect(asFragment(<Home />)).toMatchSnapshot()

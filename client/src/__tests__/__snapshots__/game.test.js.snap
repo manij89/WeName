@@ -1,242 +1,189 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Game render correctly 1`] = `
-<body>
-  <div>
-    <div
-      class="game"
-    >
-      <div>
-        <nav
-          class="header navbar navbar-expand-xxl navbar-dark fixed-bottom"
-        >
-          <span
-            class="navbar-brand"
-          >
-            WENAME
-          </span>
-          <button
-            aria-controls="basic-navbar-nav"
-            aria-label="Toggle navigation"
-            class="navbar-toggler collapsed"
-            type="button"
-          >
-            <span
-              class="navbar-toggler-icon"
-            />
-          </button>
-          <div
-            class="navbar-collapse collapse"
-            id="basic-navbar-nav"
-          >
-            <div
-              class="mr-auto navbar-nav"
-            >
-              <a
-                class="header_settings nav-link"
-                href="#"
-                role="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root header-icon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"
-                  />
-                </svg>
-                 Profile
-              </a>
-              <a
-                class="header_settings nav-link"
-                href="#"
-                role="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root header-icon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    cx="14.5"
-                    cy="10.5"
-                    r="1.25"
-                  />
-                  <circle
-                    cx="9.5"
-                    cy="10.5"
-                    r="1.25"
-                  />
-                  <path
-                    d="M22.94 12.66c.04-.21.06-.43.06-.66s-.02-.45-.06-.66c-.25-1.51-1.36-2.74-2.81-3.17-.53-1.12-1.28-2.1-2.19-2.91C16.36 3.85 14.28 3 12 3s-4.36.85-5.94 2.26c-.92.81-1.67 1.8-2.19 2.91-1.45.43-2.56 1.65-2.81 3.17-.04.21-.06.43-.06.66s.02.45.06.66c.25 1.51 1.36 2.74 2.81 3.17.52 1.11 1.27 2.09 2.17 2.89C7.62 20.14 9.71 21 12 21s4.38-.86 5.97-2.28c.9-.8 1.65-1.79 2.17-2.89 1.44-.43 2.55-1.65 2.8-3.17zM19 14c-.1 0-.19-.02-.29-.03-.2.67-.49 1.29-.86 1.86C16.6 17.74 14.45 19 12 19s-4.6-1.26-5.85-3.17c-.37-.57-.66-1.19-.86-1.86-.1.01-.19.03-.29.03-1.1 0-2-.9-2-2s.9-2 2-2c.1 0 .19.02.29.03.2-.67.49-1.29.86-1.86C7.4 6.26 9.55 5 12 5s4.6 1.26 5.85 3.17c.37.57.66 1.19.86 1.86.1-.01.19-.03.29-.03 1.1 0 2 .9 2 2s-.9 2-2 2zM7.5 14c.76 1.77 2.49 3 4.5 3s3.74-1.23 4.5-3h-9z"
-                  />
-                </svg>
-                 Pick Gender
-              </a>
-              <a
-                class="header_settings nav-link"
-                href="#"
-                role="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root header-icon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"
-                  />
-                </svg>
-                 My Names
-              </a>
-              <a
-                class="header_settings nav-link"
-                href="#"
-                role="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root header-icon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                  />
-                </svg>
-                 Matches
-              </a>
-              <a
-                class="header_settings nav-link"
-                href="#"
-                role="button"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="MuiSvgIcon-root header-icon"
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                  />
-                </svg>
-                 Your Final Pick
-              </a>
-              <a
-                class="header_settings nav-link"
-                href="#"
-                role="button"
-              >
-                Logout
-              </a>
-            </div>
-          </div>
-        </nav>
-      </div>
-      <div
-        class="MuiPaper-root game-card MuiPaper-elevation7 MuiPaper-rounded"
-      >
-        <h2>
-          What type of name are you looking for?
-        </h2>
-        <div
-          class="game-buttons"
-        >
-          <div>
-            <a
-              href="/game/girl"
-            >
-              <button
-                class="gender-button"
-              >
-                Girls
-              </button>
-            </a>
-          </div>
-          <div>
-            <a
-              href="/game/boy"
-            >
-              <button
-                class="gender-button"
-              >
-                Boys
-              </button>
-            </a>
-          </div>
-          <div>
-            <a
-              href="/game/neutral"
-            >
-              <button
-                class="gender-button"
-              >
-                Neutral
-              </button>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-`;
-
 exports[`register snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="login"
+    class="game"
   >
-    <form
-      class="login-form"
-    >
-      <h1>
-        Login
-      </h1>
-      <label
-        for="email"
+    <div>
+      <nav
+        class="header navbar navbar-expand-xxl navbar-dark fixed-bottom"
       >
-        Email
-      </label>
-      <input
-        class="registration-input"
-        id="email"
-        name="email"
-        type="email"
-      />
-      <label
-        for="password"
-      >
-        Password
-      </label>
-      <input
-        class="registration-input"
-        id="password"
-        name="password"
-        type="password"
-      />
-      <button
-        class="registration-button"
-        data-testid="loginBtn"
-        type="submit"
-      >
-         Login
-      </button>
-      <h5>
-        Not Registered? 
-        <a
-          href="/register"
+        <span
+          class="navbar-brand"
         >
-          Register
-        </a>
-         here
-      </h5>
-    </form>
+          WENAME
+        </span>
+        <button
+          aria-controls="basic-navbar-nav"
+          aria-label="Toggle navigation"
+          class="navbar-toggler collapsed"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="navbar-collapse collapse"
+          id="basic-navbar-nav"
+        >
+          <div
+            class="mr-auto navbar-nav"
+          >
+            <a
+              class="header_settings nav-link"
+              href="#"
+              role="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root header-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"
+                />
+              </svg>
+               Profile
+            </a>
+            <a
+              class="header_settings nav-link"
+              href="#"
+              role="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root header-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  cx="14.5"
+                  cy="10.5"
+                  r="1.25"
+                />
+                <circle
+                  cx="9.5"
+                  cy="10.5"
+                  r="1.25"
+                />
+                <path
+                  d="M22.94 12.66c.04-.21.06-.43.06-.66s-.02-.45-.06-.66c-.25-1.51-1.36-2.74-2.81-3.17-.53-1.12-1.28-2.1-2.19-2.91C16.36 3.85 14.28 3 12 3s-4.36.85-5.94 2.26c-.92.81-1.67 1.8-2.19 2.91-1.45.43-2.56 1.65-2.81 3.17-.04.21-.06.43-.06.66s.02.45.06.66c.25 1.51 1.36 2.74 2.81 3.17.52 1.11 1.27 2.09 2.17 2.89C7.62 20.14 9.71 21 12 21s4.38-.86 5.97-2.28c.9-.8 1.65-1.79 2.17-2.89 1.44-.43 2.55-1.65 2.8-3.17zM19 14c-.1 0-.19-.02-.29-.03-.2.67-.49 1.29-.86 1.86C16.6 17.74 14.45 19 12 19s-4.6-1.26-5.85-3.17c-.37-.57-.66-1.19-.86-1.86-.1.01-.19.03-.29.03-1.1 0-2-.9-2-2s.9-2 2-2c.1 0 .19.02.29.03.2-.67.49-1.29.86-1.86C7.4 6.26 9.55 5 12 5s4.6 1.26 5.85 3.17c.37.57.66 1.19.86 1.86.1-.01.19-.03.29-.03 1.1 0 2 .9 2 2s-.9 2-2 2zM7.5 14c.76 1.77 2.49 3 4.5 3s3.74-1.23 4.5-3h-9z"
+                />
+              </svg>
+               Pick Gender
+            </a>
+            <a
+              class="header_settings nav-link"
+              href="#"
+              role="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root header-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"
+                />
+              </svg>
+               My Names
+            </a>
+            <a
+              class="header_settings nav-link"
+              href="#"
+              role="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root header-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                />
+              </svg>
+               Matches
+            </a>
+            <a
+              class="header_settings nav-link"
+              href="#"
+              role="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root header-icon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                />
+              </svg>
+               Your Final Pick
+            </a>
+            <a
+              class="header_settings nav-link"
+              href="#"
+              role="button"
+            >
+              Logout
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div
+      class="MuiPaper-root game-card MuiPaper-elevation7 MuiPaper-rounded"
+    >
+      <h2>
+        What type of name are you looking for?
+      </h2>
+      <div
+        class="game-buttons"
+      >
+        <div>
+          <a
+            href="/game/girl"
+          >
+            <button
+              class="gender-button"
+              data-testid="girlsBtn"
+            >
+              Girls
+            </button>
+          </a>
+        </div>
+        <div>
+          <a
+            href="/game/boy"
+          >
+            <button
+              class="gender-button"
+              data-testid="boysBtn"
+            >
+              Boys
+            </button>
+          </a>
+        </div>
+        <div>
+          <a
+            href="/game/neutral"
+          >
+            <button
+              class="gender-button"
+              data-testid="neutralBtn"
+            >
+              Neutral
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;
