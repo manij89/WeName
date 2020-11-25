@@ -6,7 +6,7 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
-
+console.log(process.env);
 const dbName = process.env.NODE_ENV === 'test' ? 
   process.env.DB_NAME_TEST : 
   process.env.DB_NAME;
@@ -23,6 +23,12 @@ const sequelize = new Sequelize(dbName, process.env.DB_USERNAME, process.env.DB_
   },
   // operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
 });
+
+try {
+  await sequelize.authenticate()
+} catch (err) {
+  console.error('Unable to connect to the database:', err)
+}
 
 fs
   .readdirSync(__dirname)
