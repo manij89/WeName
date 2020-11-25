@@ -38,6 +38,10 @@ const name = {
 };
 
 describe('Mock tests', () => {
+  beforeAll(async () => {
+    await db.sequelize.sync();
+   }
+ );
   const req = {};
   const res = {
     send: jest.fn(()=> res).mockName('send'),
