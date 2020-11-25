@@ -13,6 +13,7 @@ function Register(props) {
     lastName: '',
     email: '',
     password: ''
+
   });
 
   const onChange = e => {
@@ -67,7 +68,7 @@ function Register(props) {
           ref={register({ required: true, minLength: 2 })} />
         <ErrorMessage error={errors.firstName} />
 
-        <label htmlFor='email'>Email</label>
+        <label htmlFor='email'>sausage</label>
         <input
           id='email'
           className='registration-input'
