@@ -4,8 +4,8 @@
   "description": "server WeName",
   "main": "index.js",
   "scripts": {
-    "test:watch": "NODE_ENV=test jest --watch",
     "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watch",
     "dev": "nodemon index.js"
   },
   "jest": {
