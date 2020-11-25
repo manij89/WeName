@@ -3,6 +3,13 @@ const request = require('supertest');
 const app = require('../app');
 const db = require('../models');
 
+const mockName = {
+    id: 1,
+    name: "Lina",
+    gender: "girl"
+}
+
+
 describe('User\'s operations', () => {
   let user;
   beforeAll(async () => {
@@ -15,7 +22,10 @@ describe('User\'s operations', () => {
       liked: [],
       matched: []
     });
-  });
+
+    await db.Name.create(mockName);
+  }
+  );
 
   describe('Authentication' , () => {
 
@@ -56,7 +66,7 @@ describe('User\'s operations', () => {
     }); 
 
     test('Should have 1 like', async () => {
-      await user.addLiked(24);
+      await user.addLiked(1);
       const { body } = await request(app).get(`/user/${user.id}`);
       result = body;
       expect(result.Liked.length).toBe(1);
@@ -70,7 +80,7 @@ describe('User\'s operations', () => {
     });
 
     test('Should have a seen name if a name has been seen', async () => {
-      await request(app).post(`/user/${user.id}/seen/666`);
+      await request(app).post(`/user/${user.id}/seen/1`);
       const { body } = await request(app).get(`/user/${user.id}`);
       expect(body.Seen.length).toBe(1);
     });
@@ -101,6 +111,7 @@ describe('User\'s operations', () => {
 
   afterAll(async () => {
     await db.User.destroy({where: {}});
+    await db.Name.destroy({where: {}});
     await db.sequelize.close();
   });
 });
