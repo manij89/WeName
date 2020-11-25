@@ -13,6 +13,7 @@ const mockName = {
 describe('User\'s operations', () => {
   let user;
   beforeAll(async () => {
+    await db.sequelize.sync();
     user = await db.User.create({
       firstName: 'Carlos',
       lastName: 'De Souza',
