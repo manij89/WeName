@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: "12"
       - name: NPM CI
-        working-directory: ./server
+        working-directory: server
         run: |
           npm ci 
           npm test
