@@ -68,7 +68,7 @@ function Register(props) {
           ref={register({ required: true, minLength: 2 })} />
         <ErrorMessage error={errors.firstName} />
 
-        <label htmlFor='email'>sausage</label>
+        <label htmlFor='email'>Email</label>
         <input
           id='email'
           className='registration-input'
