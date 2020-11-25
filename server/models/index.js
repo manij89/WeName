@@ -14,6 +14,7 @@ const dbName = process.env.NODE_ENV === 'test' ?
 
 const sequelize = new Sequelize(dbName, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
   dialect: 'postgres',
   pool: {
     max: 5,
