@@ -1,14 +1,7 @@
-
 const request = require('supertest');
 const app = require('../app');
 const db = require('../models');
-
-const mockName = {
-    id: 1,
-    name: "Lina",
-    gender: "girl"
-}
-
+const mocks = require('../mocks');
 
 describe('User\'s operations', () => {
   let user;
@@ -24,7 +17,7 @@ describe('User\'s operations', () => {
       matched: []
     });
 
-    await db.Name.create(mockName);
+    await db.Name.create(mocks.names[0]);
   }
   );
 
@@ -100,6 +93,7 @@ describe('User\'s operations', () => {
         matched: []
       });
     });
+    
     test('Should link two users correctly', async () => {
       await request(app).put(`/user/${user2.id}/link`).send({
         linkingCode: user.linkingCode
