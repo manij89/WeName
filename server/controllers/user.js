@@ -2,8 +2,6 @@ const db = require('../models');
 const bcrypt = require('bcrypt');
 const { v4: uuidv4 } = require('uuid');
 
-// TODO get linkingCode after registration and not on loading profile
-
 exports.getUser = async (req, res) => {
   try {
     const { id } = req.params;
