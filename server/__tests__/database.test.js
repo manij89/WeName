@@ -38,10 +38,6 @@ beforeAll(async () => {
 });
 
 describe('Models work correctly', () => {
-  test('Name model returns names', () => {
-    expect(true).toBe(true);
-  });
-
   test('user1 has 1 seen name', () => {
     expect(user1.Seen).toBeDefined();
     expect(user1.Seen.length).toBe(1);
