@@ -37,6 +37,8 @@ Make sure you have all the necessary programs running (eg Postgres).
 
 ## Work in Progress ⚡️
 
+Feel free to contribute! Fork the repo and send me a pull request.
+
 * Currently build to be mobile-first. In process of making it fully responsive.
 * Authentication
 
@@ -55,10 +57,9 @@ Mandy Nijssen - [Github](https://github.com/manij89/) - [LinkedIn](https://www.l
 
 ## Contributing
 
-All improvements are welcome! 
-Fork the repo and send a pull request.
-
-
+* Carlos De Sousa - [github](https://github.com/carlosdsv)
+* Guillermo Schmithalter - [github](https://github.com/gSchmithalter14)
+* Ritam Verma - [github](https://github.com/ritammv/)
 
 ## License
 
