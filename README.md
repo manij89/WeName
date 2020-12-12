@@ -32,6 +32,7 @@ npm install
 3. Start it up
 ```
 'npm start' in the client folder and 'node index.js' in the server folder.
+Make sure you have all the necessary programs running (eg Postgres).
 ```
 
 ## Work in Progress ⚡️
