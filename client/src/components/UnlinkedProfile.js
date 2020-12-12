@@ -13,9 +13,7 @@ function Unlinkedprofile({user, setUser, setPartner}) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(code);
     apiclient.linkPartners(user.id, code, setUser, setPartner);
-    console.log('user', user)
   }
   
   return (
