@@ -22,7 +22,9 @@ export function getNames(gender, setState, setLoading) {
 export function seenNames(userId, setState) {
   return axios
     .get(`${BASE_URL}/user/${userId}/seen`)
-    .then(res => { console.log('seen', res.data); setState(res.data); return res.data;})
+    .then(res => { 
+      setState(res.data); 
+      return res.data;})
     .catch(err => console.error(err))
 }
 
@@ -37,7 +39,6 @@ export function likedNames(userId, setState) {
   axios
     .get(`${BASE_URL}/user/${userId}/liked`)
     .then(res => {
-      console.log('liked', res.data)
       if (res.data && Array.isArray(res.data)) {
         setState(res.data)
       }

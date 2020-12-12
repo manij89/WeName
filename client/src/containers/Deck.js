@@ -30,10 +30,8 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
   function filterNames(names, seen) {
     if (names.length && seen.length) {
       const results = names.filter(({ id: id1 }) => !seen.some(({ id: id2 }) => id2 === id1));
-      console.log('results', results)
       setFilteredNames(results);
     } else {
-      console.log('else')
       setFilteredNames(names);
     }
   }
@@ -56,13 +54,6 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
 
   }, []);
 
-  // useEffect(() => {
-  //   if (isFetched) {
-  //     filterNames();
-  //   }
-  // }, [names, seen, liked])
-
-  // with every new update of liked names, this will run
   useEffect(() => {
     if (liked.length && partnerLikedNames.length) {
       const result = liked.filter(({ id: id1 }) => partnerLikedNames.some(({ id: id2 }) => id2 === id1));
@@ -72,7 +63,6 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
 
 
   const swipe = (direction) => {
-    console.log('swipe')
 
     if (direction === "right") {
       setDirection("right");
@@ -92,9 +82,7 @@ function Deck({ user, partner, partnerLikedNames, loading, setPartner, setLoadin
       setSeen(prev => [...prev, filteredNames[index]]);
     }
 
-    console.log('index', index)
     setTimeout(() => {
-      console.log('index st', index)
       setIndex((previousIndex) => previousIndex + 1);
       setDirection(null);
       setDragging(false);

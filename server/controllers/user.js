@@ -11,10 +11,13 @@ exports.getUser = async (req, res) => {
       },
       include: [{
         model: db.Name,
-        as: 'Seen'
-      },{
+
+        as: 'Seen',
+      },
+      {
         model: db.Name,
-        as: 'Liked'
+        as: 'Liked',
+
       }]
     });
     res.send(result);

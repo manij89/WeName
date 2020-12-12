@@ -8,14 +8,9 @@ import Counter from '../components/counter';
 import Draggable from 'react-draggable';
 import NameCard from '../components/NameCard';
 
-
-// TODO bug: lagging in the drag function, which does not trigger the 'swipe'
-// function in the correct way
-
 function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoading, setMatches, getPartnerLikedNames, likedNames, matches, getLikedNames }) {
 
   const [direction, setDirection] = useState(null);
-  // const [index, setIndex] = useState(0);
   const [dragging, setDragging] = useState(false);
 
   const startGame = () => {
@@ -51,13 +46,11 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
       setDirection("left");
       let copy = [...matches];
       copy.shift();
-      console.log('copy left', copy)
       setMatches(copy);
       apiclient.deleteName(user.id, matches[0].id);
     }
 
     setTimeout(() => {
-      // setIndex(index + 1);
       setDirection(null);
       setDragging(false);
     }, 400)
@@ -66,13 +59,10 @@ function Final({ user, partner, partnerLikedNames, loading, setPartner, setLoadi
   const handleDrag = (e, d) => {
     // swiping animations
     if (d.x > 80) {
-      console.log('dragging right')
       swipe("right");
     } else if (d.x < -80) {
-      console.log('dragging left')
       swipe("left");
     } else {
-      console.log('dragging else')
       setDragging(false);
     };
   };
