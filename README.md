@@ -34,6 +34,10 @@ npm install
 'npm start' in the client folder and 'node index.js' in the server folder.
 ```
 
+## Work in Progress ⚡️
+
+* Currently build to be mobile-first. In process of making it fully responsive.
+* Authentication
 
 ## Built with
 
