@@ -1,10 +1,60 @@
-# WeName
-Find the perfect babyname together with your partner.
-You can swipe or click to like and store all your favourite babynames.
-
-Send your unique code to your partner and see what your matches are!
-
-Ready for the final choice? 
-Start the game again, just with your matched names by going to 'your final pick' in the dashboard.
+<p align="center">
+  <img src="images/logo-readme.png" />
+</p>
 
 
+WeName is a “Tinder for baby names” mobile-first application to let you and your partner find the perfect baby name.
+Simply sign up and click or swipe to save your favourites. Invite your partner with a unique link and find our if you have matched names.
+
+## Screenshots
+
+<p align="center">
+  <img src="images/screenshots-1.png" />
+  <img src="images/screenshots-2.png" />
+</p>
+
+
+
+## Getting started
+
+1. Clone the repo
+
+```
+git clone https://github.com/manij89/WeName
+cd Wename
+```
+
+2. Install dependencies in client and server folder
+```
+npm install
+```
+
+3. Start it up
+```
+'npm start' in the client folder and 'node index.js' in the server folder.
+```
+
+
+## Built with
+
+* [React](https://reactjs.org/) - Front end library for building user interfaces
+* [Redux](https://redux.js.org) - Storage to share data inside the app
+* [Node.JS](https://nodejs.org/en/)
+* [Sequelize](https://sequelize.org/master/) - promise-based Node.js ORM uses here with Postgres
+* Drive and determination ♥
+
+
+## Author
+
+Mandy Nijssen - [Github](https://github.com/manij89/) - [LinkedIn](https://www.linkedin.com/in/mandy-nijssen/)
+
+## Contributing
+
+All improvements are welcome! 
+Fork the repo and send a pull request.
+
+
+
+## License
+
+This project is licensed under the MIT License.
