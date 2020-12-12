@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = (sequelize, DataTypes) => {
   const Name = sequelize.define('Name', {
     name: {
@@ -18,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Name.associate = db => {
-      db.Name.belongsToMany(db.User, {through: 'SeenNames'});
-      db.Name.belongsToMany(db.User, {through: 'LikedNames'});
-  }
+    db.Name.belongsToMany(db.User, {through: 'SeenNames'});
+    db.Name.belongsToMany(db.User, {through: 'LikedNames'});
+  };
 
   return Name;
-}
+};

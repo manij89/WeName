@@ -40,8 +40,9 @@ function Login (props) {
         className='login-form'
         onSubmit={handleSubmit}>
         <h1>Login</h1>
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <input className='registration-input'
+          id='email'
           name="email"
           type="email"
           ref={register({ required: true, pattern: /^\S+@\S+$/i })}
@@ -49,8 +50,9 @@ function Login (props) {
         />
         <ErrorMessage error={errors.email || errors.validate} />
 
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
         <input className='registration-input'
+          id= "password"
           name="password"
           type="password"
           ref={register({ required: true, minLength: 8 })}
@@ -58,7 +60,7 @@ function Login (props) {
         />
         <ErrorMessage error={errors.email} />
 
-        <button className='registration-button' disabled={isSubmitting} type="submit"> Login
+        <button data-testid='loginBtn' className='registration-button' disabled={isSubmitting} type="submit"> Login
         </button>
 
         <h5>Not Registered? <Link to='/register'>Register</Link> here</h5>

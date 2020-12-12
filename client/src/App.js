@@ -1,6 +1,6 @@
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route, Switch } from 'react-router-dom';
+import {  Route, Switch } from 'react-router-dom';
 import Home from './containers/Home';
 import Register from './containers/Register';
 import Login from './containers/Login';
@@ -11,8 +11,10 @@ import Deck from './containers/Deck';
 import Mylikes from './components/MyLikes';
 import Final from './containers/Final';
 
+
 function App() {
   return (
+    
 
     <Switch>
       <Route
@@ -65,6 +67,7 @@ function App() {
         component={Matches}
       />
     </Switch>
+   
 
   );
 }

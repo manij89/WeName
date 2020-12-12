@@ -13,9 +13,7 @@ router.post('/login', userCtrl.login);
 router.post('/register', userCtrl.register);
 router.put('/user/:id/link', userCtrl.linkPartner);
 
-
-router.get('/names/:gender', namesCtrl.getNamesByGender);
+router.get('/names/gender/:gender', namesCtrl.getNamesByGender);
 router.get('/names/:id', namesCtrl.getName);
-
 
 module.exports = router;

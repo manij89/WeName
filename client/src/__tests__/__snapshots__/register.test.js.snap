@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`register snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="registration"
+  >
+    <form
+      class="registration-form"
+    >
+      <h1>
+        Sign Up
+      </h1>
+      <label
+        for="firstName"
+      >
+        First Name:
+      </label>
+      <input
+        class="registration-input"
+        id="firstName"
+        name="firstName"
+        required=""
+      />
+      <label
+        for="lastName"
+      >
+        Last Name:
+      </label>
+      <input
+        class="registration-input"
+        id="lastName"
+        name="lastName"
+        required=""
+      />
+      <label
+        for="email"
+      >
+        Email
+      </label>
+      <input
+        class="registration-input"
+        id="email"
+        name="email"
+        required=""
+        type="email"
+      />
+      <label
+        for="password"
+      >
+        Password
+      </label>
+      <input
+        class="registration-input"
+        id="password"
+        name="password"
+        required=""
+        type="password"
+      />
+      <input
+        class="registration-button"
+        data-testid="submit"
+        type="submit"
+      />
+      <h5>
+        Already Registered? 
+        <a
+          href="/login"
+        >
+          Login
+        </a>
+         here
+      </h5>
+    </form>
+  </div>
+</DocumentFragment>
+`;

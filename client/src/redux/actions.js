@@ -7,7 +7,7 @@ import {
   GET_PARTNER_NAMES } from './actiontypes';
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4002';
+export const BASE_URL = 'http://localhost:4002';
 
 export const setLoading = (status) => {
   return {

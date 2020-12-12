@@ -1,15 +1,20 @@
 'use strict';
+require('dotenv').config();
 
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const {db_name, db_user, db_password, db_host} = require('../config')
 const db = {};
 
-// TODO : config file with db keys 
-const sequelize = new Sequelize(db_name, db_user, db_password, {
-  host: db_host,
+const dbName = process.env.NODE_ENV === 'test' ? 
+  process.env.DB_NAME_TEST : 
+  process.env.DB_NAME;
+
+
+const sequelize = new Sequelize(dbName, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT || 5432,
   dialect: 'postgres',
   pool: {
     max: 5,
@@ -17,9 +22,17 @@ const sequelize = new Sequelize(db_name, db_user, db_password, {
     acquire: 30000,
     idle: 10000
   },
-  operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
+  // operatorsAliases: false // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
 });
 
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 fs
   .readdirSync(__dirname)
@@ -29,14 +42,13 @@ fs
   .forEach(file => {
     var model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
-  })
+  });
 
-  Object.keys(db).forEach(model => {
-    if(db[model].associate) {
-      db[model].associate(db)
-    }
-  })
-
+Object.keys(db).forEach(model => {
+  if(db[model].associate) {
+    db[model].associate(db);
+  }
+});
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

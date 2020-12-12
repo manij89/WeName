@@ -65,13 +65,14 @@ export default function Home(props) {
             </div>
           </List>
           <div>
+
             <Link to='/register'>
               <button
                 className='info-button'
               >Sign up</button>
             </Link>
+            
           </div>
-
         </Paper>
       </div>
     </div>
