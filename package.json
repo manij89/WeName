@@ -1,0 +1,19 @@
+{
+  "name": "wename",
+  "version": "1.0.0",
+  "description": "tinder for baby names",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manij89/WeName.git"
+  },
+  "author": "Mandy Nijssen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manij89/WeName/issues"
+  },
+  "homepage": "https://github.com/manij89/WeName#readme"
+}
