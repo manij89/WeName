@@ -6,7 +6,6 @@ const path = require('path');
 const morgan = require('morgan');
 const app = express();
 
-// app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/*', (req, res) => {
