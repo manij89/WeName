@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // const BASE_URL = 'http://localhost:4002';
-// const BASE_URL = 'https://we-name.herokuapp.com';
-const BASE_URL = window.location.origin;
+const BASE_URL = 'https://we-name.herokuapp.com';
+// const BASE_URL = window.location.origin;
 
 export function getNames(gender, setState, setLoading) {
 
