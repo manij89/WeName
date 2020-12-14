@@ -20,6 +20,9 @@
   }
 }
 
+.full-screen {
+  display: none;
+}
 
 
 .logo {
@@ -60,4 +63,19 @@
   background-color: transparent;
   position: relative;
   bottom: 18px
+}
+
+@media only screen and (min-width: 700px) {
+  button {
+    display: none;
+  }
+
+  img {
+    display: none;
+  }
+
+  .full-screen {
+    display: flex;
+  }
+
 }

@@ -27,6 +27,10 @@ export default function Home(props) {
 
           />
         </div>
+        <div className='full-screen'>
+          🚧 Under Construction: reduce your screen size to use this app 
+        </div>
+
 
         <button
           className='home_button'
